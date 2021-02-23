@@ -12,18 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
+    <!-- add blinds button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_action_button"
+        android:id="@+id/fab_add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:backgroundTint="@android:color/white"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|right"
+        android:onClick="addBlinds"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:srcCompat="@drawable/ic_add_24"
-        />
-
+        android:contentDescription="@string/add_blinds_button"
+        app:srcCompat="@drawable/add" />
 
 </RelativeLayout>

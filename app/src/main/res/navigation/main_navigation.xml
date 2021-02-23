@@ -23,7 +23,7 @@
         android:id="@+id/navigation_control"
         android:name="com.helio.app.ui.control.ControlFragment"
         android:label="@string/title_control"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_control" />
     <fragment
         android:id="@+id/singleBlindSettingsFragment"
         android:name="com.helio.app.ui.blind.SingleBlindSettingsFragment"

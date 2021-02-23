@@ -14,6 +14,7 @@
         android:theme="@style/Theme.HelioApp"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute">
+        <activity android:name=".EditBlindsActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

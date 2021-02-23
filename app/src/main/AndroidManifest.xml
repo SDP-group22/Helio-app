@@ -14,7 +14,11 @@
         android:theme="@style/Theme.HelioApp"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute">
-        <activity android:name=".EditBlindsActivity"></activity>
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/single_blind_schedule_preferences" />
+
+        <activity android:name=".EditBlindsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

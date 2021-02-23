@@ -25,6 +25,7 @@
         andriod:key="seeSchedule"
         andriod:title="@string/settingsViewSchedules" />
 
+
     <Preference
         andriod:key="sensors"
         andriod:title="@string/settingsViewSensors" />

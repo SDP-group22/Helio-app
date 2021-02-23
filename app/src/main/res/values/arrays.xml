@@ -42,6 +42,22 @@
         <item />
     </array>
 
+    <array name="ScheduleDays">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </array>
+
+    <array name="BlindsState">
+        <item>Open</item>
+        <item>Close</item>
+    </array>
+
+
     <string-array name="sensorTypeString">
         <item>@string/light_sensor</item>
         <item>@string/motion_sensor</item>

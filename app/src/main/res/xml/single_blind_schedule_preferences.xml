@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:andriod="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.blind.SingleBlindsSettingScheduleFragment">
+
+    <ListPreference
+        andriod:entries="@array/ScheduleDays"
+        andriod:entryValues="@array/ScheduleDays"
+        andriod:key="Day"
+        andriod:title="Day"
+        app:useSimpleSummaryProvider="true"
+    />
+
+    <EditTextPreference
+        andriod:key="Time"
+        andriod:title="Time"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        andriod:entries="@array/BlindsState"
+        andriod:entryValues="@array/BlindsState"
+        andriod:key="State"
+        andriod:title="State"
+        app:useSimpleSummaryProvider="true"
+        />
+
+
+
+</PreferenceScreen>

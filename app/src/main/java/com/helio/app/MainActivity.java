@@ -2,15 +2,12 @@ package com.helio.app;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MotionEventCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,7 +19,7 @@ import com.helio.app.networking.HubClient;
 import com.helio.app.networking.MoveMotorRequest;
 import com.helio.app.networking.RegisterMotorRequest;
 import com.helio.app.networking.RenameMotorRequest;
-import android.view.GestureDetector.OnGestureListener;
+
 
 import java.util.HashMap;
 import java.util.Map;

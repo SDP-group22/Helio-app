@@ -2,10 +2,15 @@ package com.helio.app;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MotionEventCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,6 +22,7 @@ import com.helio.app.networking.HubClient;
 import com.helio.app.networking.MoveMotorRequest;
 import com.helio.app.networking.RegisterMotorRequest;
 import com.helio.app.networking.RenameMotorRequest;
+import android.view.GestureDetector.OnGestureListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,14 +48,13 @@ public class MainActivity extends AppCompatActivity {
         // This makes the fragment change when you press the navigation buttons
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navView, navController);
-
         fetchState();
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // Navigate backwards when pressing back button in top app bar
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
@@ -78,4 +83,11 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(() -> client.deactivateMotor(motors, 42), 1750);
         handler.postDelayed(() -> client.deleteMotor(motors, 42), 2000);
     }
+
+    public void addBlinds(View view) {
+        Toast.makeText(this, "Add a new Blinds", Toast.LENGTH_SHORT).show();
+    }
+
+
 }
+

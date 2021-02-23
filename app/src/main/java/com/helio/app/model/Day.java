@@ -1,5 +1,7 @@
 package com.helio.app.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,12 +10,19 @@ import java.util.Map;
  */
 public enum Day {
 
+    @SerializedName("Monday")
     MONDAY("Monday"),
+    @SerializedName("Tuesday")
     TUESDAY("Tuesday"),
+    @SerializedName("Wednesday")
     WEDNESDAY("Wednesday"),
+    @SerializedName("Thursday")
     THURSDAY("Thursday"),
+    @SerializedName("Friday")
     FRIDAY("Friday"),
+    @SerializedName("Saturday")
     SATURDAY("Saturday"),
+    @SerializedName("Sunday")
     SUNDAY("Sunday");
 
     // Lookup map for getting a day from a String from the API

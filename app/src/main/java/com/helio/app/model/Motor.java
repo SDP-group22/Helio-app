@@ -1,15 +1,14 @@
 package com.helio.app.model;
 
-import androidx.annotation.NonNull;
-
 import com.helio.app.ui.MotorIcon;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
  * Motor objects represent motor controllers in the user's home environment.
  */
-public class Motor {
-    private final int id;
+public class Motor extends IdComponent {
     private String name;
     private String ip;
     private boolean active;
@@ -29,7 +28,7 @@ public class Motor {
             int length,
             String style,
             MotorIcon icon) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.ip = ip;
         this.active = active;
@@ -54,14 +53,20 @@ public class Motor {
         this(0, name, "", false, 0, 0, 0, "", icon);
     }
 
-    @NonNull
+    @NotNull
     @Override
     public String toString() {
-        return "Motor w/ id=" + id;
-    }
-
-    public int getId() {
-        return id;
+        return "Motor{" +
+                "id='" + getId() + '\'' +
+                ", name='" + name + '\'' +
+                ", ip='" + ip + '\'' +
+                ", active=" + active +
+                ", level=" + level +
+                ", battery=" + battery +
+                ", length=" + length +
+                ", style='" + style + '\'' +
+                ", icon=" + icon +
+                '}';
     }
 
     public String getName() {

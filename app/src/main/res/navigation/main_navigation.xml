@@ -29,4 +29,11 @@
         android:name="com.helio.app.ui.blind.SingleBlindSettingsFragment"
         android:label="@string/title_edit_blind"
         tools:layout="@layout/fragment_single_blind_settings" />
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="com.helio.app.ui.schedule.ScheduleFragment"
+        android:label="Schedule"
+        tools:layout="@layout/fragment_schedule"
+        />
+
 </navigation>

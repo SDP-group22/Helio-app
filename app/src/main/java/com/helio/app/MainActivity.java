@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         // This makes the fragment change when you press the navigation buttons
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navView, navController);
-        fetchState();
+        //fetchState();
     }
 
     @Override
@@ -67,14 +67,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void fetchState() {
-        motors = new HashMap<>();
-        HubClient client = new HubClient("http://10.0.2.2:4310/");
-        testMotor(client);
-        testSchedule(client);
-        testLightSensors(client);
-        testMotionSensors(client);
-    }
+//    private void fetchState() {
+//        motors = new HashMap<>();
+//        HubClient client = new HubClient("http://10.0.2.2:4310/");
+//        testMotor(client);
+//        testSchedule(client);
+//        testLightSensors(client);
+//        testMotionSensors(client);
+//    }
 
     private void testMotor(HubClient client) {
         MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(

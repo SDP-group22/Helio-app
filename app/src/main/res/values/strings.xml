@@ -16,5 +16,5 @@
     <string name="motion_sensor">Motion Sensor</string>
     <string name="open_state">Open</string>
     <string name="closed_state">Closed</string>
-    <string name="add_blinds_button"></string>
+    <string name="add_blinds_button">Add blinds</string>
 </resources>

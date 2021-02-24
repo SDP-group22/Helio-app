@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         // This makes the fragment change when you press the navigation buttons
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navView, navController);
-
         fetchState();
     }
 
@@ -243,4 +242,6 @@ public class MainActivity extends AppCompatActivity {
         postTime += DELAY;
         handler.postDelayed(() -> client.deleteMotionSensor(motionSensors, id.get()), postTime);
     }
+
 }
+

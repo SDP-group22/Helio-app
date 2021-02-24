@@ -26,7 +26,7 @@ public class ControlFragment extends Fragment {
         controlViewModel =
                 new ViewModelProvider(this).get(ControlViewModel.class);
         View view = inflater.inflate(R.layout.fragment_control, container, false);
-        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
+        model = new ViewModelProvider(this).get(UserDataViewModel.class);
         ControlRecViewAdapter adapter = new ControlRecViewAdapter(getContext(), model);
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),

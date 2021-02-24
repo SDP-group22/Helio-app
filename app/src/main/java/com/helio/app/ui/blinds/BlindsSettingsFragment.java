@@ -21,7 +21,7 @@ public class BlindsSettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blinds_settings, container, false);
-        UserDataViewModel model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
+        UserDataViewModel model = new ViewModelProvider(this).get(UserDataViewModel.class);
         BlindsRecViewAdapter adapter = new BlindsRecViewAdapter(getContext(), model);
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),

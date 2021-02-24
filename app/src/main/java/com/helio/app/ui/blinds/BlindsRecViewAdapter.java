@@ -20,9 +20,8 @@ import java.util.ArrayList;
 
 public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdapter.ViewHolder> {
 
-    private ArrayList<Motor> motors = new ArrayList<>();
-
     private final Context context;
+    private ArrayList<Motor> motors = new ArrayList<>();
 
     public BlindsRecViewAdapter(Context context) {
         this.context = context;

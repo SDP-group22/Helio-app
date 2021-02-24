@@ -1,18 +1,24 @@
 package com.helio.app.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Schedule {
+public class Schedule implements IdComponent {
     private final int id;
+    @SerializedName("motor_ids")
+    private final List<Integer> motorIds;
     private String name;
     private boolean active;
-    private final List<Day> days;
+    private List<Day> days;
+    @SerializedName("target-level")
     private int targetLevel;
     private int gradient;
-    private final List<Integer> motorIds;
     private String time;
 
     public Schedule(int id, String name, boolean active, List<Day> days, int targetLevel,
@@ -34,10 +40,6 @@ public class Schedule {
         this(id, "", false, new ArrayList<>(), 0, 0, new ArrayList<>(), "");
     }
 
-    public int getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
@@ -56,6 +58,10 @@ public class Schedule {
 
     public List<Day> getDays() {
         return days;
+    }
+
+    public void setDays(List<Day> days) {
+        this.days = days;
     }
 
     public int getTargetLevel() {
@@ -84,7 +90,8 @@ public class Schedule {
 
     /**
      * Set the time of this schedule
-     * @param hour the hour of the day (24-hour)
+     *
+     * @param hour   the hour of the day (24-hour)
      * @param minute the minute
      */
     public void setTime(int hour, int minute) {
@@ -98,5 +105,25 @@ public class Schedule {
 
     public int getTimeMinute() {
         return Integer.parseInt(Objects.requireNonNull(time).split(":")[1]);
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "id='" + getId() + '\'' +
+                ", name='" + name + '\'' +
+                ", active=" + active +
+                ", days=" + days +
+                ", targetLevel=" + targetLevel +
+                ", gradient=" + gradient +
+                ", motorIds=" + motorIds +
+                ", time='" + time + '\'' +
+                '}';
     }
 }

@@ -6,26 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
 import com.helio.app.R;
 import com.helio.app.model.Motor;
-import com.helio.app.ui.blinds.BlindsRecViewAdapter;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAdapter.ViewHolder> {
-    private ArrayList<Motor> motors = new ArrayList<>();
-
     private final Context context;
+    private ArrayList<Motor> motors = new ArrayList<>();
 
     public ControlRecViewAdapter(Context context) {
         this.context = context;

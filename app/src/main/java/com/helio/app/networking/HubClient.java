@@ -1,5 +1,7 @@
 package com.helio.app.networking;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.helio.app.model.Day;
@@ -90,9 +92,9 @@ public class HubClient {
         call.enqueue(new IdComponentCallback<>(motors));
     }
 
-    public void moveMotor(Map<Integer, Motor> motors, int id, int level) {
-        Call<Motor> call = service.moveMotor(id, level);
-        call.enqueue(new IdComponentCallback<>(motors));
+    public void moveMotor(Motor motor, int level) {
+        Call<Motor> call = service.moveMotor(motor.getId(), level);
+        call.enqueue(new MoveMotorCallback());
     }
 
     public void startMotorCalibration(Map<Integer, Motor> motors, int motorId) {
@@ -110,12 +112,12 @@ public class HubClient {
         call.enqueue(new DeletionCallback<>(motors, motorId));
     }
 
-    public void getAllMotors(Map<Integer, Motor> motors) {
+    public void getAllMotors(MutableLiveData<Map<Integer, Motor>> motors) {
         Call<List<Motor>> call = service.getAllMotors();
         call.enqueue(new GetAllCallback<>(motors));
     }
 
-    public void getAllSchedules(Map<Integer, Schedule> schedules) {
+    public void getAllSchedules(MutableLiveData<Map<Integer, Schedule>> schedules) {
         Call<List<Schedule>> call = service.getAllSchedules();
         call.enqueue(new GetAllCallback<>(schedules));
     }
@@ -165,7 +167,7 @@ public class HubClient {
         call.enqueue(new IdComponentCallback<>(schedules));
     }
 
-    public void getAllLightSensors(Map<Integer, LightSensor> sensors) {
+    public void getAllLightSensors(MutableLiveData<Map<Integer, LightSensor>> sensors) {
         Call<List<LightSensor>> call = service.getAllLightSensors();
         call.enqueue(new GetAllCallback<>(sensors));
     }
@@ -185,7 +187,7 @@ public class HubClient {
         call.enqueue(new IdComponentCallback<>(sensors));
     }
 
-    public void getAllMotionSensors(Map<Integer, MotionSensor> sensors) {
+    public void getAllMotionSensors(MutableLiveData<Map<Integer, MotionSensor>> sensors) {
         Call<List<MotionSensor>> call = service.getAllMotionSensors();
         call.enqueue(new GetAllCallback<>(sensors));
     }

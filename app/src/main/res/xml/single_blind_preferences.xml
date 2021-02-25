@@ -17,7 +17,7 @@
     <ListPreference
         andriod:entries="@array/icons"
         andriod:entryValues="@array/iconsValues"
-        andriod:key="changeIcon"
+        andriod:key="icon"
         andriod:title="@string/settingsIcon"
         app:useSimpleSummaryProvider="true" />
 

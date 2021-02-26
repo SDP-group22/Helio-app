@@ -37,11 +37,13 @@ public class FragmentTimerActivity extends AppCompatActivity {
         setTime = findViewById(R.id.btnSetTimer);
         setAlarm = findViewById(R.id.btnSetAlarm);
 
+
         setTime.setOnClickListener((v) -> {
             calendar = Calendar.getInstance();
             currentHour = calendar.get(Calendar.HOUR_OF_DAY);
             currentMinute = calendar.get(Calendar.MINUTE);
 
+            // The API didn't work properly. The timePicker didn't work with no reason. Maybe because it is not in the mainActivity? I don't know why it happened.
             timePickerDialog = new TimePickerDialog(FragmentTimerActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {

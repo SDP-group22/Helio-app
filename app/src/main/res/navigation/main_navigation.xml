@@ -32,14 +32,29 @@
 
         <argument
             android:name="currentMotorId"
-            app:argType="integer"
-            android:defaultValue="0"/>
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_schedule"
-        android:name="com.helio.app.ui.schedule.ScheduleFragment"
-        android:label="Schedule"
-        tools:layout="@layout/fragment_schedule"
-        />
+        android:id="@+id/scheduleFragment"
+        android:name="com.helio.app.ui.schedule.SchedulesFragment"
+        android:label="Schedules"
+        tools:layout="@layout/fragment_schedule">
+        <action
+            android:id="@+id/action_scheduleFragment_to_scheduleSettingsFragment"
+            app:destination="@id/scheduleSettingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scheduleSettingsFragment"
+        android:name="com.helio.app.ui.schedule.ScheduleSettingsFragment"
+        android:label="@string/title_edit_schedule"
+        tools:layout="@layout/fragment_schedule_settings">
+
+        <argument
+            android:name="currentScheduleId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
 </navigation>

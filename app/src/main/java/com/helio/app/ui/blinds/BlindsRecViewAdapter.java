@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,7 +81,7 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtName = itemView.findViewById(R.id.txtName);
+            txtName = itemView.findViewById(R.id.scheduleName);
             blindIcon = itemView.findViewById(R.id.blindIcon);
             parent = itemView.findViewById(R.id.parent);
         }

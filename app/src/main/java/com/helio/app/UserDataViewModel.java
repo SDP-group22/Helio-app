@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.helio.app.model.Motor;
+import com.helio.app.model.Schedule;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.request.MotorSettingsRequest;
 
@@ -14,6 +15,7 @@ import java.util.Objects;
 public class UserDataViewModel extends ViewModel {
     private final HubClient client = new HubClient("http://10.0.2.2:4310/");
     private MutableLiveData<Map<Integer, Motor>> motors;
+    private MutableLiveData<Map<Integer, Schedule>> schedules;
     private int currentMotorId = -1;
 
     public LiveData<Map<Integer, Motor>> fetchMotors() {
@@ -43,5 +45,13 @@ public class UserDataViewModel extends ViewModel {
                 m.getLevel(), m.getStyle()
         );
         client.updateMotor(motors.getValue(), currentMotorId, motorSettingsRequest);
+    }
+
+    public LiveData<Map<Integer, Schedule>> fetchSchedules() {
+        if(schedules == null) {
+            schedules = new MutableLiveData<>();
+            client.getAllSchedules(schedules);
+        }
+        return schedules;
     }
 }

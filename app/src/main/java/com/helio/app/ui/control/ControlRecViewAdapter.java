@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.slider.Slider;
@@ -97,7 +96,7 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtName = itemView.findViewById(R.id.txtName);
+            txtName = itemView.findViewById(R.id.scheduleName);
             blindIcon = itemView.findViewById(R.id.blindIcon);
             slider = itemView.findViewById(R.id.controlSlider);
         }

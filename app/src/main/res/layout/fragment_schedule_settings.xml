@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--
+    TODO
+     This should include:
+     - The time, which opens a time picker (https://material.io/components/time-pickers)
+     when clicked on which displays the target level of the motor
+     - The days of the week, as 7 circles containing the letters MTWTFSS which when pressed become
+     highlighted to control the days that it gets activated
+     - A text field (https://material.io/components/text-fields) to set the name
+     - A slider like the ones in control_list_item to set the target level
+     - Some sort of way to select which blinds this schedule applies to, such as using a drop down
+     menu and checkboxes (https://material.io/components/checkboxes)
+    -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

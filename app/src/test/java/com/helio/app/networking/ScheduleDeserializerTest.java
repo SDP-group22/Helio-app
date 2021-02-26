@@ -22,7 +22,7 @@ class ScheduleDeserializerTest {
             "        999\n" +
             "      ],\n" +
             "      \"name\": \"newName\",\n" +
-            "      \"target-level\": 0,\n" +
+            "      \"target_level\": 1,\n" +
             "      \"time\": \"a\"\n" +
             "    }";
     public static final String SCHEDULE_TWO_DAYS = "{\n" +
@@ -37,7 +37,7 @@ class ScheduleDeserializerTest {
             "        999\n" +
             "      ],\n" +
             "      \"name\": \"newName\",\n" +
-            "      \"target-level\": 0,\n" +
+            "      \"target_level\": 1,\n" +
             "      \"time\": \"a\"\n" +
             "    }";
     private static Gson gson;
@@ -56,6 +56,7 @@ class ScheduleDeserializerTest {
         Schedule schedule = gson.fromJson(SCHEDULE_ONE_DAY, Schedule.class);
         assertEquals(1, schedule.getDays().size());
         assertEquals(Day.SATURDAY, schedule.getDays().get(0));
+        assertEquals(1, schedule.getTargetLevel());
     }
 
     @Test

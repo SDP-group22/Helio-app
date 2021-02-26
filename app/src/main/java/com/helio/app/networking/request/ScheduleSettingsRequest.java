@@ -11,7 +11,7 @@ public class ScheduleSettingsRequest {
     private final String name;
     private final boolean active;
     private final List<String> days;
-    @SerializedName("target-level")
+    @SerializedName("target_level")
     private final int targetLevel;
     private final int gradient;
     @SerializedName("motor_ids")

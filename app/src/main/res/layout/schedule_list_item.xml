@@ -9,9 +9,10 @@
     app:cardElevation="5dp">
 
     <!--
-    TODO
-     put some sort of visual indicator on the right of this card which
-     displays the target level of the motor
+    TODO Please also include:
+     - Some sort of visual indicator which displays the target level of the motor
+     - A switch (https://material.io/components/switches) which controls whether this schedule is
+     on or off
     -->
 
     <RelativeLayout

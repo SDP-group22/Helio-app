@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editHour"
+        android:ems="10"
+        android:hint="Hour"
+        android:inputType="text"
+        />
 
-</LinearLayout>
+    <EditText
+        android:id="@+id/editMinute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editHour"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="0dp"
+        android:ems="10"
+        android:hint="Minute"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/btnSetTimer"
+        android:text="Set Time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="230dp"
+        />
+
+    <Button
+        android:id="@+id/btnSetAlarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Alarm"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="180dp"
+        />
+    
+
+
+
+</RelativeLayout>

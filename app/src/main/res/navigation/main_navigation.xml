@@ -40,7 +40,7 @@
         android:id="@+id/scheduleFragment"
         android:name="com.helio.app.ui.schedule.SchedulesFragment"
         android:label="Schedules"
-        tools:layout="@layout/fragment_schedule">
+        tools:layout="@layout/fragment_schedule_settings">
         <action
             android:id="@+id/action_scheduleFragment_to_scheduleSettingsFragment"
             app:destination="@id/scheduleSettingsFragment" />
@@ -50,7 +50,7 @@
         android:id="@+id/scheduleSettingsFragment"
         android:name="com.helio.app.ui.schedule.ScheduleSettingsFragment"
         android:label="@string/title_edit_schedule"
-        tools:layout="@layout/fragment_schedule_settings">
+        tools:layout="@layout/schedule_list_item">
 
         <argument
             android:name="currentScheduleId"

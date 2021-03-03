@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
-import com.helio.app.ui.blinds.BlindsRecViewAdapter;
 
 import java.util.ArrayList;
 
@@ -21,7 +20,7 @@ public class SchedulesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+        View view = inflater.inflate(R.layout.fragment_schedule_settings, container, false);
 
         UserDataViewModel model = new ViewModelProvider(this).get(UserDataViewModel.class);
         SchedulesRecViewAdapter adapter = new SchedulesRecViewAdapter(getContext());

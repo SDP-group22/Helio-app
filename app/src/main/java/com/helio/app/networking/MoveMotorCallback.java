@@ -9,12 +9,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MoveMotorCallback implements Callback<Motor> {
+    private final Motor motor;
+
+    public MoveMotorCallback(Motor motor) {
+        this.motor = motor;
+    }
 
     @Override
     public void onResponse(@NotNull Call<Motor> call, Response<Motor> response) {
-        Motor motor = response.body();
-        if (motor != null) {
-            System.out.println(call + " succeeded: " + motor);
+        if (response.body() != null) {
+            System.out.println(call + " succeeded: " + response);
+            motor.setLevel(response.body().getLevel());
         } else {
             System.out.println("Communication error");
         }

@@ -51,7 +51,7 @@ public class ScheduleSettingsFragment extends Fragment {
                         public void onClick(View v) {
                             // Initialize time picker dialog
                             TimePickerDialog timePickerDialog = new TimePickerDialog(
-                                    ScheduleSettingsFragment.this,
+                                    getContext(),
                                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                                     new TimePickerDialog.OnTimeSetListener() {
                                 @Override

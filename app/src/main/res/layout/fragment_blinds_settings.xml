@@ -14,7 +14,7 @@
 
     <!-- add blinds button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_button"
+        android:id="@+id/add_blinds_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:maxImageSize="40dp"

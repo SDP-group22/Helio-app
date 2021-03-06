@@ -17,7 +17,7 @@ public class UserDataViewModel extends ViewModel {
     private int currentMotorId = -1;
 
     public LiveData<Map<Integer, Motor>> fetchMotors() {
-        if(motors == null) {
+        if (motors == null) {
             motors = new MutableLiveData<>();
             client.getAllMotors(motors);
         }
@@ -37,11 +37,18 @@ public class UserDataViewModel extends ViewModel {
     }
 
     public void pushCurrentMotorState(Motor m) {
-        motors.getValue().put(currentMotorId, m);
+        Objects.requireNonNull(motors.getValue()).put(currentMotorId, m);
         MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
                 m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
                 m.getLevel(), m.getStyle()
         );
-        client.updateMotor(motors.getValue(), currentMotorId, motorSettingsRequest);
+        client.updateMotor(motors, currentMotorId, motorSettingsRequest);
+    }
+
+    public LiveData<Map<Integer, Motor>> addMotor() {
+        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
+                "New Blind", "0.0.0.0", true, 0, 0, 0, "");
+        client.addMotor(motors, motorSettingsRequest);
+        return motors;
     }
 }

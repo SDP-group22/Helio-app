@@ -1,4 +1,4 @@
-package com.helio.app.ui.schedule;
+package com.helio.app.ui.schedules;
 
 import android.app.TimePickerDialog;
 import android.graphics.Color;
@@ -14,18 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.helio.app.MainActivity;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Schedule;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
-public class ScheduleSettingsFragment extends Fragment {
+public class SchedulesSettingsFragment extends Fragment {
     private UserDataViewModel model;
     private Schedule schedule;
     private TextView timer1;
@@ -45,7 +42,7 @@ public class ScheduleSettingsFragment extends Fragment {
                     // Set values of the settings UI with view.findViewById() and the values of schedule
 
                     // set the timer1 by time clicker
-                    timer1 = view.findViewById(R.id.timer1);
+                    timer1 = view.findViewById(R.id.schedule_timeSelect);
                     timer1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

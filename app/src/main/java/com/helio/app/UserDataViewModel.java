@@ -8,6 +8,7 @@ import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.request.MotorSettingsRequest;
+import com.helio.app.networking.request.ScheduleSettingsRequest;
 
 import java.util.Map;
 import java.util.Objects;
@@ -46,6 +47,14 @@ public class UserDataViewModel extends ViewModel {
         );
         client.updateMotor(motors.getValue(), currentMotorId, motorSettingsRequest);
     }
+    public void pushCurrentScheduleState(Schedule s){
+        schedules.getValue().put(currentMotorId,s);
+        ScheduleSettingsRequest scheduleSettingsRequest = new ScheduleSettingsRequest(
+                s.getScheduleEventName(),s.getScheduleMotorName(),s.isActive(),s.getDays(),s.getTargetLevel(),s.getGradient(),s.getMotorIds(),s.getTime()
+        );
+        client.updateSchedule(schedules.getValue(),currentMotorId,scheduleSettingsRequest);
+    }
+
 
     public LiveData<Map<Integer, Schedule>> fetchSchedules() {
         if(schedules == null) {

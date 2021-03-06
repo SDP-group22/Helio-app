@@ -8,7 +8,8 @@ import java.util.List;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused", "RedundantSuppression", "MismatchedQueryAndUpdateOfCollection"})
 public class ScheduleSettingsRequest {
-    private final String name;
+    private String ScheduleEventName;
+    private String ScheduleMotorName;
     private final boolean active;
     private final List<String> days;
     @SerializedName("target_level")
@@ -18,9 +19,10 @@ public class ScheduleSettingsRequest {
     private final List<Integer> motorIds;
     private final String time;
 
-    public ScheduleSettingsRequest(String name, boolean active, List<Day> days, int targetLevel,
+    public ScheduleSettingsRequest(String ScheduleEventName, String ScheduleMotorName, boolean active, List<Day> days, int targetLevel,
                                    int gradient, List<Integer> motorIds, String time) {
-        this.name = name;
+        this.ScheduleEventName = ScheduleEventName;
+        this.ScheduleMotorName = ScheduleMotorName;
         this.active = active;
         this.days = new ArrayList<>();
         for (Day d : days) {

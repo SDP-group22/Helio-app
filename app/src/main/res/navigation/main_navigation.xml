@@ -38,7 +38,7 @@
         tools:layout="@layout/fragment_control" />
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="com.helio.app.ui.schedule.SchedulesFragment"
+        android:name="com.helio.app.ui.schedules.SchedulesSettingsFragment"
         android:label="@string/title_schedule_setting"
         tools:layout="@layout/fragment_schedule_settings">
         <action
@@ -48,7 +48,7 @@
 
     <fragment
         android:id="@+id/scheduleSettingsFragment"
-        android:name="com.helio.app.ui.schedule.ScheduleSettingsFragment"
+        android:name="com.helio.app.ui.schedule.SingleScheduleSettingsFragment"
         android:label="@string/title_edit_schedule"
         tools:layout="@layout/schedule_list_item">
 

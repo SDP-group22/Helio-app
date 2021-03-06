@@ -8,12 +8,25 @@
     android:layout_marginVertical="5dp"
     app:cardElevation="5dp">
 
-    <!--
-    TODO Please also include:
-     - Some sort of visual indicator which displays the target level of the motor
-     - A switch (https://material.io/components/switches) which controls whether this schedule is
-     on or off
-    -->
+<!--    &lt;!&ndash;-->
+<!--     Please also include:-->
+<!--     - Some sort of visual indicator which displays the target level of the motor-->
+<!--     - A switch (https://material.io/components/switches) which controls whether this schedule is-->
+<!--     on or off-->
+<!--    &ndash;&gt;-->
+<!--    &lt;!&ndash;-->
+<!--    -->
+<!--     This should include:-->
+<!--     - The time, which opens a time picker (https://material.io/components/time-pickers)-->
+<!--     when clicked on which displays the target level of the motor-->
+<!--     - The days of the week, as 7 circles containing the letters MTWTFSS which when pressed become-->
+<!--     highlighted to control the days that it gets activated-->
+<!--     - A text field (https://material.io/components/text-fields) to set the name-->
+<!--     - A slider like the ones in control_list_item to set the target level-->
+<!--     - Some sort of way to select which blinds this schedule applies to, such as using a drop down-->
+<!--     menu and checkboxes (https://material.io/components/checkboxes)-->
+<!--    &ndash;&gt;-->
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,41 +35,115 @@
         android:paddingVertical="5dp">
 
         <TextView
+            android:id="@+id/timer1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="44dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center"
+            android:hint="Select Time"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editText"
+            app:drawableTopCompat="@drawable/timer"
+            tools:ignore="MissingConstraints"
+             />
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:hint="Select Event"
+            android:drawableLeft="@drawable/ic_event"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="56dp"
+            tools:ignore="MissingConstraints"
+            android:autofillHints="Event" />
+
+
+        <ImageView
             android:id="@+id/blindIcon"
             android:layout_width="45sp"
             android:layout_height="45sp"
             android:layout_alignTop="@+id/scheduleName"
             android:layout_alignBottom="@+id/controlSlider"
             android:layout_marginStart="5dp"
-            android:text="[Time]"
-            android:textSize="16sp"
+
             app:srcCompat="@drawable/ic_fridge"
-            tools:ignore="ContentDescription,HardcodedText" />
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/scheduleName"
+            android:layout_below="@+id/timer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_toEndOf="@+id/blindIcon"
-            android:text="Name of schedule"
-            android:textSize="12sp"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:text="Name of motor"
             android:textStyle="bold"
             tools:ignore="HardcodedText" />
 
-        <TextView
+        <com.google.android.material.slider.Slider
             android:id="@+id/controlSlider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/scheduleName"
-            android:layout_toEndOf="@+id/blindIcon"
-            android:stepSize="1"
-            android:text="[Days of week]"
             android:valueFrom="0"
             android:valueTo="100"
-            app:thumbColor="?colorSecondary"
+            android:stepSize="1"
             app:tickVisible="false"
-            tools:ignore="HardcodedText" />
+            app:thumbColor="?colorSecondary"
+            android:layout_below="@+id/scheduleName"
+            android:layout_toEndOf="@+id/blindIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="28dp"
+            android:checked="true"
+            android:text="Open" />
+
+        <!--        <TextView-->
+<!--            android:id="@+id/blindIcon"-->
+<!--            android:layout_width="45sp"-->
+<!--            android:layout_height="45sp"-->
+<!--            android:layout_alignTop="@+id/scheduleName"-->
+<!--            android:layout_alignBottom="@+id/controlSlider"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:text="[Time]"-->
+<!--            android:textSize="16sp"-->
+<!--            app:srcCompat="@drawable/ic_fridge"-->
+<!--            tools:ignore="ContentDescription,HardcodedText" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/scheduleName"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_toEndOf="@+id/blindIcon"-->
+<!--            android:text="Name of schedule"-->
+<!--            android:textSize="12sp"-->
+<!--            android:textStyle="bold"-->
+<!--            tools:ignore="HardcodedText" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/controlSlider"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/scheduleName"-->
+<!--            android:layout_toEndOf="@+id/blindIcon"-->
+<!--            android:stepSize="1"-->
+<!--            android:text="[Days of week]"-->
+<!--            android:valueFrom="0"-->
+<!--            android:valueTo="100"-->
+<!--            app:thumbColor="?colorSecondary"-->
+<!--            app:tickVisible="false"-->
+<!--            tools:ignore="HardcodedText" />-->
 
     </RelativeLayout>
 

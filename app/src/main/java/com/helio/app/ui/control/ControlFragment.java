@@ -18,15 +18,12 @@ import java.util.ArrayList;
 
 public class ControlFragment extends Fragment {
 
-    private ControlViewModel controlViewModel;
     private UserDataViewModel model;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        controlViewModel =
-                new ViewModelProvider(this).get(ControlViewModel.class);
         View view = inflater.inflate(R.layout.fragment_control, container, false);
-        model = new ViewModelProvider(this).get(UserDataViewModel.class);
+        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         ControlRecViewAdapter adapter = new ControlRecViewAdapter(getContext(), model);
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),

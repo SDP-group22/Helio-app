@@ -23,7 +23,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="@string/add_blinds_button"
+        android:contentDescription="@string/new_blinds"
         app:srcCompat="@drawable/add" />
 
 </RelativeLayout>

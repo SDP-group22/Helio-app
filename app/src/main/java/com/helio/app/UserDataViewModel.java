@@ -1,5 +1,9 @@
 package com.helio.app;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,10 +15,14 @@ import com.helio.app.networking.request.MotorSettingsRequest;
 import java.util.Map;
 import java.util.Objects;
 
-public class UserDataViewModel extends ViewModel {
+public class UserDataViewModel extends AndroidViewModel {
     private final HubClient client = new HubClient("http://10.0.2.2:4310/");
     private MutableLiveData<Map<Integer, Motor>> motors;
     private int currentMotorId = -1;
+
+    public UserDataViewModel(@NonNull Application application) {
+        super(application);
+    }
 
     public LiveData<Map<Integer, Motor>> fetchMotors() {
         if (motors == null) {
@@ -47,7 +55,7 @@ public class UserDataViewModel extends ViewModel {
 
     public LiveData<Map<Integer, Motor>> addMotor() {
         MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
-                "New Blind", "0.0.0.0", true, 0, 0, 0, "");
+                getApplication().getString(R.string.new_blinds), "0.0.0.0", true, 0, 0, 0, "");
         client.addMotor(motors, motorSettingsRequest);
         return motors;
     }

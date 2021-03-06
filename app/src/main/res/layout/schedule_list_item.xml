@@ -67,7 +67,7 @@
             tools:ignore="HardcodedText"
             />
         <com.google.android.material.slider.Slider
-            android:id="@+id/controlSlider"
+            android:id="@+id/schedule_controlSlider"
             android:valueFrom="0"
             android:valueTo="100"
             android:stepSize="1"
@@ -86,6 +86,8 @@
             android:layout_below="@+id/schedule_eventName"
             android:layout_alignEnd="@+id/schedule_timeSelect"
             android:layout_alignParentEnd="true"
+            android:textOff="OFF"
+            android:textOn="ON"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="0dp"
             tools:ignore="HardcodedText" />

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_single_eventName"
+        android:hint="@string/enter_event_name"
+        android:inputType="text"
+        android:textStyle="bold"
+        android:importantForAutofill="no"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_single_motorName"
+        android:hint="@string/enter_motor_name"
+        android:inputType="text"
+        android:textStyle="bold"
+        android:layout_below="@+id/schedule_single_eventName"
+        android:importantForAutofill="no"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_single_timer"
+        android:layout_below="@+id/schedule_single_motorName"
+        android:text="@string/select_time"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center"
+        app:drawableTopCompat="@drawable/timer" />
+</RelativeLayout>

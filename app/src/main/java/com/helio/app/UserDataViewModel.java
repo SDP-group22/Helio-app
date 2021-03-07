@@ -18,6 +18,7 @@ public class UserDataViewModel extends ViewModel {
     private MutableLiveData<Map<Integer, Motor>> motors;
     private MutableLiveData<Map<Integer, Schedule>> schedules;
     private int currentMotorId = -1;
+    private int currentScheduleID = -1;
 
     public LiveData<Map<Integer, Motor>> fetchMotors() {
         if(motors == null) {
@@ -26,9 +27,20 @@ public class UserDataViewModel extends ViewModel {
         }
         return motors;
     }
+    public LiveData<Map<Integer, Schedule>> fetchSchedules() {
+        if(schedules == null) {
+            schedules = new MutableLiveData<>();
+            client.getAllSchedules(schedules);
+        }
+        return schedules;
+    }
+
 
     public void setCurrentMotor(int id) {
         currentMotorId = id;
+    }
+    public void setCurrentSchedule(int id){
+        currentScheduleID = id;
     }
 
     public void moveCurrentMotor(int level) {
@@ -37,6 +49,9 @@ public class UserDataViewModel extends ViewModel {
 
     public Motor getCurrentMotor() {
         return Objects.requireNonNull(motors.getValue()).get(currentMotorId);
+    }
+    public Schedule getCurrentSchedule(){
+        return Objects.requireNonNull(schedules.getValue()).get(currentScheduleID);
     }
 
     public void pushCurrentMotorState(Motor m) {
@@ -56,11 +71,4 @@ public class UserDataViewModel extends ViewModel {
     }
 
 
-    public LiveData<Map<Integer, Schedule>> fetchSchedules() {
-        if(schedules == null) {
-            schedules = new MutableLiveData<>();
-            client.getAllSchedules(schedules);
-        }
-        return schedules;
-    }
 }

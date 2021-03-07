@@ -10,9 +10,8 @@
     <string name="settingsIcon">Icon</string>
     <string name="settingsName">Name</string>
     <string name="settingsIP">IP address</string>
-    <string name="title_connect_hub">Connect to Hub</string>
+    <string name="title_settings">Settings</string>
     <string name="title_edit_blind">Edit Blind</string>
-    <string name="title_main_preferences">Settings</string>
     <string name="light_sensor">Light Sensor</string>
     <string name="motion_sensor">Motion Sensor</string>
     <string name="open_state">Open</string>

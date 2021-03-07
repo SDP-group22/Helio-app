@@ -42,7 +42,7 @@ public class HubClient {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY); // Logging level
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);
+//        httpClient.addInterceptor(logging);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseAddress)
@@ -62,32 +62,32 @@ public class HubClient {
         return GsonConverterFactory.create(gson);
     }
 
-    public void addMotor(Map<Integer, Motor> motors, MotorSettingsRequest motorSettingsRequest) {
+    public void addMotor(MutableLiveData<Map<Integer, Motor>> motors, MotorSettingsRequest motorSettingsRequest) {
         Call<Motor> call = service.addMotor(motorSettingsRequest);
         call.enqueue(new IdComponentCallback<>(motors));
     }
 
-    public void activateMotor(Map<Integer, Motor> motors, int motorId) {
+    public void activateMotor(MutableLiveData<Map<Integer, Motor>> motors, int motorId) {
         Call<Motor> call = service.activateMotor(motorId);
         call.enqueue(new IdComponentCallback<>(motors));
     }
 
-    public void deactivateMotor(Map<Integer, Motor> motors, int motorId) {
+    public void deactivateMotor(MutableLiveData<Map<Integer, Motor>> motors, int motorId) {
         Call<Motor> call = service.deactivateMotor(motorId);
         call.enqueue(new IdComponentCallback<>(motors));
     }
 
-    public void updateMotor(Map<Integer, Motor> motors, int id, MotorSettingsRequest motorSettingsRequest) {
+    public void updateMotor(MutableLiveData<Map<Integer, Motor>> motors, int id, MotorSettingsRequest motorSettingsRequest) {
         Call<Motor> call = service.updateMotor(id, motorSettingsRequest);
         call.enqueue(new IdComponentCallback<>(motors));
     }
 
-    public void renameMotor(Map<Integer, Motor> motors, int id, String name) {
+    public void renameMotor(MutableLiveData<Map<Integer, Motor>> motors, int id, String name) {
         Call<Motor> call = service.renameMotor(id, name);
         call.enqueue(new IdComponentCallback<>(motors));
     }
 
-    public void getMotor(Map<Integer, Motor> motors, int motorId) {
+    public void getMotor(MutableLiveData<Map<Integer, Motor>> motors, int motorId) {
         Call<Motor> call = service.getMotor(motorId);
         call.enqueue(new IdComponentCallback<>(motors));
     }
@@ -97,17 +97,17 @@ public class HubClient {
         call.enqueue(new MoveMotorCallback(motor));
     }
 
-    public void startMotorCalibration(Map<Integer, Motor> motors, int motorId) {
+    public void startMotorCalibration(MutableLiveData<Map<Integer, Motor>> motors, int motorId) {
         Call<Motor> call = service.startMotorCalibration(motorId);
         call.enqueue(new IdComponentCallback<>(motors));
     }
 
-    public void stopMotorCalibration(Map<Integer, Motor> motors, int motorId) {
+    public void stopMotorCalibration(MutableLiveData<Map<Integer, Motor>> motors, int motorId) {
         Call<Motor> call = service.stopMotorCalibration(motorId);
         call.enqueue(new IdComponentCallback<>(motors));
     }
 
-    public void deleteMotor(Map<Integer, Motor> motors, int motorId) {
+    public void deleteMotor(MutableLiveData<Map<Integer, Motor>> motors, int motorId) {
         Call<ResponseBody> call = service.deleteMotor(motorId);
         call.enqueue(new DeletionCallback<>(motors, motorId));
     }
@@ -122,47 +122,47 @@ public class HubClient {
         call.enqueue(new GetAllCallback<>(schedules));
     }
 
-    public void addSchedule(Map<Integer, Schedule> schedules, ScheduleSettingsRequest scheduleSettingsRequest) {
+    public void addSchedule(MutableLiveData<Map<Integer, Schedule>> schedules, ScheduleSettingsRequest scheduleSettingsRequest) {
         Call<Schedule> call = service.addSchedule(scheduleSettingsRequest);
         call.enqueue(new IdComponentCallback<>(schedules));
     }
 
-    public void deleteSchedule(Map<Integer, Schedule> schedules, int id) {
+    public void deleteSchedule(MutableLiveData<Map<Integer, Schedule>> schedules, int id) {
         Call<ResponseBody> call = service.deleteSchedule(id);
         call.enqueue(new DeletionCallback<>(schedules, id));
     }
 
-    public void updateSchedule(Map<Integer, Schedule> schedules, int id, ScheduleSettingsRequest scheduleSettingsRequest) {
+    public void updateSchedule(MutableLiveData<Map<Integer, Schedule>> schedules, int id, ScheduleSettingsRequest scheduleSettingsRequest) {
         Call<Schedule> call = service.updateSchedule(id, scheduleSettingsRequest);
         call.enqueue(new IdComponentCallback<>(schedules));
     }
 
-    public void changeDaysSchedule(Map<Integer, Schedule> schedules, int id, List<Day> days) {
+    public void changeDaysSchedule(MutableLiveData<Map<Integer, Schedule>> schedules, int id, List<Day> days) {
         Call<Schedule> call = service.changeDaysSchedule(id, days);
         call.enqueue(new IdComponentCallback<>(schedules));
     }
 
-    public void changeTimeSchedule(Map<Integer, Schedule> schedules, int id, String time) {
+    public void changeTimeSchedule(MutableLiveData<Map<Integer, Schedule>> schedules, int id, String time) {
         Call<Schedule> call = service.changeTimeSchedule(id, time);
         call.enqueue(new IdComponentCallback<>(schedules));
     }
 
-    public void changeGradientSchedule(Map<Integer, Schedule> schedules, int id, int gradient) {
+    public void changeGradientSchedule(MutableLiveData<Map<Integer, Schedule>> schedules, int id, int gradient) {
         Call<Schedule> call = service.changeGradientSchedule(id, gradient);
         call.enqueue(new IdComponentCallback<>(schedules));
     }
 
-    public void renameSchedule(Map<Integer, Schedule> schedules, int id, String name) {
+    public void renameSchedule(MutableLiveData<Map<Integer, Schedule>> schedules, int id, String name) {
         Call<Schedule> call = service.renameSchedule(id, name);
         call.enqueue(new IdComponentCallback<>(schedules));
     }
 
-    public void activateSchedule(Map<Integer, Schedule> schedules, int id) {
+    public void activateSchedule(MutableLiveData<Map<Integer, Schedule>> schedules, int id) {
         Call<Schedule> call = service.activateSchedule(id);
         call.enqueue(new IdComponentCallback<>(schedules));
     }
 
-    public void deactivateSchedule(Map<Integer, Schedule> schedules, int id) {
+    public void deactivateSchedule(MutableLiveData<Map<Integer, Schedule>> schedules, int id) {
         Call<Schedule> call = service.deactivateSchedule(id);
         call.enqueue(new IdComponentCallback<>(schedules));
     }
@@ -172,17 +172,17 @@ public class HubClient {
         call.enqueue(new GetAllCallback<>(sensors));
     }
 
-    public void addLightSensor(Map<Integer, LightSensor> sensors, LightSensorSettingsRequest lightSensorSettingsRequest) {
+    public void addLightSensor(MutableLiveData<Map<Integer, LightSensor>> sensors, LightSensorSettingsRequest lightSensorSettingsRequest) {
         Call<LightSensor> call = service.addLightSensor(lightSensorSettingsRequest);
         call.enqueue(new IdComponentCallback<>(sensors));
     }
 
-    public void deleteLightSensor(Map<Integer, LightSensor> sensors, int id) {
+    public void deleteLightSensor(MutableLiveData<Map<Integer, LightSensor>> sensors, int id) {
         Call<ResponseBody> call = service.deleteLightSensor(id);
         call.enqueue(new DeletionCallback<>(sensors, id));
     }
 
-    public void updateLightSensor(Map<Integer, LightSensor> sensors, int id, LightSensorSettingsRequest lightSensorSettingsRequest) {
+    public void updateLightSensor(MutableLiveData<Map<Integer, LightSensor>> sensors, int id, LightSensorSettingsRequest lightSensorSettingsRequest) {
         Call<LightSensor> call = service.updateLightSensor(id, lightSensorSettingsRequest);
         call.enqueue(new IdComponentCallback<>(sensors));
     }
@@ -192,17 +192,17 @@ public class HubClient {
         call.enqueue(new GetAllCallback<>(sensors));
     }
 
-    public void addMotionSensor(Map<Integer, MotionSensor> sensors, MotionSensorSettingsRequest motionSensorSettingsRequest) {
+    public void addMotionSensor(MutableLiveData<Map<Integer, MotionSensor>> sensors, MotionSensorSettingsRequest motionSensorSettingsRequest) {
         Call<MotionSensor> call = service.addMotionSensor(motionSensorSettingsRequest);
         call.enqueue(new IdComponentCallback<>(sensors));
     }
 
-    public void deleteMotionSensor(Map<Integer, MotionSensor> sensors, int id) {
+    public void deleteMotionSensor(MutableLiveData<Map<Integer, MotionSensor>> sensors, int id) {
         Call<ResponseBody> call = service.deleteMotionSensor(id);
         call.enqueue(new DeletionCallback<>(sensors, id));
     }
 
-    public void updateMotionSensor(Map<Integer, MotionSensor> sensors, int id, MotionSensorSettingsRequest motionSensorSettingsRequest) {
+    public void updateMotionSensor(MutableLiveData<Map<Integer, MotionSensor>> sensors, int id, MotionSensorSettingsRequest motionSensorSettingsRequest) {
         Call<MotionSensor> call = service.updateMotionSensor(id, motionSensorSettingsRequest);
         call.enqueue(new IdComponentCallback<>(sensors));
     }

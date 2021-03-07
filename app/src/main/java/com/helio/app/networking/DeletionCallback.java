@@ -1,5 +1,7 @@
 package com.helio.app.networking;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.helio.app.model.IdComponent;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,11 +21,11 @@ import retrofit2.Response;
  * @see HubClient
  */
 class DeletionCallback<T extends IdComponent> implements Callback<ResponseBody> {
-    private final Map<Integer, T> map;
+    private final MutableLiveData<Map<Integer, T>> liveData;
     private final int id;
 
-    DeletionCallback(Map<Integer, T> map, int id) {
-        this.map = map;
+    DeletionCallback(MutableLiveData<Map<Integer, T>> liveData, int id) {
+        this.liveData = liveData;
         this.id = id;
     }
 
@@ -32,8 +34,11 @@ class DeletionCallback<T extends IdComponent> implements Callback<ResponseBody> 
             @NotNull Call<ResponseBody> call,
             @NotNull Response<ResponseBody> response
     ) {
+        System.out.println(id + " is being removed from local state");
+        Map<Integer, T> map = liveData.getValue();
+        assert map != null;
         map.remove(id);
-        System.out.println(id + " was removed from local state");
+        liveData.setValue(map);
     }
 
     @Override

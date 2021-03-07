@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 
@@ -32,6 +33,15 @@ public class BlindsSettingsFragment extends Fragment {
         RecyclerView recView = view.findViewById(R.id.blindsRCView);
         recView.setAdapter(adapter);
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        FloatingActionButton addButton = view.findViewById(R.id.add_blinds_button);
+        addButton.setOnClickListener(
+                v -> model.addMotor().observe(
+                        getViewLifecycleOwner(),
+                        motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+                )
+        );
+
         return view;
     }
 }

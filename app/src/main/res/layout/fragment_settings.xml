@@ -8,39 +8,26 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/titleView"
+        android:id="@+id/hub_title_view"
         android:layout_centerHorizontal="true"
-        android:gravity="start|center_vertical"
-        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginTop="75dp"
-        android:textSize="22sp"
+        android:layout_above="@id/connectionForm"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:text="@string/connect_to_your_helio_hub_device"
         app:drawableRightCompat="@drawable/hub"
         android:drawablePadding="5dp"
         />
 
-    <TextView
-        android:id="@+id/explanation"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/titleView"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="50dp"
-        android:textSize="16sp"
-        android:text="@string/enter_your_hub_s_ip_address_to_get_started"
-        />
-
     <LinearLayout
         android:id="@+id/connectionForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/explanation"
+        android:layout_above="@id/connection_status_title_view"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        >
+        android:orientation="horizontal">
 
         <!--    One EditText element for each 8bit number in IPv4 address    -->
         <EditText
@@ -109,10 +96,12 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/connection_status_title_view"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_marginBottom="15dp"
+        android:layout_marginTop="30dp"
         android:layout_above="@id/connectionStatus"
         android:textSize="22sp"
         android:textStyle="bold"

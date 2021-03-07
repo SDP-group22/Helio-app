@@ -80,7 +80,7 @@
             />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/schedule_swtich"
+            android:id="@+id/schedule_switch"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_below="@+id/schedule_eventName"
@@ -94,18 +94,124 @@
 
 
 <!--        The schedule of days of week didn't finish yet.-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/schedule_calendar_DaysOfWeek"-->
+<!--            android:layout_below="@id/schedule_switch"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:text="Days of Week"-->
+<!--            tools:ignore="HardcodedText"-->
+<!--            />-->
+<!--        <Button-->
+<!--            android:id="@+id/schedule_daysOfweek_Monday"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_below="@+id/schedule_switch"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginTop="0dp"-->
+<!--            android:layout_marginEnd="170dp"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:text="M"-->
+<!--            android:textColor="@color/black" />-->
+
+
+<!--        Sorry everyone, I did lots of search about how to achieve the idea: daysOfWeek. But I didn't find out any useful information about how to achieve this. -->
+<!--        I got stuck on this. I have no idea about this right now. And currently I just use the textView as the most similiar one. And I also try about the button, but the Button can't show the style like the "M" inside the button.-->
+<!--        So I quit the option about button. But I guess maybe butto will be possible solution for this? I don't know how to achieve this. If anyone could help me, I am really appreciate this and thanks you very much. -->
+<!--        Thanks for replying and helping.-->
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_calendar_DaysOfWeek"
-            android:layout_below="@id/schedule_swtich"
+            android:layout_width="20dp"
+            android:layout_height="28dp"
+            android:id="@+id/schedule_DaysOfWeek_Monday"
+            android:text="M"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/schedule_switch"
             android:layout_alignParentEnd="true"
-            android:text="Days of Week"
-            tools:ignore="HardcodedText"
+            android:layout_marginEnd="220dp"
             />
 
+        <TextView
+            android:id="@+id/schedule_DaysOfWeek_Tuesday"
+            android:layout_width="20dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/schedule_switch"
+            android:layout_alignEnd="@+id/schedule_DaysOfWeek_Monday"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="195dp"
+            android:text="T"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/schedule_DaysOfWeek_Wednesday"
+            android:layout_width="20dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/schedule_switch"
+            android:layout_alignEnd="@+id/schedule_DaysOfWeek_Tuesday"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="170dp"
+            android:text="W"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/schedule_switch"
+            android:layout_alignEnd="@+id/schedule_DaysOfWeek_Wednesday"
+            android:id="@+id/schedule_DaysOfWeek_Thursday"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="145dp"
+            android:text="T"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/schedule_switch"
+            android:layout_alignEnd="@+id/schedule_DaysOfWeek_Thursday"
+            android:id="@+id/schedule_DaysOfWeek_Friday"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="120dp"
+            android:text="F"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/schedule_switch"
+            android:layout_alignEnd="@+id/schedule_DaysOfWeek_Friday"
+            android:id="@+id/schedule_DaysOfWeek_Saturday"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="95dp"
+            android:text="S"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/schedule_switch"
+            android:layout_alignEnd="@+id/schedule_DaysOfWeek_Saturday"
+            android:id="@+id/schedule_DaysOfWeek_Sunday"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="70dp"
+            android:text="S"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
 
-<!--I don't know who write this, please remind me what is purpose for this? -from Jeremy -->
+        <!--I don't know who write this, please remind me what is purpose for this? -from Jeremy -->
 
         <!--        <TextView-->
 <!--            android:id="@+id/blindIcon"-->

@@ -1,27 +1,20 @@
 package com.helio.app.ui.schedules;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.slider.Slider;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
-import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
-import com.helio.app.ui.schedule.SchedulesFragmentDirections;
-
-import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -43,7 +36,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.schedule_list_item,
                 parent, false);
         // click the switch button, the schedule turn off.
-        switch_button = view.findViewById(R.id.schedule_swtich);
+        switch_button = view.findViewById(R.id.schedule_switch);
         switch_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +113,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         private final TextView scheduleMotorName;
         private final Slider scheduleSlider;
         private final SwitchMaterial scheduleSwtich;
-        private final TextView schedule_DaysOfWeek;
+        //private final TextView schedule_DaysOfWeek;
         private final CardView parent;
 
         public ViewHolder(@NonNull View itemView) {
@@ -129,8 +122,8 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
             scheduleTime = itemView.findViewById(R.id.schedule_timeSelect);
             scheduleMotorName = itemView.findViewById(R.id.schedule_motorName);
             scheduleSlider = itemView.findViewById(R.id.schedule_controlSlider);
-            scheduleSwtich = itemView.findViewById(R.id.schedule_swtich);
-            schedule_DaysOfWeek = itemView.findViewById(R.id.schedule_calendar_DaysOfWeek);
+            scheduleSwtich = itemView.findViewById(R.id.schedule_switch);
+            //schedule_DaysOfWeek = itemView.findViewById(R.id.schedule_calendar_DaysOfWeek);
             parent = itemView.findViewById(R.id.parent);
         }
     }

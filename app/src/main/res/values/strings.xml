@@ -12,9 +12,12 @@
     <string name="settingsIP">IP address</string>
     <string name="title_connect_hub">Connect to Hub</string>
     <string name="title_edit_blind">Edit Blind</string>
+    <string name="title_main_preferences">Settings</string>
     <string name="light_sensor">Light Sensor</string>
     <string name="motion_sensor">Motion Sensor</string>
     <string name="open_state">Open</string>
     <string name="closed_state">Closed</string>
     <string name="add_blinds_button">Add blinds</string>
+    <string name="title_theme_selection">App Theme</string>
+    <string name="summary_theme_selection">Select your favourite theme for the Helio App</string>
 </resources>

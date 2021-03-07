@@ -1,7 +1,10 @@
 package com.helio.app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,16 +17,27 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int[] THEMES = {
+            R.style.Theme_HelioApp,
+            R.style.Theme_HelioApp_Night,
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // set theme
+//        SharedPreferences settings = getSharedPreferences("settings", Context.MODE_PRIVATE);
+//        setTheme(THEMES[settings.getInt("theme", 0)]);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_control, R.id.navigation_blinds, R.id.navigation_hub)
-                .build();
+                R.id.navigation_control,
+                R.id.navigation_blinds,
+                R.id.navigation_hub
+        ).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         // This makes the bar at the top change when you use the navigation (changes the title text)

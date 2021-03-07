@@ -10,6 +10,17 @@
         <item>reply_all</item>
     </string-array>
 
+    <!--  Theme Preference  -->
+    <array name="theme_options">
+        <item>Default</item>
+        <item>Night</item>
+    </array>
+
+    <array name="theme_options_values">
+        <item>@style/Theme.HelioApp</item>
+        <item>@style/Theme.HelioApp.Night</item>
+    </array>
+
     <array name="icons">
         <item>Wash</item>
         <item>Window</item>

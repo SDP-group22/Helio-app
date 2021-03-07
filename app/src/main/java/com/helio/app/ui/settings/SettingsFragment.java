@@ -1,4 +1,4 @@
-package com.helio.app.ui.hub;
+package com.helio.app.ui.settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,14 +11,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.helio.app.R;
 
-public class HubFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
-    private HubViewModel hubViewModel;
+    private SettingsViewModel settingsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        hubViewModel =
-                new ViewModelProvider(this).get(HubViewModel.class);
-        return inflater.inflate(R.layout.fragment_hub, container, false);
+        settingsViewModel =
+                new ViewModelProvider(this).get(SettingsViewModel.class);
+        return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 }

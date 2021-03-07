@@ -17,7 +17,7 @@
         android:layout_marginTop="75dp"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:text="Connect to your Helio Hub device"
+        android:text="@string/connect_to_your_helio_hub_device"
         app:drawableRightCompat="@drawable/hub"
         android:drawablePadding="5dp"
         />
@@ -30,7 +30,7 @@
         android:layout_height="20dp"
         android:layout_marginTop="50dp"
         android:textSize="16sp"
-        android:text="Enter your Hub's IP address to get started:"
+        android:text="@string/enter_your_hub_s_ip_address_to_get_started"
         />
 
     <LinearLayout
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:hint="255"
+            android:hint="@string/_255"
             android:inputType="numberDecimal"
             android:importantForAutofill="no" />
         <TextView
@@ -56,14 +56,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="."
+            android:text="@string/_dot"
             />
         <EditText
             android:id="@+id/hubAddress2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:hint="255"
+            android:hint="@string/_255"
             android:inputType="numberDecimal"
             android:importantForAutofill="no" />
         <TextView
@@ -71,14 +71,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="."
+            android:text="@string/_dot"
             />
         <EditText
             android:id="@+id/hubAddress3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:hint="255"
+            android:hint="@string/_255"
             android:inputType="numberDecimal"
             android:importantForAutofill="no" />
         <TextView
@@ -86,14 +86,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="."
+            android:text="@string/_dot"
             />
         <EditText
             android:id="@+id/hubAddress4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:hint="255"
+            android:hint="@string/_255"
             android:inputType="numberDecimal"
             android:importantForAutofill="no" />
 
@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Connect"
+            android:text="@string/connect"
             />
 
     </LinearLayout>
@@ -116,7 +116,7 @@
         android:layout_above="@id/connectionStatus"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:text="Connection status"
+        android:text="@string/connection_status"
         />
 
     <TextView
@@ -127,7 +127,7 @@
         android:layout_marginBottom="45dp"
         android:layout_alignParentBottom="true"
         android:textSize="18sp"
-        android:text="not connected"
+        android:text="@string/not_connected"
         app:drawableLeftCompat="@android:drawable/ic_delete"
         android:drawablePadding="2dp"
         android:gravity="start|center_vertical"

@@ -1,14 +1,14 @@
-package com.helio.app.ui.hub;
+package com.helio.app.ui.settings;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HubViewModel extends ViewModel {
+public class SettingsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HubViewModel() {
+    public SettingsViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is hub fragment");
     }

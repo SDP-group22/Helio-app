@@ -90,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
         setTheme(appTheme);
         // reload activity
         finish();
+        overridePendingTransition(0, 0);
         startActivity(getIntent());
+        overridePendingTransition(0, 0);
     }
 
     private void saveNewThemeName(SharedPreferences sharedPrefs, String themeName) {

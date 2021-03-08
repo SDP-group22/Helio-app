@@ -1,10 +1,8 @@
 package com.helio.app;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,17 +15,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int[] THEMES = {
-            R.style.Theme_HelioApp,
-            R.style.Theme_HelioApp_Night,
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // set theme
-//        SharedPreferences settings = getSharedPreferences("settings", Context.MODE_PRIVATE);
-//        setTheme(THEMES[settings.getInt("theme", 0)]);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

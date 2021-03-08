@@ -30,8 +30,17 @@ public class SettingsFragment extends Fragment {
         // listen for updates
         themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Theme: " + parent.getItemAtPosition(position));
+            public void onItemSelected(AdapterView<?> parent, View view1, int position, long id) {
+                final String newThemeName = parent.getItemAtPosition(position).toString();
+                int newTheme = R.style.Theme_HelioApp;
+                if(newThemeName.equals("Night")) {
+                    System.out.println("Switching app theme to \"" + newThemeName + "\"...");
+                    newTheme = R.style.Theme_HelioApp_Night;
+                } else {
+                    System.out.println("Unknown theme \"" + newThemeName + "\". " +
+                            "Switching to default theme...");
+                }
+                getActivity().setTheme(newTheme);
             }
 
             @Override

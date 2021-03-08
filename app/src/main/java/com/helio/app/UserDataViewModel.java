@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
@@ -35,8 +34,9 @@ public class UserDataViewModel extends AndroidViewModel {
         }
         return motors;
     }
+
     public LiveData<Map<Integer, Schedule>> fetchSchedules() {
-        if(schedules == null) {
+        if (schedules == null) {
             schedules = new MutableLiveData<>();
             client.getAllSchedules(schedules);
         }
@@ -47,7 +47,8 @@ public class UserDataViewModel extends AndroidViewModel {
     public void setCurrentMotor(int id) {
         currentMotorId = id;
     }
-    public void setCurrentSchedule(int id){
+
+    public void setCurrentSchedule(int id) {
         currentScheduleID = id;
     }
 
@@ -58,7 +59,8 @@ public class UserDataViewModel extends AndroidViewModel {
     public Motor getCurrentMotor() {
         return Objects.requireNonNull(motors.getValue()).get(currentMotorId);
     }
-    public Schedule getCurrentSchedule(){
+
+    public Schedule getCurrentSchedule() {
         return Objects.requireNonNull(schedules.getValue()).get(currentScheduleID);
     }
 
@@ -77,12 +79,13 @@ public class UserDataViewModel extends AndroidViewModel {
         client.addMotor(motors, motorSettingsRequest);
         return motors;
     }
-    public void pushCurrentScheduleState(Schedule s){
-        schedules.getValue().put(currentMotorId,s);
+
+    public void pushCurrentScheduleState(Schedule s) {
+        schedules.getValue().put(currentMotorId, s);
         ScheduleSettingsRequest scheduleSettingsRequest = new ScheduleSettingsRequest(
-                s.getScheduleEventName(),s.getScheduleMotorName(),s.isActive(),s.getDays(),s.getTargetLevel(),s.getGradient(),s.getMotorIds(),s.getTime()
+                s.getScheduleEventName(), s.getScheduleMotorName(), s.isActive(), s.getDays(), s.getTargetLevel(), s.getGradient(), s.getMotorIds(), s.getTime()
         );
-        client.updateSchedule(schedules.getValue(),currentMotorId,scheduleSettingsRequest);
+        client.updateSchedule(schedules, currentMotorId, scheduleSettingsRequest);
     }
 
 

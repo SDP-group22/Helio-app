@@ -26,4 +26,6 @@
     <string name="connection_status">Connection status</string>
     <string name="not_connected">not connected</string>
     <string name="_dot">.</string>
+    <string name="user_settings_file_key">user_settings</string>
+    <string name="user_settings_theme_key">user_settings</string>
 </resources>

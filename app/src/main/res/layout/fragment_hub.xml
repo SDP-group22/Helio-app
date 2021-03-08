@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/explanation"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="65dp"
         android:layout_marginTop="50dp"
         >
 
@@ -102,11 +102,54 @@
             android:id="@+id/hubConnectionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:text="Connect"
             />
 
+
     </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/mic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/explanation"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="95dp"
+        >
+
+        <!--    voice recognizers    -->
+        <ImageButton
+            android:id="@+id/btnSpeak1"
+            android:layout_width="41dp"
+            android:layout_height="42dp"
+            android:contentDescription="speak1"
+            android:src="@android:drawable/ic_btn_speak_now" />
+        <ImageButton
+            android:id="@+id/btnSpeak2"
+            android:layout_width="41dp"
+            android:layout_height="42dp"
+            android:contentDescription="speak1"
+            android:layout_marginLeft="5dp"
+            android:src="@android:drawable/ic_btn_speak_now" />
+        <ImageButton
+            android:id="@+id/btnSpeak3"
+            android:layout_width="41dp"
+            android:layout_height="42dp"
+            android:contentDescription="speak1"
+            android:layout_marginLeft="5dp"
+            android:src="@android:drawable/ic_btn_speak_now" />
+        <ImageButton
+            android:id="@+id/btnSpeak4"
+            android:layout_width="41dp"
+            android:layout_height="42dp"
+            android:contentDescription="speak1"
+            android:layout_marginLeft="5dp"
+            android:src="@android:drawable/ic_btn_speak_now" />
+
+    </LinearLayout>
+
+
 
     <TextView
         android:layout_centerHorizontal="true"

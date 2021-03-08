@@ -1,5 +1,7 @@
 package com.helio.app.networking;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.helio.app.model.IdComponent;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,10 +20,10 @@ import retrofit2.Response;
  * @see HubClient
  */
 class IdComponentCallback<T extends IdComponent> implements Callback<T> {
-    private final Map<Integer, T> map;
+    private final MutableLiveData<Map<Integer, T>> liveData;
 
-    IdComponentCallback(Map<Integer, T> map) {
-        this.map = map;
+    IdComponentCallback(MutableLiveData<Map<Integer, T>> liveData) {
+        this.liveData = liveData;
     }
 
     @Override
@@ -29,8 +31,11 @@ class IdComponentCallback<T extends IdComponent> implements Callback<T> {
         T t = response.body();
         if (t != null) {
             System.out.println(call + " succeeded: " + t);
+            System.out.println("Updating local state for " + t);
+            Map<Integer, T> map = liveData.getValue();
+            assert map != null;
             map.put(t.getId(), t);
-            System.out.println("Updated local state for " + t);
+            liveData.setValue(map);
         } else {
             System.out.println("Communication error");
         }

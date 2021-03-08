@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.helio.app.R;
-import com.helio.app.model.Motor;
-import com.helio.app.ui.MotorIcon;
+import com.helio.app.UserDataViewModel;
 
 import java.util.ArrayList;
 
@@ -21,22 +22,26 @@ public class BlindsSettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blinds_settings, container, false);
-
-        // Prepare the list of motors TODO (temporary)
-        ArrayList<Motor> motors = new ArrayList<>();
-        motors.add(new Motor("Bedroom", MotorIcon.BEDROOM));
-        motors.add(new Motor("Kitchen", MotorIcon.KITCHEN));
-        motors.add(new Motor("Next to TV", MotorIcon.TV));
-        motors.add(new Motor("Living room", MotorIcon.HOUSE));
-
-        // Setup the adapter with the motors
-        BlindsRecViewAdapter adapter = new BlindsRecViewAdapter(getContext());
-        adapter.setMotors(motors);
+        UserDataViewModel model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
+        BlindsRecViewAdapter adapter = new BlindsRecViewAdapter(getContext(), model);
+        model.fetchMotors().observe(
+                getViewLifecycleOwner(),
+                motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+        );
 
         // Insert into the recycler view
         RecyclerView recView = view.findViewById(R.id.blindsRCView);
         recView.setAdapter(adapter);
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        FloatingActionButton addButton = view.findViewById(R.id.add_blinds_button);
+        addButton.setOnClickListener(
+                v -> model.addMotor().observe(
+                        getViewLifecycleOwner(),
+                        motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+                )
+        );
+
         return view;
     }
 }

@@ -8,10 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.slider.Slider;
 import com.helio.app.R;
+import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
 
 import java.text.NumberFormat;
@@ -19,10 +21,12 @@ import java.util.ArrayList;
 
 public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAdapter.ViewHolder> {
     private final Context context;
+    private final UserDataViewModel model;
     private ArrayList<Motor> motors = new ArrayList<>();
 
-    public ControlRecViewAdapter(Context context) {
+    public ControlRecViewAdapter(Context context, UserDataViewModel model) {
         this.context = context;
+        this.model = model;
     }
 
 
@@ -36,9 +40,12 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
     @Override
     public void onBindViewHolder(@NonNull ControlRecViewAdapter.ViewHolder holder, int position) {
         // Set the name and icon of the motor and put the current level in the slider
-        holder.txtName.setText(motors.get(position).getName());
-        holder.blindIcon.setImageResource(motors.get(position).getIcon().id);
-        holder.slider.setValue(motors.get(position).getLevel());
+        Motor motor = motors.get(position);
+        holder.txtName.setText(motor.getName());
+        if(motor.getIcon() != null) {
+            holder.blindIcon.setImageResource(motor.getIcon().id);
+        }
+        holder.slider.setValue(motor.getLevel());
 
         // Format the number as a percentage (possibly sensitive to Locale)
         // Display Closed or Open if completely closed or open
@@ -60,7 +67,14 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
 
             @Override
             public void onStopTrackingTouch(@NonNull Slider slider) {
-                motors.get(position).setLevel((int) slider.getValue());
+                Motor motor = motors.get(position);
+                // disable dragging? TODO
+                // send update to Hub
+                motor.setLevel((int) slider.getValue());
+                System.out.println("Updated level using slider: " + motor);
+                model.setCurrentMotor(motor.getId());
+                model.pushCurrentMotorState(motor);
+                // asynchronously enable dragging? TODO
             }
         });
     }

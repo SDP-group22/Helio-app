@@ -16,7 +16,7 @@ public class Schedule implements IdComponent {
     private String name;
     private boolean active;
     private List<Day> days;
-    @SerializedName("target-level")
+    @SerializedName("target_level")
     private int targetLevel;
     private int gradient;
     private String time;

@@ -1,9 +1,12 @@
 package com.helio.app.networking;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.helio.app.model.IdComponent;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +15,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetAllCallback<T extends IdComponent> implements Callback<List<T>> {
-    private final Map<Integer, T> map;
+    private final MutableLiveData<Map<Integer, T>> map;
 
-    public GetAllCallback(Map<Integer, T> map) {
+    public GetAllCallback(MutableLiveData<Map<Integer, T>> map) {
         this.map = map;
     }
 
@@ -24,10 +27,11 @@ public class GetAllCallback<T extends IdComponent> implements Callback<List<T>> 
         if (responseList != null) {
             System.out.println(call + " succeeded: " + responseList);
             // Clear the map and replace with the new one
-            map.clear();
+            Map<Integer, T> resultsMap = new HashMap<>();
             for (T t : responseList) {
-                map.put(t.getId(), t);
+                resultsMap.put(t.getId(), t);
             }
+            map.setValue(resultsMap);
             System.out.println("Updated local state for " + responseList);
         } else {
             System.out.println("Communication error");

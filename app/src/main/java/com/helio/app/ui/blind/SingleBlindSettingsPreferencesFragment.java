@@ -19,10 +19,8 @@ public class SingleBlindSettingsPreferencesFragment extends PreferenceFragmentCo
 
         EditTextPreference namePreference = findPreference("name");
         EditTextPreference ipPreference = findPreference("ip");
-        ListPreference changeIconPreference = findPreference("changeIcon");
+        ListPreference iconPreference = findPreference("icon");
         Preference calibrationPreference = findPreference("calibration");
-        Preference openNowPreference = findPreference("openNow");
-        Preference closeNowPreference = findPreference("closeNow");
         Preference createSchedulePreference = findPreference("createSchedule");
         Preference seeSchedulePreference = findPreference("seeSchedule");
         Preference motionSensorPreference = findPreference("motionSensor");

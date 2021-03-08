@@ -36,6 +36,7 @@ public class SettingsFragment extends Fragment {
                 view.getContext(), R.array.theme_options, android.R.layout.simple_spinner_item
         );
         themeSpinner.setAdapter(adapter);
+        selectCurrentTheme(themeSpinner);
         // listen for updates
         themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -45,9 +46,20 @@ public class SettingsFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
+    }
+
+    private void selectCurrentTheme(Spinner spinner) {
+        String currentThemeName = ((MainActivity) getActivity()).getCurrentThemeName();
+        final int count = spinner.getCount();
+        for(int i = 0; i < count; i++) {
+            String itemValue = (String) spinner.getItemAtPosition(i);
+            if(itemValue.equals(currentThemeName)) {
+                System.out.println("Setting spinner to \"" + itemValue + "\"...");
+                spinner.setSelection(i);
+                break;
+            }
+        }
     }
 }

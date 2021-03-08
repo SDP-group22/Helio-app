@@ -2,7 +2,6 @@ package com.helio.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -22,9 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // get the theme that is supposed to be active and activate if necessary
-        SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);
-        String currentThemeName = sharedPrefs.getString(getString(R.string.user_settings_theme_key),
-                "Default");
+        String currentThemeName = getCurrentThemeName();
         int currentTheme = getTheme(currentThemeName);
         setTheme(currentTheme);
         setContentView(R.layout.activity_main);
@@ -55,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public String getCurrentThemeName() {
+        SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);
+        return sharedPrefs.getString(getString(R.string.user_settings_theme_key), "Default");
+    }
     public void updateTheme(String themeName) {
         AppTheme newTheme = AppTheme.getEnumFromName(themeName);
         SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);

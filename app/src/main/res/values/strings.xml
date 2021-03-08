@@ -19,7 +19,7 @@
     <string name="add_blinds_button">Add blinds</string>
     <string name="title_theme_selection">App Theme</string>
     <string name="summary_theme_selection">Select your favourite theme for the Helio App</string>
-    <string name="enter_your_hub_s_ip_address_to_get_started">Enter your Hub\'s IP address to get started:</string>
+    <string name="enter_ip_address">Enter your Hub\'s IP address to get started:</string>
     <string name="connect_to_your_helio_hub_device">Connect to your Helio Hub device</string>
     <string name="_255">255</string>
     <string name="connect">Connect</string>
@@ -28,4 +28,5 @@
     <string name="_dot">.</string>
     <string name="user_settings_file_key">user_settings</string>
     <string name="user_settings_theme_key">user_settings</string>
+    <string name="new_blinds">New blinds</string>
 </resources>

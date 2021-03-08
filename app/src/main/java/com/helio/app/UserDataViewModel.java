@@ -1,5 +1,9 @@
 package com.helio.app;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,13 +15,17 @@ import com.helio.app.networking.request.MotorSettingsRequest;
 import java.util.Map;
 import java.util.Objects;
 
-public class UserDataViewModel extends ViewModel {
+public class UserDataViewModel extends AndroidViewModel {
     private final HubClient client = new HubClient("http://10.0.2.2:4310/");
     private MutableLiveData<Map<Integer, Motor>> motors;
     private int currentMotorId = -1;
 
+    public UserDataViewModel(@NonNull Application application) {
+        super(application);
+    }
+
     public LiveData<Map<Integer, Motor>> fetchMotors() {
-        if(motors == null) {
+        if (motors == null) {
             motors = new MutableLiveData<>();
             client.getAllMotors(motors);
         }
@@ -37,11 +45,18 @@ public class UserDataViewModel extends ViewModel {
     }
 
     public void pushCurrentMotorState(Motor m) {
-        motors.getValue().put(currentMotorId, m);
+        Objects.requireNonNull(motors.getValue()).put(currentMotorId, m);
         MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
                 m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
                 m.getLevel(), m.getStyle()
         );
-        client.updateMotor(motors.getValue(), currentMotorId, motorSettingsRequest);
+        client.updateMotor(motors, currentMotorId, motorSettingsRequest);
+    }
+
+    public LiveData<Map<Integer, Motor>> addMotor() {
+        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
+                getApplication().getString(R.string.new_blinds), "0.0.0.0", true, 0, 0, 0, "");
+        client.addMotor(motors, motorSettingsRequest);
+        return motors;
     }
 }

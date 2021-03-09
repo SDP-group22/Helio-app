@@ -7,6 +7,7 @@ public enum AppTheme {
     DEFAULT("Default"),
     NIGHT("Night");
 
+    public static final String DEFAULT_THEME_NAME = "Default";
     private final String name;
 
     // Lookup map for getting an AppTheme from an integer

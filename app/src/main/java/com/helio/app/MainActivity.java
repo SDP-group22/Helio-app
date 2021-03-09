@@ -54,13 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
     public String getCurrentThemeName() {
         SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);
-        return sharedPrefs.getString(getString(R.string.user_settings_theme_key), "Default");
+        return sharedPrefs.getString(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_NAME);
     }
     public void updateTheme(String themeName) {
         AppTheme newTheme = AppTheme.getEnumFromName(themeName);
         SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);
-        String currentThemeName = sharedPrefs.getString(getString(R.string.user_settings_theme_key),
-                "Default");
+        String currentThemeName = sharedPrefs.getString(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_NAME);
         AppTheme currentTheme = AppTheme.getEnumFromName(currentThemeName);
         if(currentTheme == newTheme) {
             System.out.println("New theme \"" + themeName + "\" is already active.");
@@ -99,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putString(getString(R.string.user_settings_theme_key), themeName);
         editor.apply();
-        System.out.println("New theme name: " + sharedPrefs.getString(getString(R.string.user_settings_theme_key), "DEFAULT"));
+        System.out.println("New theme name: " +
+                sharedPrefs.getString(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_NAME));
     }
 }
 

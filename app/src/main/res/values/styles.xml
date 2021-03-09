@@ -19,6 +19,8 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
+        <item name="android:spinnerItemStyle">@style/mySpinnerItemStyle</item>
     </style>
     <!-- Base application theme. -->
     <style name="Theme.HelioApp.Night" parent="Theme.HelioApp">
@@ -36,9 +38,16 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
+        <item name="android:spinnerItemStyle">@style/mySpinnerItemStyle</item>
     </style>
+    <!--  Transitions  -->
     <style name="WindowAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+    <!--  Fix dropdown text colour  -->
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

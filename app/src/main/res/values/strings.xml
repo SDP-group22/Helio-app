@@ -10,11 +10,23 @@
     <string name="settingsIcon">Icon</string>
     <string name="settingsName">Name</string>
     <string name="settingsIP">IP address</string>
-    <string name="title_connect_hub">Connect to Hub</string>
+    <string name="title_settings">Settings</string>
     <string name="title_edit_blind">Edit Blind</string>
     <string name="light_sensor">Light Sensor</string>
     <string name="motion_sensor">Motion Sensor</string>
     <string name="open_state">Open</string>
     <string name="closed_state">Closed</string>
+    <string name="add_blinds_button">Add blinds</string>
+    <string name="title_theme_selection">App Theme</string>
+    <string name="summary_theme_selection">Select your favourite theme for the Helio App</string>
+    <string name="enter_ip_address">Enter your Hub\'s IP address to get started:</string>
+    <string name="connect_to_your_helio_hub_device">Connect to your Helio Hub device</string>
+    <string name="_255">255</string>
+    <string name="connect">Connect</string>
+    <string name="connection_status">Connection status</string>
+    <string name="not_connected">not connected</string>
+    <string name="_dot">.</string>
+    <string name="user_settings_file_key">user_settings</string>
+    <string name="user_settings_theme_key">user_settings</string>
     <string name="new_blinds">New blinds</string>
 </resources>

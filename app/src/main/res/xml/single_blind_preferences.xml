@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:andriod="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.blind.SingleBlindSettingsPreferencesFragment">
 
     <EditTextPreference
-        andriod:key="ip"
-        andriod:title="@string/settingsIP"
+        android:key="ip"
+        android:title="@string/settingsIP"
         app:useSimpleSummaryProvider="true" />
 
     <EditTextPreference
-        andriod:key="name"
-        andriod:title="@string/settingsName"
+        android:key="name"
+        android:title="@string/settingsName"
         app:useSimpleSummaryProvider="true" />
 
     <ListPreference
-        andriod:entries="@array/icons"
-        andriod:entryValues="@array/iconsValues"
-        andriod:key="icon"
-        andriod:title="@string/settingsIcon"
+        android:entries="@array/icons"
+        android:entryValues="@array/iconsValues"
+        android:key="icon"
+        android:title="@string/settingsIcon"
         app:useSimpleSummaryProvider="true" />
 
     <Preference
-        andriod:key="seeSchedule"
-        andriod:title="@string/settingsViewSchedules" />
+        android:key="seeSchedule"
+        android:title="@string/settingsViewSchedules" />
 
     <Preference
-        andriod:key="sensors"
-        andriod:title="@string/settingsViewSensors" />
+        android:key="sensors"
+        android:title="@string/settingsViewSensors" />
 
     <Preference
-        andriod:key="calibration"
-        andriod:title="@string/settingsCalibration" />
+        android:key="calibration"
+        android:title="@string/settingsCalibration" />
 
     <Preference
-        andriod:key="motionSensor"
-        andriod:title="Motion sensor settings"/>
+        android:key="motionSensor"
+        android:title="Motion sensor settings"/>
 
     <Preference
-        andriod:key="lightSensor"
-        andriod:title="Light sensor settings"/>
+        android:key="lightSensor"
+        android:title="Light sensor settings"/>
 
 
 

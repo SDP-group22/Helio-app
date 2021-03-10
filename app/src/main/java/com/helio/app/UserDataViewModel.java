@@ -59,4 +59,25 @@ public class UserDataViewModel extends AndroidViewModel {
         client.addMotor(motors, motorSettingsRequest);
         return motors;
     }
+
+    public void voiceIntegrationAction(String s) {
+        // Go through each of the motors
+        for (Motor m : motors.getValue().values()) {
+            // Check if s contains a blind's name
+            if (s.contains(m.getName())) {
+                if(s.contains("open") || s.contains("up")|| s.contains("raise")){
+                    // Open the blind
+                    setCurrentMotor(m.getId());
+                    moveCurrentMotor(100);
+//                    System.out.println(String.format("Open %s", m.getName()));
+                }
+                if(s.contains("close") || s.contains("down")|| s.contains("lower")){
+                    // Close the blind
+                    setCurrentMotor(m.getId());
+                    moveCurrentMotor(0);
+//                    System.out.println(String.format("Close %s", m.getName()));
+                }
+            }
+        }
+    }
 }

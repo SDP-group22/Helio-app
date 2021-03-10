@@ -9,7 +9,7 @@
         <item name="colorPrimary">@color/dark_orange</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorText">@color/black</item>
+        <item name="colorText">@color/grey_text</item>
         <item name="colorTextHint">@color/gray_dark</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/darker_orange</item>

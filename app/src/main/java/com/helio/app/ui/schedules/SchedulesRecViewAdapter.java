@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -58,13 +59,18 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
             e.printStackTrace();
         }
 
-
-        // click the switch button, the schedule turn off.
-        holder.activateSwitch.setOnClickListener(v -> {
-            schedule.setActive(!schedule.isActive());
-            model.setCurrentSchedule(schedule.getId());
-            model.pushCurrentScheduleState(schedule);
+        holder.activateSwitch.setChecked(schedule.isActive());
+        holder.activateSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            String message;
+            if (isChecked) {
+                message = holder.parent.getResources().getString(R.string.scheduleDeactivated);
+            } else {
+                message = holder.parent.getResources().getString(R.string.scheduleActivated);
+            }
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            model.toggleScheduleActive(schedule);
         });
+
     }
 
     @Override

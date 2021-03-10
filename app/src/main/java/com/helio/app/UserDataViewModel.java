@@ -88,5 +88,21 @@ public class UserDataViewModel extends AndroidViewModel {
         client.updateSchedule(schedules, currentScheduleID, scheduleSettingsRequest);
     }
 
+    public void pushScheduleState(Schedule s) {
+        if (schedules.getValue() != null) {
+            schedules.getValue().put(s.getId(), s);
+            ScheduleSettingsRequest scheduleSettingsRequest = new ScheduleSettingsRequest(
+                    s.getName(), s.isActive(), s.getDays(), s.getTargetLevel(), s.getGradient(), s.getMotorIds(), s.getTime()
+            );
+            client.updateSchedule(schedules, s.getId(), scheduleSettingsRequest);
+        }
+    }
 
+    public void toggleScheduleActive(Schedule s) {
+        if (s.isActive()) {
+            client.deactivateSchedule(schedules, s.getId());
+        } else {
+            client.activateSchedule(schedules, s.getId());
+        }
+    }
 }

@@ -24,4 +24,6 @@
     <string name="enter_event_name">Enter event name</string>
     <string name="enter_motor_name">Enter motor name</string>
     <string name="select_time">Select time</string>
+    <string name="scheduleActivated">Schedule enabled</string>
+    <string name="scheduleDeactivated">Schedule disabled</string>
 </resources>

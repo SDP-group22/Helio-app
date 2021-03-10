@@ -21,7 +21,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/activate_switch"
             android:importantForAutofill="no"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="10dp"
             android:paddingVertical="5dp"
             android:text="00:00"
             android:textSize="40sp"
@@ -35,8 +35,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="M T W T F S S"
+            android:paddingHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/activate_switch"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial

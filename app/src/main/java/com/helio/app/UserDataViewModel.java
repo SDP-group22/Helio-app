@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.helio.app.model.Motor;
 import com.helio.app.networking.HubClient;
@@ -60,18 +59,23 @@ public class UserDataViewModel extends AndroidViewModel {
         return motors;
     }
 
-    public void voiceIntegrationAction(String s) {
+    /**
+     * Attempts to interpret the given voice command from speech recognition, and take actions as specified.
+     *
+     * @param voiceCommand the String from voice recognition
+     */
+    public void interpretVoiceCommand(String voiceCommand) {
         // Go through each of the motors
         for (Motor m : motors.getValue().values()) {
             // Check if s contains a blind's name
-            if (s.contains(m.getName())) {
-                if(s.contains("open") || s.contains("up")|| s.contains("raise")){
+            if (voiceCommand.contains(m.getName())) {
+                if (voiceCommand.contains("open") || voiceCommand.contains("up") || voiceCommand.contains("raise")) {
                     // Open the blind
                     setCurrentMotor(m.getId());
                     moveCurrentMotor(100);
 //                    System.out.println(String.format("Open %s", m.getName()));
                 }
-                if(s.contains("close") || s.contains("down")|| s.contains("lower")){
+                if (voiceCommand.contains("close") || voiceCommand.contains("down") || voiceCommand.contains("lower")) {
                     // Close the blind
                     setCurrentMotor(m.getId());
                     moveCurrentMotor(0);

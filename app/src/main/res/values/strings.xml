@@ -16,5 +16,14 @@
     <string name="motion_sensor">Motion Sensor</string>
     <string name="open_state">Open</string>
     <string name="closed_state">Closed</string>
-    <string name="new_blinds">New blinds</string>
+    <string name="add_blinds_button">Add blinds</string>
+    <string name="add_new_schedule_button">Add a new schedule</string>
+    <string name="title_edit_schedule">Edit Schedule</string>
+    <string name="title_schedule_setting">Schedule</string>
+    <string name="enter_event_name">Enter event name</string>
+    <string name="enter_motor_name">Enter motor name</string>
+    <string name="select_time">Select time</string>
+    <string name="add_new_sensor_button">Add sensor</string>
+    <string name="enter_ip_address">Enter IP address</string>
+    <string name="label">Label</string>
 </resources>

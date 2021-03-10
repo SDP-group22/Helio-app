@@ -9,6 +9,7 @@ import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
+import com.helio.app.model.Sensor;
 import com.helio.app.networking.request.LightSensorSettingsRequest;
 import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
@@ -206,4 +207,8 @@ public class HubClient {
         Call<MotionSensor> call = service.updateMotionSensor(id, motionSensorSettingsRequest);
         call.enqueue(new IdComponentCallback<>(sensors));
     }
+//    public void getAllSensors(MutableLiveData<Map<Integer, Sensor>> sensors) {
+//        Call<List<Sensor>> call = service.getAllSen
+//    }
+
 }

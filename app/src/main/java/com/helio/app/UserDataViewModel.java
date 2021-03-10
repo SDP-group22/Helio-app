@@ -83,9 +83,9 @@ public class UserDataViewModel extends AndroidViewModel {
     public void pushCurrentScheduleState(Schedule s) {
         schedules.getValue().put(currentMotorId, s);
         ScheduleSettingsRequest scheduleSettingsRequest = new ScheduleSettingsRequest(
-                s.getScheduleEventName(), s.getScheduleMotorName(), s.isActive(), s.getDays(), s.getTargetLevel(), s.getGradient(), s.getMotorIds(), s.getTime()
+                s.getName(), s.isActive(), s.getDays(), s.getTargetLevel(), s.getGradient(), s.getMotorIds(), s.getTime()
         );
-        client.updateSchedule(schedules, currentMotorId, scheduleSettingsRequest);
+        client.updateSchedule(schedules, currentScheduleID, scheduleSettingsRequest);
     }
 
 

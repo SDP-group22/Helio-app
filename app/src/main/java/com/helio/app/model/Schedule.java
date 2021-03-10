@@ -13,8 +13,7 @@ public class Schedule implements IdComponent {
     private final int id;
     @SerializedName("motor_ids")
     private final List<Integer> motorIds;
-    private String ScheduleEventName;
-    private String ScheduleMotorName;
+    private String name;
     private boolean active;
     private List<Day> days;
     @SerializedName("target_level")
@@ -22,11 +21,10 @@ public class Schedule implements IdComponent {
     private int gradient;
     private String time;
 
-    public Schedule(int id, String ScheduleEventName,String ScheduleMotorName, boolean active, List<Day> days, int targetLevel,
+    public Schedule(int id, String name, boolean active, List<Day> days, int targetLevel,
                     int gradient, List<Integer> motorIds, String time) {
         this.id = id;
-        this.ScheduleEventName = ScheduleEventName;
-        this.ScheduleMotorName = ScheduleMotorName;
+        this.name = name;
         this.active = active;
         this.days = days;
         this.targetLevel = targetLevel;
@@ -39,23 +37,15 @@ public class Schedule implements IdComponent {
      * Create a schedule with the ID only, leaving everything else as default.
      */
     public Schedule(int id) {
-        this(id, "","", false, new ArrayList<>(), 0, 0, new ArrayList<>(), "");
+        this(id, "", false, new ArrayList<>(), 0, 0, new ArrayList<>(), "");
     }
 
-    public String getScheduleEventName() {
-        return ScheduleEventName;
+    public String getName() {
+        return name;
     }
 
-    public void setScheduleEventName(String name) {
-        this.ScheduleEventName = name;
-    }
-
-    public String getScheduleMotorName() {
-        return ScheduleMotorName;
-    }
-
-    public void setScheduleMotorName(String name) {
-        this.ScheduleMotorName = name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isActive() {
@@ -128,8 +118,7 @@ public class Schedule implements IdComponent {
     public String toString() {
         return "Schedule{" +
                 "id='" + getId() + '\'' +
-                ", schedule event name='" + getScheduleEventName() + '\'' +
-                ", schedule motor name='" + getScheduleMotorName() + '\'' +
+                ", schedule event name='" + name + '\'' +
                 ", active=" + active +
                 ", days=" + days +
                 ", targetLevel=" + targetLevel +

@@ -9,11 +9,11 @@
         android:icon="@drawable/ic_edit_pencil"
         android:title="@string/title_blinds_settings" />
     <item
-        android:id="@+id/navigation_hub"
-        android:icon="@drawable/ic_baseline_wifi_24"
-        android:title="@string/title_connect_hub" />
-    <item
         android:id="@+id/navigation_schedule"
         android:icon="@drawable/timer"
         android:title="@string/title_schedule_setting"/>
+    <item
+        android:id="@+id/navigation_hub"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/title_settings" />
 </menu>

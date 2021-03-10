@@ -28,9 +28,9 @@
 
     <fragment
         android:id="@+id/navigation_hub"
-        android:name="com.helio.app.ui.hub.HubFragment"
-        android:label="@string/title_connect_hub"
-        tools:layout="@layout/fragment_hub" />
+        android:name="com.helio.app.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/navigation_control"
         android:name="com.helio.app.ui.control.ControlFragment"

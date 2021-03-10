@@ -1,5 +1,11 @@
 <resources>
 
+    <!--  Theme Preference  -->
+    <array name="theme_options">
+        <item>Default</item>
+        <item>Night</item>
+    </array>
+
     <array name="icons">
         <item>Wash</item>
         <item>Window</item>

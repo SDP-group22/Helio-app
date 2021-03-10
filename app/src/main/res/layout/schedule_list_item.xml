@@ -14,12 +14,18 @@
         android:background="@drawable/border"
         android:paddingVertical="5dp">
 
-        <EditText
+        <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="time" />
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/activate_switch"
+            android:importantForAutofill="no"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="5dp"
+            android:text="00:00"
+            android:textSize="40sp"
+            tools:ignore="HardcodedText,LabelFor" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/activate_switch"
@@ -28,6 +34,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="0dp"
+            android:layout_centerInParent="true"
             tools:ignore="HardcodedText" />
 
     </RelativeLayout>

@@ -15,7 +15,12 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Schedule;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecViewAdapter.ViewHolder> {
     private final Context context;
@@ -39,6 +44,21 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
     @Override
     public void onBindViewHolder(@NonNull SchedulesRecViewAdapter.ViewHolder holder, int position) {
         Schedule schedule = schedules.get(position);
+
+        // Parse the date from the schedule String and convert to local format
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.US);
+        try {
+            Date date = sdf.parse(schedule.getTime());
+            if (date != null) {
+                String formattedTime = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+                holder.time.setText(formattedTime);
+            }
+        } catch (ParseException e) {
+            System.out.println("Could not parse date " + schedule.getTime());
+            e.printStackTrace();
+        }
+
+
         // click the switch button, the schedule turn off.
         holder.activateSwitch.setOnClickListener(v -> {
             schedule.setActive(!schedule.isActive());

@@ -5,10 +5,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 
 import org.hamcrest.Matcher
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,6 +21,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 
 import com.google.android.material.slider.Slider
+import com.helio.app.Utils.atPosition
 import org.hamcrest.Description
 
 @RunWith(AndroidJUnit4::class)
@@ -31,30 +32,80 @@ class TestBlindsControl {
     var activityRule: ActivityScenarioRule<MainActivity>
             = ActivityScenarioRule(MainActivity::class.java);
 
-    @Before
-    // ensure the fragment contains blinds objects
-    fun initBlindsList() {
-
+    @Test
+    fun adjustSlider0() {
+        val sliderPosition = 0
+        // adjust to 50%
+        var expectedValue = 50.0F
+        onView(withId(R.id.control_rc_view))
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
+                (sliderPosition, setValue(expectedValue)))
+        onView(withId(R.id.control_rc_view))
+                .check(matches(atPosition(sliderPosition, withValue(expectedValue))));
+        // adjust to 10%
+        expectedValue = 10.0F
+        onView(withId(R.id.control_rc_view))
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
+                (sliderPosition, setValue(expectedValue)))
+        onView(withId(R.id.control_rc_view))
+                .check(matches(atPosition(sliderPosition, withValue(expectedValue))));
     }
 
     @Test
-    fun changeText_sameActivity() {
+    fun adjustSlidersInOrder() {
+        val slider1Position = 0
+        val slider2Position = 1
+        val slider1ExpectedValue = 100.0F
+        val slider2ExpectedValue = 33.0F
+        // adjust slider 1 to 100%
         onView(withId(R.id.control_rc_view))
-                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, setValue(1.0F)))
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
+                (slider1Position, setValue(slider1ExpectedValue)))
+        // verify slider 1 value matches expectation
+        onView(withId(R.id.control_rc_view))
+                .check(matches(atPosition(slider1Position, withValue(slider1ExpectedValue))));
+        // adjust slider 2 to 33.2%
+        onView(withId(R.id.control_rc_view))
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
+                (slider2Position, setValue(slider2ExpectedValue)))
+        // verify slider 2 value matches expectation
+        onView(withId(R.id.control_rc_view))
+                .check(matches(atPosition(slider2Position, withValue(slider2ExpectedValue))));
+    }
+
+    @Test
+    fun adjustSlidersInterleaved() {
+        val slider1Position = 0
+        val slider2Position = 1
+        val slider1ExpectedValue = 100.0F
+        val slider2ExpectedValue = 33.0F
+        // adjust slider 1 to 100%
+        onView(withId(R.id.control_rc_view))
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
+                (slider1Position, setValue(slider1ExpectedValue)))
+        // adjust slider 2 to 33.2%
+        onView(withId(R.id.control_rc_view))
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
+                (slider2Position, setValue(slider2ExpectedValue)))
+        // verify values match expectations
+        onView(withId(R.id.control_rc_view))
+                .check(matches(atPosition(slider1Position, withValue(slider1ExpectedValue))));
+        onView(withId(R.id.control_rc_view))
+                .check(matches(atPosition(slider2Position, withValue(slider2ExpectedValue))));
     }
 
 
-//    fun withValue(expectedValue: Float): Matcher<View?> {
-//        return object : BoundedMatcher<View?, Slider>(Slider::class.java) {
-//            override fun describeTo(description: Description) {
-//                description.appendText("expected: $expectedValue")
-//            }
-//
-//            override fun matchesSafely(slider: Slider?): Boolean {
-//                return slider?.value == expectedValue
-//            }
-//        }
-//    }
+    private fun withValue(expectedValue: Float): Matcher<View?> {
+        return object : BoundedMatcher<View?, View>(View::class.java) {
+            override fun describeTo(description: Description) {
+                description.appendText("expected: $expectedValue")
+            }
+
+            override fun matchesSafely(view: View): Boolean {
+                return view.findViewById<Slider>(R.id.controlSlider).value == expectedValue
+            }
+        }
+    }
 
     fun setValue(value: Float): ViewAction {
         return object : ViewAction {

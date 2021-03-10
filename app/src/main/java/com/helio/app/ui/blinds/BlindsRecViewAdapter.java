@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,20 +47,6 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
         if(icon != null) {
             holder.blindIcon.setImageResource(icon.id);
         }
-        holder.parent.setOnClickListener(v ->
-        {
-            /*  The following line is horribly convoluted, but it follows the advice given here:
-                https://developer.android.com/guide/navigation/navigation-pass-data#define_destination_arguments
-                In short, this allows us to pass an argument (the id of the motor) to the single
-                blind settings fragment.
-             */
-            BlindsSettingsFragmentDirections.ActionBlindsSettingsFragmentToSingleBlindSettingsFragment action =
-                    BlindsSettingsFragmentDirections.actionBlindsSettingsFragmentToSingleBlindSettingsFragment();
-            action.setCurrentMotorId(motor.getId());
-            Toast.makeText(context, motor.getName() + " Selected",
-                    Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(holder.itemView).navigate(action);
-        });
     }
 
     @Override
@@ -82,9 +67,22 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtName = itemView.findViewById(R.id.txtName);
+            txtName = itemView.findViewById(R.id.scheduleName);
             blindIcon = itemView.findViewById(R.id.blindIcon);
             parent = itemView.findViewById(R.id.parent);
+            parent.setOnClickListener(v ->
+            {
+            /*  The following line is horribly convoluted, but it follows the advice given here:
+                https://developer.android.com/guide/navigation/navigation-pass-data#define_destination_arguments
+                In short, this allows us to pass an argument (the id of the motor) to the single
+                blind settings fragment.
+             */
+                BlindsSettingsFragmentDirections.ActionBlindsSettingsFragmentToSingleBlindSettingsFragment action =
+                        BlindsSettingsFragmentDirections.actionBlindsSettingsFragmentToSingleBlindSettingsFragment();
+                Motor m = motors.get(getAdapterPosition());
+                action.setCurrentMotorId(m.getId());
+                Navigation.findNavController(itemView).navigate(action);
+            });
         }
     }
 

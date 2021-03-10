@@ -42,7 +42,7 @@ public class HubClient {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY); // Logging level
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-//        httpClient.addInterceptor(logging);
+        httpClient.addInterceptor(logging);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseAddress)

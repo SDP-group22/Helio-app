@@ -112,12 +112,13 @@ public class Schedule implements IdComponent {
         return id;
     }
 
+
     @NotNull
     @Override
     public String toString() {
         return "Schedule{" +
                 "id='" + getId() + '\'' +
-                ", name='" + name + '\'' +
+                ", schedule event name='" + name + '\'' +
                 ", active=" + active +
                 ", days=" + days +
                 ", targetLevel=" + targetLevel +

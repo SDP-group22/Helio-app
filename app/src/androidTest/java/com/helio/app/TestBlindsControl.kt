@@ -33,6 +33,7 @@ class TestBlindsControl {
             = ActivityScenarioRule(MainActivity::class.java);
 
     @Test
+    // check that we can adjust the slider for the first blind in the list
     fun adjustSlider0() {
         val sliderPosition = 0
         // adjust to 50%
@@ -52,29 +53,8 @@ class TestBlindsControl {
     }
 
     @Test
-    fun adjustSlidersInOrder() {
-        val slider1Position = 0
-        val slider2Position = 1
-        val slider1ExpectedValue = 100.0F
-        val slider2ExpectedValue = 33.0F
-        // adjust slider 1 to 100%
-        onView(withId(R.id.control_rc_view))
-                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (slider1Position, setValue(slider1ExpectedValue)))
-        // verify slider 1 value matches expectation
-        onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(slider1Position, withValue(slider1ExpectedValue))));
-        // adjust slider 2 to 33.2%
-        onView(withId(R.id.control_rc_view))
-                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (slider2Position, setValue(slider2ExpectedValue)))
-        // verify slider 2 value matches expectation
-        onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(slider2Position, withValue(slider2ExpectedValue))));
-    }
-
-    @Test
-    fun adjustSlidersInterleaved() {
+    // check that we can adjust multiple sliders
+    fun adjustMultipleSliders() {
         val slider1Position = 0
         val slider2Position = 1
         val slider1ExpectedValue = 100.0F
@@ -93,7 +73,6 @@ class TestBlindsControl {
         onView(withId(R.id.control_rc_view))
                 .check(matches(atPosition(slider2Position, withValue(slider2ExpectedValue))));
     }
-
 
     private fun withValue(expectedValue: Float): Matcher<View?> {
         return object : BoundedMatcher<View?, View>(View::class.java) {

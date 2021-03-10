@@ -60,17 +60,6 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         }
 
         holder.activateSwitch.setChecked(schedule.isActive());
-        holder.activateSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            String message;
-            if (isChecked) {
-                message = holder.parent.getResources().getString(R.string.scheduleDeactivated);
-            } else {
-                message = holder.parent.getResources().getString(R.string.scheduleActivated);
-            }
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-            model.toggleScheduleActive(schedule);
-        });
-
     }
 
     @Override
@@ -94,6 +83,26 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
             time = itemView.findViewById(R.id.time);
             activateSwitch = itemView.findViewById(R.id.activate_switch);
             parent = itemView.findViewById(R.id.parent);
+
+            // Click listener for enable
+            activateSwitch.setOnClickListener(v -> {
+                SwitchMaterial switchView = (SwitchMaterial) v;
+
+                // Update the view
+                switchView.toggle();
+
+                // Toast to explain what happened
+                String message;
+                if (switchView.isChecked()) {
+                    message = parent.getResources().getString(R.string.scheduleDeactivated);
+                } else {
+                    message = parent.getResources().getString(R.string.scheduleActivated);
+                }
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                // Send update to model
+                model.toggleScheduleActive(schedules.get(getAdapterPosition()));
+            });
         }
     }
 }

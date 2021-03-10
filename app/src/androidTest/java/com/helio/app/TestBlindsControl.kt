@@ -67,7 +67,7 @@ class TestBlindsControl {
             }
 
             override fun perform(uiController: UiController?, view: View) {
-                val seekBar = view as Slider
+                val seekBar = view.findViewById(R.id.controlSlider) as Slider
                 seekBar.value = value
             }
         }

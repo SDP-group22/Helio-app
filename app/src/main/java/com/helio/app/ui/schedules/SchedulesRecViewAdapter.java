@@ -94,9 +94,9 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
                 // Toast to explain what happened
                 String message;
                 if (switchView.isChecked()) {
-                    message = parent.getResources().getString(R.string.scheduleDeactivated);
+                    message = parent.getResources().getString(R.string.schedule_deactivated);
                 } else {
-                    message = parent.getResources().getString(R.string.scheduleActivated);
+                    message = parent.getResources().getString(R.string.schedule_activated);
                 }
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 

@@ -24,6 +24,13 @@
     <string name="enter_event_name">Enter event name</string>
     <string name="enter_motor_name">Enter motor name</string>
     <string name="select_time">Select time</string>
-    <string name="scheduleActivated">Schedule enabled</string>
-    <string name="scheduleDeactivated">Schedule disabled</string>
+    <string name="schedule_activated">Schedule enabled</string>
+    <string name="schedule_deactivated">Schedule disabled</string>
+    <string name="monday_short">M</string>
+    <string name="tuesday_short">T</string>
+    <string name="wednesday_short">W</string>
+    <string name="thursday_short">T</string>
+    <string name="friday_short">F</string>
+    <string name="saturday_short">S</string>
+    <string name="sunday_short">S</string>
 </resources>

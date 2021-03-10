@@ -1,14 +1,4 @@
 <resources>
-    <!-- Reply Preference -->
-    <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
-    </string-array>
-
-    <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
-    </string-array>
 
     <array name="icons">
         <item>Wash</item>
@@ -47,5 +37,13 @@
         <item>@string/motion_sensor</item>
     </string-array>
 
-
+    <string-array name="weekdaysShort">
+        <item>@string/monday_short</item>
+        <item>@string/tuesday_short</item>
+        <item>@string/wednesday_short</item>
+        <item>@string/thursday_short</item>
+        <item>@string/friday_short</item>
+        <item>@string/saturday_short</item>
+        <item>@string/sunday_short</item>
+    </string-array>
 </resources>

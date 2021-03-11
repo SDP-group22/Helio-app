@@ -31,4 +31,5 @@
     <string name="edit_sensor_icon">Edit sensor icon</string>
     <string name="ip_hint">IP address should be Integer</string>
     <string name="motion_sensor_sensitivity">Motion Sensor Sensitivity</string>
+    <string name="select_blinds">Select the control blinds</string>
 </resources>

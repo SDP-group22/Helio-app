@@ -3,7 +3,6 @@ package com.helio.app.ui.schedules;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -12,6 +11,7 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,11 +29,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecViewAdapter.ViewHolder> {
     private final Context context;
@@ -110,6 +108,13 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         }
 
         holder.days.setText(spannableStringBuilder);
+
+        // Set the name of the schedule, but if there isn't one remove it from the layout
+        if (schedule.getName() == null || schedule.getName().equals("")) {
+            holder.layout.removeView(holder.nameLayout);
+        } else {
+            holder.scheduleName.setText(schedule.getName());
+        }
     }
 
     @Override
@@ -127,14 +132,20 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         private final TextView time;
         private final TextView days;
         private final SwitchMaterial activateSwitch;
+        private final TextView scheduleName;
         private final CardView parent;
+        private final RelativeLayout layout;
+        private final RelativeLayout nameLayout;
 
         public ViewHolder(@NonNull View view) {
             super(view);
+            layout = view.findViewById(R.id.parent_layout);
+            nameLayout = view.findViewById(R.id.name_layout);
             time = view.findViewById(R.id.time);
             days = view.findViewById(R.id.days);
             activateSwitch = view.findViewById(R.id.activate_switch);
             parent = view.findViewById(R.id.parent);
+            scheduleName = view.findViewById(R.id.schedule_name);
 
             // Click listener for enable
             activateSwitch.setOnClickListener(v -> {

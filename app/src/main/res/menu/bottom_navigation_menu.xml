@@ -16,4 +16,9 @@
         android:id="@+id/navigation_schedule"
         android:icon="@drawable/timer"
         android:title="Schedule"/>
+    <item
+        android:id="@+id/navigation_sensors"
+        android:icon="@drawable/ic_sensor"
+        android:title="@string/sensor"
+        />
 </menu>

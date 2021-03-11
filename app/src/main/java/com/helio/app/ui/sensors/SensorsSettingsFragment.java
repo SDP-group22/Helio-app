@@ -15,13 +15,11 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Sensor;
 
-import java.util.ArrayList;
-
-public class SensorSettingsFragment extends Fragment {
+public class SensorsSettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sensor_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_sensors_settings, container, false);
         UserDataViewModel model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         // Currently I didn't know which sensor will be chosen.
         Sensor sensor = null;

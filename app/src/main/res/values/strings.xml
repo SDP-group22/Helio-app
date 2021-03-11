@@ -26,4 +26,9 @@
     <string name="add_new_sensor_button">Add sensor</string>
     <string name="enter_ip_address">Enter IP address</string>
     <string name="label">Label</string>
+    <string name="sensor">Sensor</string>
+    <string name="sensor_name">Enter Sensor name</string>
+    <string name="edit_sensor_icon">Edit sensor icon</string>
+    <string name="ip_hint">IP address should be Integer</string>
+    <string name="motion_sensor_sensitivity">Motion Sensor Sensitivity</string>
 </resources>

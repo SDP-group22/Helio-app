@@ -28,7 +28,7 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sensor_list_item,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sensors_list_item,
                 parent, false);
         return new ViewHolder(view);
     }
@@ -41,6 +41,7 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
     public Sensor getSensor() {
         return sensor;
     }
+
 
     @Override
     public int getItemCount() {

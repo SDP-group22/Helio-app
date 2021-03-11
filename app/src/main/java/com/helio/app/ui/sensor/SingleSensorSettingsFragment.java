@@ -30,21 +30,24 @@ public class SingleSensorSettingsFragment extends Fragment {
         UserDataViewModel model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         assert getArguments() != null;
 
-        textInputLayout = view.findViewById(R.id.motion_sensor_sensitivity);
-        dropDownText = view.findViewById(R.id.dropdown_sensitivity);
-        String [] sensitivityItem = new String[]{
-                "1 seconds",
-                "3 seconds",
-                "5 seconds",
-                "10 seconds",
-                "30 seconds",
-                "60 seconds" };
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(SingleSensorSettingsFragment.this,R.layout.dropdown_motion_sensitivity,sensitivityItem);
-        dropDownText.setAdapter(adapter);
+//        // Set up the sensor sensitivity
+        // It didn't work properly
+//        dropDownText = view.findViewById(R.id.dropdown_sensitivity);
+//
+//        String [] sensitivityItemsList = new String[]{
+//                "1 seconds",
+//                "3 seconds",
+//                "5 seconds",
+//                "10 seconds",
+//                "30 seconds",
+//                "60 seconds"
+//        };
+//
+//        ArrayAdapter <String> adapter = new ArrayAdapter<>(SingleSensorSettingsFragment.this,R.layout.dropdown_motion_sensitivity,sensitivityItemsList);
+//        dropDownText.setAdapter(adapter);
 
         return view;
     }
+
 
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
@@ -80,31 +81,35 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
             themeArray.recycle();
         }
 
-        String[] days = context.getResources().getStringArray(R.array.weekdaysShort);
-        String daysString = buildDaysString(days);
-        SpannableString spannableDaysString = new SpannableString(daysString);
-        List<String> allDayStrings = Day.getStrings();
-        List<String> scheduleDayStrings = schedule.getDays().stream().map(d -> d.dayName).collect(Collectors.toList());
-        for (int i = 0; i < days.length; i++) {
-            if (scheduleDayStrings.contains(allDayStrings.get(i))) {
-                spannableDaysString.setSpan(new ForegroundColorSpan(highlightColour), i * 2, i * 2 + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableDaysString.setSpan(new StyleSpan(Typeface.BOLD), i * 2, i * 2 + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableDaysString.setSpan(new UnderlineSpan(), i * 2, i * 2 + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-        }
+        // Get the list of all days and the list of shortened day names (M, T, W...)
+        // Rotate the arrays around for local specific first day as specified in strings.xml
+        Day firstLocalDay = Day.getEnumFromName(context.getResources().getString(R.string.first_day));
+        String[] shortDaysFromResource = context.getResources().getStringArray(R.array.weekdaysShort);
+        List<String> shortWeekdays = Day.getShortDaysLocalOrder(shortDaysFromResource, firstLocalDay);
 
-        holder.days.setText(spannableDaysString);
-    }
+        List<Day> allDays = Day.getValuesLocalOrder(firstLocalDay);
 
-    private String buildDaysString(String[] days) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < days.length; i++) {
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+        for (int i = 0; i < shortWeekdays.size(); i++) {
             if (i > 0) {
-                builder.append(' ');
+                // Do not put spacing in before the first day
+                spannableStringBuilder.append(' ');
             }
-            builder.append(days[i]);
+            // Append the appropriate letter
+            spannableStringBuilder.append(shortWeekdays.get(i));
+
+            // If in the schedule emphasise the day with colour, bold, and underline
+            if (schedule.getDays().contains(allDays.get(i))) {
+                int start = i * 2;
+                // The length is supposed to be 1 character, but in case it isn't
+                int end = start + shortWeekdays.get(i).length();
+                spannableStringBuilder.setSpan(new ForegroundColorSpan(highlightColour), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableStringBuilder.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableStringBuilder.setSpan(new UnderlineSpan(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
         }
-        return builder.toString();
+
+        holder.days.setText(spannableStringBuilder);
     }
 
     @Override

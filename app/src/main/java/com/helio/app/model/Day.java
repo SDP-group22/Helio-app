@@ -3,6 +3,7 @@ package com.helio.app.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,16 @@ public enum Day {
         return lookup.get(name);
     }
 
-    public static List<String> getStrings() {
-        return Arrays.stream(values()).map(d -> d.dayName).collect(Collectors.toList());
+    public static List<Day> getValuesLocalOrder(Day firstDay) {
+        List<Day> allDaysList = Arrays.asList(values());
+        Collections.rotate(allDaysList, -allDaysList.indexOf(firstDay));
+        return allDaysList;
+    }
+
+    public static List<String> getShortDaysLocalOrder(String[] shortWeekdays, Day firstDay) {
+        List<Day> allDaysList = Arrays.asList(values());
+        List<String> shortDayList = Arrays.asList(shortWeekdays);
+        Collections.rotate(shortDayList, -allDaysList.indexOf(firstDay));
+        return shortDayList;
     }
 }

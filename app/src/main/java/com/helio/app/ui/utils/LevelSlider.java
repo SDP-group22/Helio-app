@@ -13,18 +13,18 @@ import com.google.android.material.slider.Slider;
 /**
  * The custom version of the material slider used for controlling blinds
  */
-public class ControlSlider extends Slider {
-    public ControlSlider(@NonNull Context context) {
+public class LevelSlider extends Slider {
+    public LevelSlider(@NonNull Context context) {
         super(context);
         setMyParams();
     }
 
-    public ControlSlider(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public LevelSlider(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setMyParams();
     }
 
-    public ControlSlider(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public LevelSlider(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setMyParams();
     }

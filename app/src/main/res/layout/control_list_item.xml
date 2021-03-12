@@ -38,7 +38,7 @@
             android:textStyle="bold"
             tools:ignore="HardcodedText" />
 
-        <com.helio.app.ui.utils.ControlSlider
+        <com.helio.app.ui.utils.LevelSlider
             android:id="@+id/controlSlider"
             android:layout_below="@+id/scheduleName"
             android:layout_toEndOf="@+id/blindIcon"

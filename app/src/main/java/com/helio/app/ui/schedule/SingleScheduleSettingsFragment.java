@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
@@ -37,6 +38,7 @@ public class SingleScheduleSettingsFragment extends Fragment {
         TextInputLayout name = view.findViewById(R.id.schedule_name);
         EditText nameEditText = name.getEditText();
         MaterialButton button = view.findViewById(R.id.time_button);
+        Slider levelSlider = view.findViewById(R.id.level_slider);
 
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         model.setCurrentSchedule(scheduleId);
@@ -48,6 +50,7 @@ public class SingleScheduleSettingsFragment extends Fragment {
                     Objects.requireNonNull(nameEditText).setInputType(InputType.TYPE_CLASS_TEXT);
                     nameEditText.setText(schedule.getName());
                     button.setText(schedule.getFormattedTime());
+                    levelSlider.setValue(schedule.getTargetLevel());
 
                     nameEditText.addTextChangedListener(new TextChangedListener() {
                         @Override
@@ -71,6 +74,8 @@ public class SingleScheduleSettingsFragment extends Fragment {
                             button.setText(schedule.getFormattedTime());
                         });
                     });
+
+                    levelSlider.addOnChangeListener((slider, value, fromUser) -> schedule.setTargetLevel((int) value));
                 }
         );
 

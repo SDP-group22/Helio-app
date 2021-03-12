@@ -18,11 +18,17 @@
         android:textSize="48sp"
         tools:ignore="HardcodedText" />
 
+    <com.helio.app.ui.utils.LevelSlider
+        android:id="@+id/level_slider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_button"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/schedule_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/time_button"
+        android:layout_below="@id/level_slider"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
         android:hint="@string/settingsName"

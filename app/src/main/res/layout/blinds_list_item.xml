@@ -34,7 +34,7 @@
             android:layout_toEndOf="@+id/blindIcon"
             android:layout_centerHorizontal="true"
             android:textSize="32sp"
-            android:text="Name of motor"
+            android:text="Name of motorr"
             android:textStyle="bold"
             tools:ignore="HardcodedText" />
 

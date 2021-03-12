@@ -9,7 +9,7 @@
     <string name="settingsViewSchedules">View this Blind\'s Schedules</string>
     <string name="settingsIcon">Icon</string>
     <string name="settingsName">Name</string>
-    <string name="settingsIP">IP address</string>
+    <string name="ip_address">IP address</string>
     <string name="title_settings">Settings</string>
     <string name="title_edit_blind">Edit Blind</string>
     <string name="light_sensor">Light Sensor</string>
@@ -41,7 +41,7 @@
     <string name="sensor">Sensor</string>
     <string name="sensor_name">Enter Sensor name</string>
     <string name="edit_sensor_icon">Edit sensor icon</string>
-    <string name="ip_hint">IP address should be Integer</string>
+    <string name="ip_hint">For example: 192.168.0.1</string>
     <string name="motion_sensor_sensitivity">Motion Sensor Sensitivity</string>
     <string name="sensor_enterIP_address">Enter sensor IP address</string>
     <string name="select_blinds">Select the control blinds</string>

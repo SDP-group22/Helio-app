@@ -4,29 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--    IP Box-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ip_address"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:endIconMode="password_toggle"
-        app:boxBackgroundMode="outline"
-        app:helperText="@string/ip_hint"
-        app:counterEnabled="true"
-        app:counterMaxLength="12"
         android:layout_margin="20dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        >
+        android:hint="@string/ip_address"
+        app:helperText="@string/ip_hint"
+        app:startIconDrawable="@drawable/ic_baseline_wifi_24">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/sensor_enterIP_address"
-            app:drawableLeftCompat="@drawable/hub"
-            android:drawablePadding="5dp"
-
-            />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -39,7 +30,7 @@
         android:layout_margin="20dp"
         app:boxBackgroundMode="outline"
         app:endIconMode="clear_text">
-        
+
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,15 +46,13 @@
         android:layout_below="@+id/sensorName"
         android:layout_margin="20dp"
         app:boxBackgroundMode="outline"
-        app:endIconMode="dropdown_menu"
-        >
+        app:endIconMode="dropdown_menu">
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edit_sensor_icon"
             android:background="@null"
-            />
+            android:hint="@string/edit_sensor_icon" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -76,16 +65,14 @@
         android:layout_below="@+id/sensor_icon"
         android:layout_margin="20dp"
         app:boxBackgroundMode="outline"
-        app:endIconMode="dropdown_menu"
-        >
+        app:endIconMode="dropdown_menu">
 
         <AutoCompleteTextView
             android:id="@+id/dropdown_sensitivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/motion_sensor_sensitivity"
             android:background="@null"
-            />
+            android:hint="@string/motion_sensor_sensitivity" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -96,16 +83,14 @@
         android:layout_below="@+id/motion_sensor_sensitivity"
         android:layout_margin="20dp"
         app:boxBackgroundMode="outline"
-        app:endIconMode="dropdown_menu"
-        >
+        app:endIconMode="dropdown_menu">
 
         <AutoCompleteTextView
             android:id="@+id/checkbox_blinds"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/select_blinds"
             android:background="@null"
-            />
+            android:hint="@string/select_blinds" />
 
     </com.google.android.material.textfield.TextInputLayout>
 </RelativeLayout>

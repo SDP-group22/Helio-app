@@ -23,7 +23,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+import com.helio.app.model.Sensor;
 
 /**
  * HubClient is the client-side code we use to communicate with the Hub.

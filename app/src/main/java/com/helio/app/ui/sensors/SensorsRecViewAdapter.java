@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.LightSensor;
@@ -50,12 +52,14 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
         sensor = sensors.get(position);
         holder.txtName.setText(sensor.getName());
         holder.sensorIcon.setImageResource(sensor.getIcon());
+        holder.activateSwitch.setChecked(sensor.isActive());
     }
 
     public void setLightSensors(Collection<LightSensor> sensors) {
         // Remove sensors of this type before adding them back to avoid duplication
         this.sensors = this.sensors.stream().filter(s -> s.getType() != LightSensor.TYPE).collect(Collectors.toList());
         this.sensors.addAll(sensors);
+        sortSensors();
         notifyDataSetChanged();
     }
 
@@ -70,7 +74,7 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
     private void sortSensors() {
         // Sort for consistent order
         Collections.sort(sensors, Comparator.comparingInt(sensor ->
-                sensor.getId() + sensor.getType() == MotionSensor.TYPE ? -1000 : 1000));
+                (sensor.getId() + 1) * sensor.getType() == MotionSensor.TYPE ? -1 : 1));
     }
 
     @Override
@@ -81,13 +85,15 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView txtName;
         private final ImageView sensorIcon;
+        private final SwitchMaterial activateSwitch;
         private final CardView parent;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtName = itemView.findViewById(R.id.sensorName);
-            sensorIcon = itemView.findViewById(R.id.sensorIcon);
-            parent = itemView.findViewById(R.id.parent);
+        public ViewHolder(@NonNull View view) {
+            super(view);
+            txtName = view.findViewById(R.id.sensorName);
+            sensorIcon = view.findViewById(R.id.sensorIcon);
+            activateSwitch = view.findViewById(R.id.activate_switch);
+            parent = view.findViewById(R.id.parent);
 
             // Click to open individual settings page
             parent.setOnClickListener(v -> {
@@ -95,7 +101,27 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
                         SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
                 action.setCurrentSensorId(sensor.getId());
                 action.setSensorType(sensor.getType());
-                Navigation.findNavController(itemView).navigate(action);
+                Navigation.findNavController(view).navigate(action);
+            });
+
+            // Click listener for enable
+            activateSwitch.setOnClickListener(v -> {
+                SwitchMaterial switchView = (SwitchMaterial) v;
+
+                // Update the view
+                switchView.toggle();
+
+                // Toast to explain what happened
+                String message;
+                if (switchView.isChecked()) {
+                    message = parent.getResources().getString(R.string.deactivated);
+                } else {
+                    message = parent.getResources().getString(R.string.activated);
+                }
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                // Send update to model
+                model.toggleSensorActive(sensors.get(getAdapterPosition()));
             });
         }
     }

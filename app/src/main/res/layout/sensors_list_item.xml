@@ -23,8 +23,8 @@
             android:layout_alignTop="@+id/sensorName"
             android:layout_alignBottom="@+id/sensorName"
             android:layout_marginStart="5dp"
-            app:tint="?colorText"
             app:srcCompat="@drawable/ic_motion_sensor"
+            app:tint="?colorText"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -32,12 +32,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_toEndOf="@+id/sensorIcon"
             android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/sensorIcon"
             android:text="Name of sensor"
             android:textSize="32sp"
             tools:ignore="HardcodedText" />
 
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/activate_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

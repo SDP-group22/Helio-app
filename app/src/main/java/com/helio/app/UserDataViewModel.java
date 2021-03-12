@@ -10,6 +10,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
+import com.helio.app.model.Schedule;
+import com.helio.app.model.Sensor;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.request.LightSensorSettingsRequest;
 import com.helio.app.networking.request.MotionSensorSettingsRequest;
@@ -96,5 +98,32 @@ public class UserDataViewModel extends AndroidViewModel {
                 new ArrayList<>(), getApplication().getString(R.string.new_light_sensor), "0.0.0.0", true, 0, "");
         client.addLightSensor(lightSensors, request);
         return lightSensors;
+    }
+
+    public void pushSensorState(MotionSensor s) {
+        if (motionSensors.getValue() != null) {
+            motionSensors.getValue().put(s.getId(), s);
+            MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
+                    s.getMotorIds(), s.getName(), s.getIp(), s.isActive(), s.getBattery(), s.getStyle(), s.getDurationSensitivity());
+            client.updateMotionSensor(motionSensors, s.getId(), request);
+        }
+    }
+
+    public void pushSensorState(LightSensor s) {
+        if (lightSensors.getValue() != null) {
+            lightSensors.getValue().put(s.getId(), s);
+            LightSensorSettingsRequest request = new LightSensorSettingsRequest(
+                    s.getMotorIds(), s.getName(), s.getIp(), s.isActive(), s.getBattery(), s.getStyle());
+            client.updateLightSensor(lightSensors, s.getId(), request);
+        }
+    }
+
+    public void toggleSensorActive(Sensor s) {
+        s.setActive(!s.isActive());
+        if (s.getClass() == MotionSensor.class) {
+            pushSensorState((MotionSensor) s);
+        } else if (s.getClass() == LightSensor.class) {
+            pushSensorState((LightSensor) s);
+        }
     }
 }

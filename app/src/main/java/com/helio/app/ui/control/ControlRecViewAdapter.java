@@ -45,8 +45,6 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
             holder.blindIcon.setImageResource(motor.getIcon().id);
         }
         holder.slider.setValue(motor.getLevel());
-
-        holder.slider.setLabelFormatter(new LevelLabelFormatter(context));
     }
 
     @Override

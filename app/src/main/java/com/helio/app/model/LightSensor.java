@@ -11,4 +11,9 @@ public class LightSensor extends Sensor {
     public LightSensor(int id) {
         super(id);
     }
+
+    @Override
+    public String getType() {
+        return "Light";
+    }
 }

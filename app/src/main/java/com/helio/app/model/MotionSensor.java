@@ -18,6 +18,11 @@ public class MotionSensor extends Sensor {
         super(id);
     }
 
+    @Override
+    public String getType() {
+        return "Motion";
+    }
+
     public String getDurationSensitivity() {
         return durationSensitivity;
     }

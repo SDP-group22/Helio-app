@@ -16,15 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Day;
 import com.helio.app.model.Schedule;
-import com.helio.app.ui.control.LevelLabelFormatter;
+import com.helio.app.ui.utils.LevelLabelFormatter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -148,7 +149,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         private final TextView days;
         private final SwitchMaterial activateSwitch;
         private final TextView scheduleName;
-        private final CardView parent;
+        private final MaterialCardView parent;
         private final RelativeLayout layout;
         private final RelativeLayout nameLayout;
         private final TextView level;
@@ -182,6 +183,14 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
 
                 // Send update to model
                 model.toggleScheduleActive(schedules.get(getAdapterPosition()));
+            });
+
+            parent.setOnClickListener(v -> {
+                SchedulesSettingsFragmentDirections.ActionScheduleFragmentToScheduleSettingsFragment action =
+                        SchedulesSettingsFragmentDirections.actionScheduleFragmentToScheduleSettingsFragment();
+                Schedule s = schedules.get(getAdapterPosition());
+                action.setCurrentScheduleId(s.getId());
+                Navigation.findNavController(itemView).navigate(action);
             });
         }
     }

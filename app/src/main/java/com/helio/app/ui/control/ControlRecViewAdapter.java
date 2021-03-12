@@ -14,6 +14,7 @@ import com.google.android.material.slider.Slider;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
+import com.helio.app.ui.utils.LevelLabelFormatter;
 
 import java.util.ArrayList;
 

@@ -55,8 +55,9 @@
         android:layout_marginBottom="15dp"
         android:layout_alignParentBottom="true"
         android:textSize="18sp"
-        android:text="@string/not_connected"
-        app:drawableLeftCompat="@android:drawable/ic_delete"
+        android:text="@string/connecting_to_helio_hub"
+        app:drawableLeftCompat="@android:drawable/stat_notify_sync"
+        android:drawableTint="?colorPrimary"
         android:drawablePadding="2dp"
         android:gravity="start|center_vertical"
         />

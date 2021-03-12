@@ -28,11 +28,22 @@
             android:layout_marginEnd="15dp"
             />
 
-        <Spinner
-            android:id="@+id/theme_selection_dropdown"
-            android:background="@android:drawable/btn_dropdown"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/theme_menu"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/theme"
+            android:inputType="none">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

@@ -8,56 +8,53 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.MainActivity;
 import com.helio.app.R;
 
-public class SettingsFragment extends Fragment {
+import java.util.Objects;
 
-    private SettingsViewModel settingsViewModel;
+public class SettingsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         setupThemeDropdown(view);
         return view;
     }
 
     private void setupThemeDropdown(View view) {
-        Spinner themeSpinner = (Spinner) view.findViewById(R.id.theme_selection_dropdown);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                view.getContext(), R.array.theme_options, android.R.layout.simple_spinner_item
-        );
-        themeSpinner.setAdapter(adapter);
-        selectCurrentTheme(themeSpinner);
-        // listen for updates
-        themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view1, int position, long id) {
-                final String newThemeName = parent.getItemAtPosition(position).toString();
-                ((MainActivity) getActivity()).updateTheme(newThemeName);
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+        AutoCompleteTextView themeMenu = (AutoCompleteTextView) view.<TextInputLayout>findViewById(R.id.theme_menu).getEditText();
+        assert themeMenu != null;
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.theme_list_item, view.getResources().getStringArray(R.array.theme_options));
+        themeMenu.setAdapter(adapter);
+        selectCurrentTheme(themeMenu);
+        themeMenu.setOnItemClickListener((parent, v, position, id) -> {
+            final String newThemeName = parent.getItemAtPosition(position).toString();
+            ((MainActivity) requireActivity()).updateTheme(newThemeName);
         });
     }
 
-    private void selectCurrentTheme(Spinner spinner) {
-        String currentThemeName = ((MainActivity) getActivity()).getCurrentThemeName();
-        final int count = spinner.getCount();
+    private void selectCurrentTheme(AutoCompleteTextView themeMenu) {
+        ListAdapter adapter = Objects.requireNonNull(themeMenu).getAdapter();
+        String currentThemeName = ((MainActivity) requireActivity()).getCurrentThemeName();
+        final int count = adapter.getCount();
         for(int i = 0; i < count; i++) {
-            String itemValue = (String) spinner.getItemAtPosition(i);
+            String itemValue = (String) adapter.getItem(i);
             if(itemValue.equals(currentThemeName)) {
                 System.out.println("Setting spinner to \"" + itemValue + "\"...");
-                spinner.setSelection(i);
+                themeMenu.setText(currentThemeName, false);
                 break;
             }
         }

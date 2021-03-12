@@ -44,4 +44,5 @@
     <string name="motion_sensor_sensitivity">Motion Sensor Sensitivity</string>
     <string name="sensor_enterIP_address">Enter sensor IP address</string>
     <string name="select_blinds">Select the control blinds</string>
+    <string name="theme">Theme</string>
 </resources>

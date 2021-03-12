@@ -30,4 +30,19 @@
     <string name="user_settings_theme_key">user_settings</string>
     <string name="new_blinds">New blinds</string>
     <string name="theme">Theme</string>
+    <string name="add_new_schedule_button">Add a new schedule</string>
+    <string name="title_edit_schedule">Edit Schedule</string>
+    <string name="title_schedule_setting">Schedule</string>
+    <string name="enter_event_name">Enter event name</string>
+    <string name="enter_motor_name">Enter motor name</string>
+    <string name="select_time">Select time</string>
+    <string name="add_new_sensor_button">Add sensor</string>
+    <string name="label">Label</string>
+    <string name="sensor">Sensor</string>
+    <string name="sensor_name">Enter Sensor name</string>
+    <string name="edit_sensor_icon">Edit sensor icon</string>
+    <string name="ip_hint">IP address should be Integer</string>
+    <string name="motion_sensor_sensitivity">Motion Sensor Sensitivity</string>
+    <string name="sensor_enterIP_address">Enter sensor IP address</string>
+    <string name="select_blinds">Select the control blinds</string>
 </resources>

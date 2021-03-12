@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent"
@@ -13,7 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/border"
+        android:background="?colorOnPrimary"
         android:paddingVertical="5dp">
 
         <ImageView
@@ -23,9 +23,9 @@
             android:layout_alignTop="@+id/sensorName"
             android:layout_alignBottom="@+id/sensorName"
             android:layout_marginStart="5dp"
-            app:tint="?colorText"
+            android:contentDescription="@string/motion_sensor"
             app:srcCompat="@drawable/ic_motion_sensor"
-            android:contentDescription="@string/motion_sensor" />
+            app:tint="?colorText" />
 
         <TextView
             android:id="@+id/sensorName"
@@ -37,6 +37,5 @@
             android:textSize="32sp"
             tools:ignore="HardcodedText" />
 
-
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

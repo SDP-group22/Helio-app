@@ -24,6 +24,7 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Day;
 import com.helio.app.model.Schedule;
+import com.helio.app.ui.control.LevelLabelFormatter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -81,33 +82,33 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
 
         // Get the list of all days and the list of shortened day names (M, T, W...)
         // Rotate the arrays around for local specific first day as specified in strings.xml
-        Day firstLocalDay = Day.getEnumFromName(context.getResources().getString(R.string.first_day));
+        Day firstLocalDay = Day.getEnumFromName(context.getString(R.string.first_day));
         String[] shortDaysFromResource = context.getResources().getStringArray(R.array.weekdaysShort);
         List<String> shortWeekdays = Day.getShortDaysLocalOrder(shortDaysFromResource, firstLocalDay);
 
         List<Day> allDays = Day.getValuesLocalOrder(firstLocalDay);
 
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+        SpannableStringBuilder daysStringBuilder = new SpannableStringBuilder();
         for (int i = 0; i < shortWeekdays.size(); i++) {
             if (i > 0) {
                 // Do not put spacing in before the first day
-                spannableStringBuilder.append(' ');
+                daysStringBuilder.append(' ');
             }
             // Append the appropriate letter
-            spannableStringBuilder.append(shortWeekdays.get(i));
+            daysStringBuilder.append(shortWeekdays.get(i));
 
             // If in the schedule emphasise the day with colour, bold, and underline
             if (schedule.getDays().contains(allDays.get(i))) {
                 int start = i * 2;
                 // The length is supposed to be 1 character, but in case it isn't
                 int end = start + shortWeekdays.get(i).length();
-                spannableStringBuilder.setSpan(new ForegroundColorSpan(highlightColour), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableStringBuilder.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableStringBuilder.setSpan(new UnderlineSpan(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                daysStringBuilder.setSpan(new ForegroundColorSpan(highlightColour), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                daysStringBuilder.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                daysStringBuilder.setSpan(new UnderlineSpan(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
 
-        holder.days.setText(spannableStringBuilder);
+        holder.days.setText(daysStringBuilder);
 
         // Set the name of the schedule, but if there isn't one remove it from the layout
         if (schedule.getName() == null || schedule.getName().equals("")) {
@@ -115,6 +116,20 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         } else {
             holder.scheduleName.setText(schedule.getName());
         }
+
+        // Set the target level, and emphasise the level itself
+        SpannableStringBuilder levelStringBuilder = new SpannableStringBuilder();
+        String targetBaseString = context.getString(R.string.target);
+        String targetAsString = new LevelLabelFormatter(context).getFormattedValue(schedule.getTargetLevel());
+        levelStringBuilder.append(targetBaseString);
+        levelStringBuilder.append(targetAsString);
+
+        int start = targetBaseString.length();
+        int end = start + targetAsString.length();
+        levelStringBuilder.setSpan(new ForegroundColorSpan(highlightColour), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        levelStringBuilder.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        holder.level.setText(levelStringBuilder);
     }
 
     @Override
@@ -136,6 +151,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         private final CardView parent;
         private final RelativeLayout layout;
         private final RelativeLayout nameLayout;
+        private final TextView level;
 
         public ViewHolder(@NonNull View view) {
             super(view);
@@ -146,6 +162,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
             activateSwitch = view.findViewById(R.id.activate_switch);
             parent = view.findViewById(R.id.parent);
             scheduleName = view.findViewById(R.id.schedule_name);
+            level = view.findViewById(R.id.level);
 
             // Click listener for enable
             activateSwitch.setOnClickListener(v -> {

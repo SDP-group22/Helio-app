@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 
@@ -36,6 +37,18 @@ public class SensorsSettingsFragment extends Fragment {
         RecyclerView recView = view.findViewById(R.id.sensorsRCView);
         recView.setAdapter(adapter);
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        view.<FloatingActionButton>findViewById(R.id.add_motion_button).setOnClickListener(
+                v -> model.addMotionSensor().observe(
+                        getViewLifecycleOwner(),
+                        sensors -> adapter.setMotionSensors(sensors.values()))
+        );
+
+        view.<FloatingActionButton>findViewById(R.id.add_light_button).setOnClickListener(
+                v -> model.addLightSensor().observe(
+                        getViewLifecycleOwner(),
+                        sensors -> adapter.setLightSensors(sensors.values()))
+        );
         return view;
     }
 }

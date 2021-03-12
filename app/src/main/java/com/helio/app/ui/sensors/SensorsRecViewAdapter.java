@@ -20,12 +20,16 @@ import com.helio.app.model.Sensor;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAdapter.ViewHolder> {
 
     private final Context context;
     private final UserDataViewModel model;
-    private ArrayList<Sensor> sensors = new ArrayList<>();
+    private List<Sensor> sensors = new ArrayList<>();
 
     public SensorsRecViewAdapter(Context context, UserDataViewModel model) {
         this.context = context;
@@ -54,13 +58,24 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
     }
 
     public void setLightSensors(Collection<LightSensor> sensors) {
+        // Remove sensors of this type before adding them back to avoid duplication
+        this.sensors = this.sensors.stream().filter(s -> s.getType() != LightSensor.TYPE).collect(Collectors.toList());
         this.sensors.addAll(sensors);
         notifyDataSetChanged();
     }
 
     public void setMotionSensors(Collection<MotionSensor> sensors) {
+        // Remove sensors of this type before adding them back to avoid duplication
+        this.sensors = this.sensors.stream().filter(s -> s.getType() != MotionSensor.TYPE).collect(Collectors.toList());
         this.sensors.addAll(sensors);
+        sortSensors();
         notifyDataSetChanged();
+    }
+
+    private void sortSensors() {
+        // Sort for consistent order
+        Collections.sort(sensors, Comparator.comparingInt(sensor ->
+                sensor.getId() + sensor.getType() == MotionSensor.TYPE ? -1000 : 1000));
     }
 
     @Override

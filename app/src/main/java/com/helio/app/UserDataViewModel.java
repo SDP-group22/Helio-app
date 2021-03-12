@@ -11,7 +11,11 @@ import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
 import com.helio.app.networking.HubClient;
+import com.helio.app.networking.request.LightSensorSettingsRequest;
+import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
+
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -78,5 +82,19 @@ public class UserDataViewModel extends AndroidViewModel {
                 getApplication().getString(R.string.new_blinds), "0.0.0.0", true, 0, 0, 0, "");
         client.addMotor(motors, motorSettingsRequest);
         return motors;
+    }
+
+    public LiveData<Map<Integer, MotionSensor>> addMotionSensor() {
+        MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
+                new ArrayList<>(), getApplication().getString(R.string.add_motion_sensor_button), "0.0.0.0", true, 0, "", "");
+        client.addMotionSensor(motionSensors, request);
+        return motionSensors;
+    }
+
+    public LiveData<Map<Integer, LightSensor>> addLightSensor() {
+        LightSensorSettingsRequest request = new LightSensorSettingsRequest(
+                new ArrayList<>(), getApplication().getString(R.string.add_motion_sensor_button), "0.0.0.0", true, 0, "");
+        client.addLightSensor(lightSensors, request);
+        return lightSensors;
     }
 }

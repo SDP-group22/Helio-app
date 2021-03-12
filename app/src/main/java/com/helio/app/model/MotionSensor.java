@@ -3,8 +3,10 @@ package com.helio.app.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MotionSensor extends Sensor {
+    public static final int TYPE = 0;
     @SerializedName("duration_sensitivity")
     private String durationSensitivity;
 
@@ -19,15 +21,16 @@ public class MotionSensor extends Sensor {
     }
 
     @Override
-    public String getType() {
-        return "Motion";
+    public int getType() {
+        return TYPE;
     }
 
     public String getDurationSensitivity() {
         return durationSensitivity;
     }
 
-    public void setDurationSensitivity(String durationSensitivity) {
-        this.durationSensitivity = durationSensitivity;
+    public void setDurationSensitivity(int hour, int minute) {
+        // Locale is set because it complains about that sometimes causing bugs
+        this.durationSensitivity = String.format(Locale.US, "%02d:%02d", hour, minute);
     }
 }

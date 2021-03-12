@@ -1,4 +1,4 @@
-package com.helio.app.ui.sensor;
+package com.helio.app.ui.sensors;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

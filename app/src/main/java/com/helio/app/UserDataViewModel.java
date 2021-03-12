@@ -18,14 +18,9 @@ import java.util.Objects;
 public class UserDataViewModel extends AndroidViewModel {
     private final HubClient client = new HubClient("http://10.0.2.2:4310/");
     private MutableLiveData<Map<Integer, Motor>> motors;
-    private MutableLiveData<Map<Integer, LightSensor>> lightsensors;
-    private MutableLiveData<Map<Integer, MotionSensor>> motionsensors;
-    //private MutableLiveData<Map<Integer, Sensor>> sensors;
+    private MutableLiveData<Map<Integer, LightSensor>> lightSensors;
+    private MutableLiveData<Map<Integer, MotionSensor>> motionSensors;
     private int currentMotorId = -1;
-    private int currentScheduleID = -1;
-    private int currentLightSensor = -1;
-    private int currentMotionSensor = -1;
-    private int currentSensor = -1;
 
 
     public UserDataViewModel(@NonNull Application application) {
@@ -41,27 +36,20 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     public LiveData<Map<Integer, LightSensor>> fetchLightSensors() {
-        if (lightsensors == null) {
-            lightsensors = new MutableLiveData<>();
-            client.getAllLightSensors(lightsensors);
+        if (lightSensors == null) {
+            lightSensors = new MutableLiveData<>();
+            client.getAllLightSensors(lightSensors);
         }
-        return lightsensors;
+        return lightSensors;
     }
 
     public LiveData<Map<Integer, MotionSensor>> fetchMotionSensors() {
-        if (motionsensors == null) {
-            motionsensors = new MutableLiveData<>();
-            client.getAllMotionSensors(motionsensors);
+        if (motionSensors == null) {
+            motionSensors = new MutableLiveData<>();
+            client.getAllMotionSensors(motionSensors);
         }
-        return motionsensors;
+        return motionSensors;
     }
-//    public LiveData<Map<Integer, Sensor>> fetchSensors(){
-//        if (sensors == null){
-//            sensors = new MutableLiveData<>();
-//            client.getAllSensors(sensors);
-//        }
-//        return sensors;
-//    }
 
     public void setCurrentMotor(int id) {
         currentMotorId = id;

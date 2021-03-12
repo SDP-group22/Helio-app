@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/singleSensorSettingsFragment"
-        android:name="com.helio.app.ui.sensor.SingleSensorSettingsFragment"
+        android:name="com.helio.app.ui.sensors.SingleSensorSettingsFragment"
         android:label="@string/sensor"
         tools:layout="@layout/fragment_single_sensor_settings"
         />

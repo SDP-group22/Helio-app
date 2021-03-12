@@ -35,4 +35,21 @@
             app:argType="integer"
             android:defaultValue="0"/>
     </fragment>
+    <fragment
+        android:id="@+id/navigation_sensors"
+        android:name="com.helio.app.ui.sensors.SensorsSettingsFragment"
+        android:label="@string/sensor"
+        tools:layout="@layout/fragment_sensors_settings">
+        <action
+            android:id="@+id/action_sensorsSettingFragment_to_singleSensorSettingFragment"
+            app:destination="@+id/singleSensorSettingsFragment"
+
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/singleSensorSettingsFragment"
+        android:name="com.helio.app.ui.sensors.SingleSensorSettingsFragment"
+        android:label="@string/sensor"
+        tools:layout="@layout/fragment_single_sensor_settings"
+        />
 </navigation>

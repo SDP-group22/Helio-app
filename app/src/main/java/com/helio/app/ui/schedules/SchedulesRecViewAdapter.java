@@ -60,17 +60,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         holder.activateSwitch.setChecked(schedule.isActive());
 
         // Parse the date from the schedule String and convert to local format
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.US);
-        try {
-            Date date = sdf.parse(schedule.getTime());
-            if (date != null) {
-                String formattedTime = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
-                holder.time.setText(formattedTime);
-            }
-        } catch (ParseException e) {
-            System.out.println("Could not parse date " + schedule.getTime());
-            e.printStackTrace();
-        }
+        holder.time.setText(schedule.getFormattedTime());
 
         // Get the emphasis colour from the theme
         TypedArray themeArray = context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});

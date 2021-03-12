@@ -10,12 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
-import androidx.preference.Preference;
 
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
-import com.helio.app.ui.MotorIcon;
 
 public class SingleBlindSettingsFragment extends Fragment {
 
@@ -42,26 +40,32 @@ public class SingleBlindSettingsFragment extends Fragment {
         assert getArguments() != null;
         int motorId = getArguments().getInt("currentMotorId");
 
+        SingleBlindSettingsPreferencesFragment preferenceFragment = (SingleBlindSettingsPreferencesFragment)
+                getChildFragmentManager().findFragmentById(R.id.fragment_container_preferences);
+        assert preferenceFragment != null;
+        EditTextPreference namePreference = preferenceFragment.findPreference("name");
+        EditTextPreference ipPreference = preferenceFragment.findPreference("ip");
+        ListPreference iconPreference = preferenceFragment.findPreference("icon");
+
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         model.setCurrentMotor(motorId);
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> {
                     motor = motors.get(motorId);
-                    SingleBlindSettingsPreferencesFragment preferenceFragment = (SingleBlindSettingsPreferencesFragment)
-                            getChildFragmentManager().findFragmentById(R.id.fragment_container_preferences);
 
-                    EditTextPreference namePreference = preferenceFragment.findPreference("name");
-                    EditTextPreference ipPreference = preferenceFragment.findPreference("ip");
-                    ListPreference iconPreference = preferenceFragment.findPreference("icon");
-
+                    assert namePreference != null;
+                    assert ipPreference != null;
+                    assert motor != null;
                     namePreference.setText(motor.getName());
                     ipPreference.setText(motor.getIp());
 
                     if (motor.getIcon() == null) {
                         // If motor has no icon then set to None
+                        assert iconPreference != null;
                         iconPreference.setValueIndex(iconPreference.getEntryValues().length - 1);
                     } else {
+                        assert iconPreference != null;
                         iconPreference.setValue(motor.getIcon().name);
                     }
 

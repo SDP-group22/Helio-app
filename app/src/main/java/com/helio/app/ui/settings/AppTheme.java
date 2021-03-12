@@ -5,7 +5,8 @@ import java.util.Map;
 
 public enum AppTheme {
     DEFAULT("Default"),
-    NIGHT("Night");
+    NIGHT("Night"),
+    HIGH_CONTRAST("High Contrast");
 
     public static final String DEFAULT_THEME_NAME = "Default";
     private final String name;

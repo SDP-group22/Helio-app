@@ -14,6 +14,7 @@
     <array name="theme_options">
         <item>Default</item>
         <item>Night</item>
+        <item>High Contrast</item>
     </array>
 
     <array name="icons">

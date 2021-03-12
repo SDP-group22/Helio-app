@@ -1,5 +1,7 @@
 package com.helio.app.model;
 
+import com.helio.app.R;
+
 import java.util.List;
 
 public class LightSensor extends Sensor {
@@ -17,5 +19,10 @@ public class LightSensor extends Sensor {
     @Override
     public int getType() {
         return TYPE;
+    }
+
+    @Override
+    public int getIcon() {
+        return R.drawable.ic_light_sensor;
     }
 }

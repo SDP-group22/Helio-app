@@ -35,7 +35,8 @@
     <string name="enter_event_name">Enter event name</string>
     <string name="enter_motor_name">Enter motor name</string>
     <string name="select_time">Select time</string>
-    <string name="add_motion_sensor_button">Add motion sensor</string>
+    <string name="new_motion_sensor">New motion sensor</string>
+    <string name="new_light_sensor">New light sensor</string>
     <string name="label">Label</string>
     <string name="sensor">Sensor</string>
     <string name="sensor_name">Enter Sensor name</string>

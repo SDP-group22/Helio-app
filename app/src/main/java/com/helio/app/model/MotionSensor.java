@@ -1,6 +1,7 @@
 package com.helio.app.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.helio.app.R;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,6 +24,11 @@ public class MotionSensor extends Sensor {
     @Override
     public int getType() {
         return TYPE;
+    }
+
+    @Override
+    public int getIcon() {
+        return R.drawable.ic_motion_sensor;
     }
 
     public String getDurationSensitivity() {

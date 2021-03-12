@@ -86,14 +86,14 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public LiveData<Map<Integer, MotionSensor>> addMotionSensor() {
         MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.add_motion_sensor_button), "0.0.0.0", true, 0, "", "");
+                new ArrayList<>(), getApplication().getString(R.string.new_motion_sensor), "0.0.0.0", true, 0, "", "");
         client.addMotionSensor(motionSensors, request);
         return motionSensors;
     }
 
     public LiveData<Map<Integer, LightSensor>> addLightSensor() {
         LightSensorSettingsRequest request = new LightSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.add_motion_sensor_button), "0.0.0.0", true, 0, "");
+                new ArrayList<>(), getApplication().getString(R.string.new_light_sensor), "0.0.0.0", true, 0, "");
         client.addLightSensor(lightSensors, request);
         return lightSensors;
     }

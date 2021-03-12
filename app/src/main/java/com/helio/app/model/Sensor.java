@@ -83,4 +83,6 @@ public abstract class Sensor implements IdComponent {
     }
 
     public abstract int getType();
+
+    public abstract int getIcon();
 }

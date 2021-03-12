@@ -30,6 +30,7 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
     private final Context context;
     private final UserDataViewModel model;
     private List<Sensor> sensors = new ArrayList<>();
+    private Sensor sensor;
 
     public SensorsRecViewAdapter(Context context, UserDataViewModel model) {
         this.context = context;
@@ -46,15 +47,9 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Sensor sensor = sensors.get(position);
+        sensor = sensors.get(position);
         holder.txtName.setText(sensor.getName());
-        holder.parent.setOnClickListener(v -> {
-            SensorsSettingsFragmentDirections.ActionSensorsSettingFragmentToSingleSensorSettingFragment action =
-                    SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
-            action.setCurrentSensorId(sensor.getId());
-            action.setSensorType(sensor.getType());
-            Navigation.findNavController(holder.itemView).navigate(action);
-        });
+        holder.sensorIcon.setImageResource(sensor.getIcon());
     }
 
     public void setLightSensors(Collection<LightSensor> sensors) {
@@ -93,6 +88,15 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
             txtName = itemView.findViewById(R.id.sensorName);
             sensorIcon = itemView.findViewById(R.id.sensorIcon);
             parent = itemView.findViewById(R.id.parent);
+
+            // Click to open individual settings page
+            parent.setOnClickListener(v -> {
+                SensorsSettingsFragmentDirections.ActionSensorsSettingFragmentToSingleSensorSettingFragment action =
+                        SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
+                action.setCurrentSensorId(sensor.getId());
+                action.setSensorType(sensor.getType());
+                Navigation.findNavController(itemView).navigate(action);
+            });
         }
     }
 }

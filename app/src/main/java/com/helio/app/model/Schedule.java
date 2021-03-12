@@ -64,6 +64,10 @@ public class Schedule implements IdComponent {
         return days;
     }
 
+    public boolean containsDay(Day d) {
+        return days.contains(d);
+    }
+
     public void setDays(List<Day> days) {
         this.days = days;
     }

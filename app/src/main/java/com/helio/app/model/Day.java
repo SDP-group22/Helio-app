@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Represents the day of the week. DayOfWeek already exists in Java, but only works in Android API level 26+
@@ -53,14 +52,17 @@ public enum Day {
 
     public static List<Day> getValuesLocalOrder(Day firstDay) {
         List<Day> allDaysList = Arrays.asList(values());
-        Collections.rotate(allDaysList, -allDaysList.indexOf(firstDay));
+        Collections.rotate(allDaysList, getLocalRotationDistance(firstDay));
         return allDaysList;
     }
 
     public static List<String> getShortDaysLocalOrder(String[] shortWeekdays, Day firstDay) {
-        List<Day> allDaysList = Arrays.asList(values());
         List<String> shortDayList = Arrays.asList(shortWeekdays);
-        Collections.rotate(shortDayList, -allDaysList.indexOf(firstDay));
+        Collections.rotate(shortDayList, getLocalRotationDistance(firstDay));
         return shortDayList;
+    }
+
+    public static int getLocalRotationDistance(Day firstDay) {
+        return -Arrays.asList(values()).indexOf(firstDay);
     }
 }

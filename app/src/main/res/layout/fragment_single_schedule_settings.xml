@@ -48,74 +48,90 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <HorizontalScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/days_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/schedule_name">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/schedule_name"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/days_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <Button
+                android:id="@+id/day1"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/day2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
 
-                <Button
-                    android:id="@+id/day1"
-                    style="@style/dayButtonStyle"
-                    android:layout_marginHorizontal="1dp"
-                    android:text="M"
-                    app:cornerRadius="24dp"
-                    tools:ignore="ButtonStyle,HardcodedText" />
+            <Button
+                android:id="@+id/day2"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/day3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/day1"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
 
-                <Button
-                    android:id="@+id/day2"
-                    style="@style/dayButtonStyle"
-                    android:layout_marginHorizontal="1dp"
-                    android:text="M"
-                    app:cornerRadius="24dp"
-                    tools:ignore="ButtonStyle,HardcodedText" />
+            <Button
+                android:id="@+id/day3"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/day4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/day2"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
 
-                <Button
-                    android:id="@+id/day3"
-                    style="@style/dayButtonStyle"
-                    android:layout_marginHorizontal="1dp"
-                    android:text="M"
-                    app:cornerRadius="24dp"
-                    tools:ignore="ButtonStyle,HardcodedText" />
+            <Button
+                android:id="@+id/day4"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/day5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/day3"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
 
-                <Button
-                    android:id="@+id/day4"
-                    style="@style/dayButtonStyle"
-                    android:layout_marginHorizontal="1dp"
-                    android:text="M"
-                    app:cornerRadius="24dp"
-                    tools:ignore="ButtonStyle,HardcodedText" />
+            <Button
+                android:id="@+id/day5"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/day6"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/day4"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
 
-                <Button
-                    android:id="@+id/day5"
-                    style="@style/dayButtonStyle"
-                    android:layout_marginHorizontal="1dp"
-                    android:text="M"
-                    app:cornerRadius="24dp"
-                    tools:ignore="ButtonStyle,HardcodedText" />
+            <Button
+                android:id="@+id/day6"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/day7"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/day5"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
 
-                <Button
-                    android:id="@+id/day6"
-                    style="@style/dayButtonStyle"
-                    android:layout_marginHorizontal="1dp"
-                    android:text="M"
-                    app:cornerRadius="24dp"
-                    tools:ignore="ButtonStyle,HardcodedText" />
+            <Button
+                android:id="@+id/day7"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/day6"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <Button
-                    android:id="@+id/day7"
-                    style="@style/dayButtonStyle"
-                    android:layout_marginHorizontal="1dp"
-                    android:text="M"
-                    app:cornerRadius="24dp"
-                    tools:ignore="ButtonStyle,HardcodedText" />
-            </LinearLayout>
-
-        </HorizontalScrollView>
     </RelativeLayout>
 </RelativeLayout>

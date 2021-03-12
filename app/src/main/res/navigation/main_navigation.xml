@@ -14,16 +14,19 @@
             android:id="@+id/action_blindsSettingsFragment_to_singleBlindSettingsFragment"
             app:destination="@id/singleBlindSettingsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_hub"
         android:name="com.helio.app.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+
     <fragment
         android:id="@+id/navigation_control"
         android:name="com.helio.app.ui.control.ControlFragment"
         android:label="@string/title_control"
         tools:layout="@layout/fragment_control" />
+
     <fragment
         android:id="@+id/singleBlindSettingsFragment"
         android:name="com.helio.app.ui.blind.SingleBlindSettingsFragment"
@@ -32,9 +35,10 @@
 
         <argument
             android:name="currentMotorId"
-            app:argType="integer"
-            android:defaultValue="0"/>
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_sensors"
         android:name="com.helio.app.ui.sensors.SensorsSettingsFragment"
@@ -42,14 +46,23 @@
         tools:layout="@layout/fragment_sensors_settings">
         <action
             android:id="@+id/action_sensorsSettingFragment_to_singleSensorSettingFragment"
-            app:destination="@+id/singleSensorSettingsFragment"
-
-            />
+            app:destination="@+id/singleSensorSettingsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/singleSensorSettingsFragment"
         android:name="com.helio.app.ui.sensors.SingleSensorSettingsFragment"
         android:label="@string/sensor"
-        tools:layout="@layout/fragment_single_sensor_settings"
-        />
+        tools:layout="@layout/fragment_single_sensor_settings">
+
+        <argument
+            android:name="currentSensorId"
+            android:defaultValue="0"
+            app:argType="integer" />
+
+        <argument
+            android:name="sensorType"
+            android:defaultValue="Motion"
+            app:argType="string" />
+    </fragment>
 </navigation>

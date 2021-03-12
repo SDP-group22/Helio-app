@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
         switch(theme) {
             case NIGHT:
                 appTheme = R.style.Theme_HelioApp_Night;
+                break;
+            case HIGH_CONTRAST:
+                appTheme = R.style.Theme_HelioApp_HighContrast;
         }
         return appTheme;
     }

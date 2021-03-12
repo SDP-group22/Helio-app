@@ -62,7 +62,7 @@
         <item name="android:text">M</item>
     </style>
 
-    <style name="dayButtonStyleOutline" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="dayButtonStyleOutline">
         <item name="android:textColor">?colorSecondary</item>
         <item name="android:textSize">20sp</item>
         <item name="android:layout_width">36dp</item>

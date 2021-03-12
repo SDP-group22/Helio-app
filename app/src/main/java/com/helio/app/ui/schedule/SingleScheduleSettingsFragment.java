@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -166,6 +167,7 @@ public class SingleScheduleSettingsFragment extends Fragment {
     public void onStop() {
         if (schedule != null) {
             model.pushScheduleState(schedule);
+            Toast.makeText(requireContext(), requireContext().getString(R.string.updated), Toast.LENGTH_SHORT).show();
         }
         super.onStop();
     }

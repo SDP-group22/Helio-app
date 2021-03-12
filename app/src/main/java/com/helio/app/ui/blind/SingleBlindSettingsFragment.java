@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -93,6 +94,7 @@ public class SingleBlindSettingsFragment extends Fragment {
         // Check if null in case something is wrong or it hasn't loaded in yet
         if (motor != null) {
             model.pushCurrentMotorState(motor);
+            Toast.makeText(requireContext(), requireContext().getString(R.string.updated), Toast.LENGTH_SHORT).show();
         }
         super.onStop();
     }

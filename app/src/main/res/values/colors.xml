@@ -11,4 +11,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_orange">#FF5722</color>
     <color name="darker_orange">#BF360C</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="yellow_dark">#A0A000</color>
 </resources>

@@ -113,7 +113,7 @@ public class SingleScheduleSettingsFragment extends Fragment {
 
     private void prepareDays(ConstraintLayout daysLayout) {
         // Get days in local order
-        Day firstLocalDay = Day.getEnumFromName(requireContext().getString(R.string.first_day));
+        Day firstLocalDay = Day.getFirstLocalDay(requireContext());
         String[] shortDaysFromResource = requireContext().getResources().getStringArray(R.array.weekdaysShort);
         List<String> shortWeekdays = Day.getShortDaysLocalOrder(shortDaysFromResource, firstLocalDay);
         List<Day> daysLocalOrder = Day.getValuesLocalOrder(firstLocalDay);

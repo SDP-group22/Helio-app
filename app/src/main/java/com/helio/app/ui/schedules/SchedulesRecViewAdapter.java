@@ -3,6 +3,7 @@ package com.helio.app.ui.schedules;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -30,6 +31,7 @@ import com.helio.app.ui.utils.LevelLabelFormatter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,7 +57,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SchedulesRecViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Schedule schedule = schedules.get(position);
         holder.activateSwitch.setChecked(schedule.isActive());
 
@@ -72,8 +74,8 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         }
 
         // Get the list of all days and the list of shortened day names (M, T, W...)
-        // Rotate the arrays around for local specific first day as specified in strings.xml
-        Day firstLocalDay = Day.getEnumFromName(context.getString(R.string.first_day));
+        // Rotate the arrays around for local specific first day
+        Day firstLocalDay = Day.getFirstLocalDay(context);
         String[] shortDaysFromResource = context.getResources().getStringArray(R.array.weekdaysShort);
         List<String> shortWeekdays = Day.getShortDaysLocalOrder(shortDaysFromResource, firstLocalDay);
 

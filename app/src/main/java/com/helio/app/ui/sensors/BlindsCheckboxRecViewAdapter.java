@@ -72,22 +72,28 @@ public class BlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<BlindsChe
         private final TextView txtName;
         private final ImageView blindIcon;
         private final MaterialCheckBox checkBox;
-        private final CardView parent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.txtName);
             blindIcon = itemView.findViewById(R.id.blindIcon);
             checkBox = itemView.findViewById(R.id.checkbox);
-            parent = itemView.findViewById(R.id.parent);
+            CardView parent = itemView.findViewById(R.id.parent);
 
-            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (isChecked) {
-                    sensor.getMotorIds().add(motors.get(getAdapterPosition()).getId());
-                } else {
-                    sensor.getMotorIds().remove(Integer.valueOf(motors.get(getAdapterPosition()).getId()));
-                }
+            parent.setOnClickListener(v -> {
+                checkBox.setChecked(!checkBox.isChecked());
+                updateMotorIds();
             });
+
+            checkBox.setOnClickListener(v -> updateMotorIds());
+        }
+
+        private void updateMotorIds() {
+            if (checkBox.isChecked()) {
+                sensor.getMotorIds().add(motors.get(getAdapterPosition()).getId());
+            } else {
+                sensor.getMotorIds().remove(Integer.valueOf(motors.get(getAdapterPosition()).getId()));
+            }
         }
     }
 

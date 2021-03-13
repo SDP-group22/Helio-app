@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
+import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Sensor;
 import com.helio.app.ui.utils.TextChangedListener;
@@ -57,6 +59,8 @@ public class SingleSensorSettingsFragment extends Fragment {
 
         // Only motion sensors have duration sensitivity
         if (sensorType == MotionSensor.TYPE) {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.motion_sensor);
+
             AutoCompleteTextView sensitivityMenu = (AutoCompleteTextView) sensitivityMenuLayout.getEditText();
             assert sensitivityMenu != null;
             ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.theme_list_item,
@@ -89,7 +93,8 @@ public class SingleSensorSettingsFragment extends Fragment {
                         sensitivityMenu.setOnItemClickListener((parent, v, position, id) ->
                                 motionSensor.setDurationSensitivity(0, Integer.parseInt(parent.getItemAtPosition(position).toString())));
                     });
-        } else {
+        } else if (sensorType == LightSensor.TYPE) {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.light_sensor);
             ((ViewGroup) sensitivityMenuLayout.getParent()).removeView(sensitivityMenuLayout);
 
             model.fetchLightSensors().observe(

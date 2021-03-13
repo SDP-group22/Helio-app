@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Schedule;
@@ -41,6 +42,15 @@ public class SchedulesSettingsFragment extends Fragment {
         RecyclerView recView = view.findViewById(R.id.schedulesRCView);
         recView.setAdapter(adapter);
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        FloatingActionButton addButton = view.findViewById(R.id.add_button);
+        addButton.setOnClickListener(
+                v -> model.addSchedule().observe(
+                        getViewLifecycleOwner(),
+                        schedules -> adapter.setSchedules(new ArrayList<>(schedules.values()))
+                )
+        );
+
         return view;
     }
 }

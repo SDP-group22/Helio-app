@@ -107,16 +107,13 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     public void toggleScheduleActive(Schedule s) {
-        if (s.isActive()) {
-            client.deactivateSchedule(schedules, s.getId());
-        } else {
-            client.activateSchedule(schedules, s.getId());
-        }
+        s.setActive(!s.isActive());
+        pushScheduleState(s);
     }
 
     public LiveData<Map<Integer, Schedule>> addSchedule() {
         ScheduleSettingsRequest request = new ScheduleSettingsRequest(
-                "", true, Arrays.asList(Day.values()), 0, 0, new ArrayList<>(), "12:00");
+                "", true, new ArrayList<>(), 0, 0, new ArrayList<>(), "12:00");
         client.addSchedule(schedules, request);
         return schedules;
     }

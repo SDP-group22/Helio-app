@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.R;
@@ -19,6 +21,8 @@ import com.helio.app.UserDataViewModel;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Sensor;
 import com.helio.app.ui.utils.TextChangedListener;
+
+import java.util.ArrayList;
 
 public class SingleSensorSettingsFragment extends Fragment {
     private UserDataViewModel model;
@@ -36,6 +40,17 @@ public class SingleSensorSettingsFragment extends Fragment {
 
         nameEditText = view.<TextInputLayout>findViewById(R.id.name).getEditText();
 
+        BlindsCheckboxRecViewAdapter checkBoxRCAdapter = new BlindsCheckboxRecViewAdapter(getContext(), model);
+        model.fetchMotors().observe(
+                getViewLifecycleOwner(),
+                motors -> checkBoxRCAdapter.setMotors(new ArrayList<>(motors.values()))
+        );
+
+        // Insert into the recycler view
+        RecyclerView recView = view.findViewById(R.id.blindsRCView);
+        recView.setAdapter(checkBoxRCAdapter);
+        recView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         TextInputLayout sensitivityMenuLayout = view.findViewById(R.id.dropdown_sensitivity);
 
         // Only motion sensors have duration sensitivity
@@ -50,6 +65,7 @@ public class SingleSensorSettingsFragment extends Fragment {
                     getViewLifecycleOwner(),
                     sensors -> {
                         sensor = sensors.get(sensorId);
+                        checkBoxRCAdapter.setSensor(sensor);
                         setupName();
 
                         MotionSensor motionSensor = (MotionSensor) sensor;
@@ -72,7 +88,15 @@ public class SingleSensorSettingsFragment extends Fragment {
                                 motionSensor.setDurationSensitivity(0, Integer.parseInt(parent.getItemAtPosition(position).toString())));
                     });
         } else {
-            sensitivityMenuLayout.setVisibility(View.INVISIBLE);
+            ((ViewGroup) sensitivityMenuLayout.getParent()).removeView(sensitivityMenuLayout);
+
+            model.fetchLightSensors().observe(
+                    getViewLifecycleOwner(),
+                    sensors -> {
+                        sensor = sensors.get(sensorId);
+                        checkBoxRCAdapter.setSensor(sensor);
+                        setupName();
+                    });
         }
 
         return view;

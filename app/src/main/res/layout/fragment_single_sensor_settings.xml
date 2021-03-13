@@ -39,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/sensor_name"
+            android:imeOptions="actionDone"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,10 +65,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:textSize="24sp"
+        android:text="@string/select_blinds"
         android:textColor="?colorSecondary"
-        android:textStyle="bold"
-        android:text="@string/select_blinds" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <View
         android:id="@+id/divider"

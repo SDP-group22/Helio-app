@@ -18,6 +18,9 @@ import com.helio.app.ui.MotorIcon;
 
 import java.util.ArrayList;
 
+/**
+ * Works with anything that implements {@link MotorIdsComponent}
+ */
 public class MotorIdsBlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<MotorIdsBlindsCheckboxRecViewAdapter.ViewHolder> {
 
     private ArrayList<Motor> motors = new ArrayList<>();

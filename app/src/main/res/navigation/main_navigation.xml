@@ -53,7 +53,7 @@
         tools:layout="@layout/schedule_list_item">
 
         <argument
-            android:name="currentMotorId"
+            android:name="currentScheduleId"
             android:defaultValue="0"
             app:argType="integer" />
     </fragment>

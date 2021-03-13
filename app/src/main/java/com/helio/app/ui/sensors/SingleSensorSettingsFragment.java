@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,15 +16,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
-import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Sensor;
+import com.helio.app.ui.utils.TextChangedListener;
 
 public class SingleSensorSettingsFragment extends Fragment {
     private UserDataViewModel model;
     private Sensor sensor;
-    private TextInputLayout textInputLayout;
-    private AutoCompleteTextView dropDownText;
+    private EditText nameEditText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -34,21 +34,29 @@ public class SingleSensorSettingsFragment extends Fragment {
         int sensorId = getArguments().getInt("currentSensorId");
         int sensorType = getArguments().getInt("sensorType");
 
+        nameEditText = view.<TextInputLayout>findViewById(R.id.name).getEditText();
+
         TextInputLayout sensitivityMenuLayout = view.findViewById(R.id.dropdown_sensitivity);
 
+        // Only motion sensors have duration sensitivity
         if (sensorType == MotionSensor.TYPE) {
             AutoCompleteTextView sensitivityMenu = (AutoCompleteTextView) sensitivityMenuLayout.getEditText();
             assert sensitivityMenu != null;
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.theme_list_item, view.getResources().getStringArray(R.array.duration_sensitivity_options));
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.theme_list_item,
+                    view.getResources().getStringArray(R.array.duration_sensitivity_options));
             sensitivityMenu.setAdapter(adapter);
 
             model.fetchMotionSensors().observe(
                     getViewLifecycleOwner(),
                     sensors -> {
                         sensor = sensors.get(sensorId);
+                        setupName();
+
                         MotionSensor motionSensor = (MotionSensor) sensor;
                         assert motionSensor != null;
+                        // Only try to set the text if it is not blank
                         if (motionSensor.getDurationSensitivity() != null && !motionSensor.getDurationSensitivity().equals("")) {
+                            // Format is just the number of it is less than 60 minutes, and HH:mm otherwise
                             int minute = motionSensor.getDurationSensitivityMinute();
                             int hour = motionSensor.getDurationSensitivityHour();
                             String text;
@@ -60,14 +68,24 @@ public class SingleSensorSettingsFragment extends Fragment {
                             sensitivityMenu.setText(text, false);
                         }
 
-                        sensitivityMenu.setOnItemClickListener((parent, view1, position, id) ->
+                        sensitivityMenu.setOnItemClickListener((parent, v, position, id) ->
                                 motionSensor.setDurationSensitivity(0, Integer.parseInt(parent.getItemAtPosition(position).toString())));
                     });
-        } else if (sensorType == LightSensor.TYPE) {
+        } else {
             sensitivityMenuLayout.setVisibility(View.INVISIBLE);
         }
 
         return view;
+    }
+
+    private void setupName() {
+        nameEditText.setText(sensor.getName());
+        nameEditText.addTextChangedListener(new TextChangedListener() {
+            @Override
+            public void onTextChanged(CharSequence s) {
+                sensor.setName(s.toString());
+            }
+        });
     }
 
     @Override

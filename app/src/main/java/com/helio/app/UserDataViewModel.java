@@ -68,16 +68,16 @@ public class UserDataViewModel extends AndroidViewModel {
         return motionSensors;
     }
 
-    public void setCurrentMotor(int id) {
-        currentMotorId = id;
-    }
-
     public void moveCurrentMotor(int level) {
         client.moveMotor(getCurrentMotor(), level);
     }
 
     public Motor getCurrentMotor() {
         return Objects.requireNonNull(motors.getValue()).get(currentMotorId);
+    }
+
+    public void setCurrentMotor(int id) {
+        currentMotorId = id;
     }
 
     public void pushCurrentMotorState(Motor m) {

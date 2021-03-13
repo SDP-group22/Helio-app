@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -44,7 +43,7 @@ public class BlindsRecViewAdapter extends RecyclerView.Adapter<BlindsRecViewAdap
         Motor motor = motors.get(position);
         holder.txtName.setText(motor.getName());
         MotorIcon icon = motor.getIcon();
-        if(icon != null) {
+        if (icon != null) {
             holder.blindIcon.setImageResource(icon.id);
         }
     }

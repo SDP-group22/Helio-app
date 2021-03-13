@@ -6,7 +6,7 @@
 
     <EditTextPreference
         android:key="ip"
-        android:title="@string/settingsIP"
+        android:title="@string/ip_address"
         app:useSimpleSummaryProvider="true" />
 
     <EditTextPreference

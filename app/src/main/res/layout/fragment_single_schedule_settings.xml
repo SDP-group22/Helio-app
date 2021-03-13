@@ -27,17 +27,18 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/schedule_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/level_slider"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
         android:hint="@string/component_name"
-        app:boxStrokeColor="?colorSecondary"
-        app:hintTextColor="?colorSecondary"
-        app:startIconDrawable="@drawable/ic_edit_pencil">
+        app:startIconDrawable="@drawable/ic_label"
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"

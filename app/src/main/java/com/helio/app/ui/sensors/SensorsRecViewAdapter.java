@@ -52,6 +52,7 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
         sensor = sensors.get(position);
         holder.txtName.setText(sensor.getName());
         holder.sensorIcon.setImageResource(sensor.getIcon());
+        holder.sensorIcon.setContentDescription(context.getString(sensor.getContentDescription()));
         holder.activateSwitch.setChecked(sensor.isActive());
     }
 
@@ -99,8 +100,8 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
             parent.setOnClickListener(v -> {
                 SensorsSettingsFragmentDirections.ActionSensorsSettingFragmentToSingleSensorSettingFragment action =
                         SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
-                action.setCurrentSensorId(sensor.getId());
-                action.setSensorType(sensor.getType());
+                action.setCurrentSensorId(sensors.get(getAdapterPosition()).getId());
+                action.setSensorType(sensors.get(getAdapterPosition()).getType());
                 Navigation.findNavController(view).navigate(action);
             });
 

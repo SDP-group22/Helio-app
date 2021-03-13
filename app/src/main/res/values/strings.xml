@@ -39,13 +39,14 @@
     <string name="new_light_sensor">New light sensor</string>
     <string name="label">Label</string>
     <string name="sensor">Sensor</string>
-    <string name="sensor_name">Enter Sensor name</string>
+    <string name="sensor_name">Sensor name</string>
     <string name="edit_sensor_icon">Edit sensor icon</string>
     <string name="ip_hint">For example: 192.168.0.1</string>
-    <string name="motion_sensor_sensitivity">Motion Sensor Sensitivity</string>
+    <string name="motion_sensor_sensitivity">Sensor Sensitivity (Minutes)</string>
     <string name="sensor_enterIP_address">Enter sensor IP address</string>
     <string name="select_blinds">Select the control blinds</string>
     <string name="theme">Theme</string>
     <string name="deactivated">Disabled</string>
     <string name="activated">Enabled</string>
+    <string name="updated">Updated</string>
 </resources>

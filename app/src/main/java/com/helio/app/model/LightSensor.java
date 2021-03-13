@@ -25,4 +25,9 @@ public class LightSensor extends Sensor {
     public int getIcon() {
         return R.drawable.ic_light_sensor;
     }
+
+    @Override
+    public int getContentDescription() {
+        return R.string.light_sensor;
+    }
 }

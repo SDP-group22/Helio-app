@@ -23,9 +23,9 @@
             android:layout_alignTop="@+id/sensorName"
             android:layout_alignBottom="@+id/sensorName"
             android:layout_marginStart="5dp"
+            android:contentDescription="@string/motion_sensor"
             app:srcCompat="@drawable/ic_motion_sensor"
-            app:tint="?colorText"
-            tools:ignore="ContentDescription" />
+            app:tint="?colorText" />
 
         <TextView
             android:id="@+id/sensorName"

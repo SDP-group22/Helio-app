@@ -10,7 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
-import com.helio.app.model.Schedule;
 import com.helio.app.model.Sensor;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.request.LightSensorSettingsRequest;
@@ -88,7 +87,7 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public LiveData<Map<Integer, MotionSensor>> addMotionSensor() {
         MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.new_motion_sensor), "0.0.0.0", true, 0, "", "");
+                new ArrayList<>(), getApplication().getString(R.string.new_motion_sensor), "0.0.0.0", true, 0, "", "00:15");
         client.addMotionSensor(motionSensors, request);
         return motionSensors;
     }
@@ -120,6 +119,10 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public void toggleSensorActive(Sensor s) {
         s.setActive(!s.isActive());
+        pushSensorState(s);
+    }
+
+    public void pushSensorState(Sensor s) {
         if (s.getClass() == MotionSensor.class) {
             pushSensorState((MotionSensor) s);
         } else if (s.getClass() == LightSensor.class) {

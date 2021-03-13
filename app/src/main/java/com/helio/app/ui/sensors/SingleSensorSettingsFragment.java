@@ -28,6 +28,7 @@ public class SingleSensorSettingsFragment extends Fragment {
     private UserDataViewModel model;
     private Sensor sensor;
     private EditText nameEditText;
+    private EditText ipEditText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,6 +40,7 @@ public class SingleSensorSettingsFragment extends Fragment {
         int sensorType = getArguments().getInt("sensorType");
 
         nameEditText = view.<TextInputLayout>findViewById(R.id.name).getEditText();
+        ipEditText = view.<TextInputLayout>findViewById(R.id.ip_address).getEditText();
 
         BlindsCheckboxRecViewAdapter checkBoxRCAdapter = new BlindsCheckboxRecViewAdapter(getContext(), model);
         model.fetchMotors().observe(
@@ -66,7 +68,7 @@ public class SingleSensorSettingsFragment extends Fragment {
                     sensors -> {
                         sensor = sensors.get(sensorId);
                         checkBoxRCAdapter.setSensor(sensor);
-                        setupName();
+                        setup();
 
                         MotionSensor motionSensor = (MotionSensor) sensor;
                         assert motionSensor != null;
@@ -95,19 +97,27 @@ public class SingleSensorSettingsFragment extends Fragment {
                     sensors -> {
                         sensor = sensors.get(sensorId);
                         checkBoxRCAdapter.setSensor(sensor);
-                        setupName();
+                        setup();
                     });
         }
 
         return view;
     }
 
-    private void setupName() {
+    private void setup() {
         nameEditText.setText(sensor.getName());
         nameEditText.addTextChangedListener(new TextChangedListener() {
             @Override
             public void onTextChanged(CharSequence s) {
                 sensor.setName(s.toString());
+            }
+        });
+
+        ipEditText.setText(sensor.getIp());
+        ipEditText.addTextChangedListener(new TextChangedListener() {
+            @Override
+            public void onTextChanged(CharSequence s) {
+                sensor.setIp(s.toString());
             }
         });
     }

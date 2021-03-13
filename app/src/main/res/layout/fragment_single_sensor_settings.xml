@@ -22,6 +22,8 @@
             style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number|numberDecimal"
+            android:digits="0123456789."
             android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>

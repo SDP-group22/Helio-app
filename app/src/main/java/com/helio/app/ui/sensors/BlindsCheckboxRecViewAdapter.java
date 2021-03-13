@@ -92,7 +92,8 @@ public class BlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<BlindsChe
             if (checkBox.isChecked()) {
                 sensor.getMotorIds().add(motors.get(getAdapterPosition()).getId());
             } else {
-                sensor.getMotorIds().remove(Integer.valueOf(motors.get(getAdapterPosition()).getId()));
+                // It needs to be an Integer not an int so that it removes the ID and not the item at that position in the list
+                sensor.getMotorIds().remove((Integer) motors.get(getAdapterPosition()).getId());
             }
         }
     }

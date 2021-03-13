@@ -24,12 +24,12 @@ public class SingleBlindSettingsFragment extends Fragment {
     private void setActionListeners(View view) {
         // "open" button
         view.findViewById(R.id.btn_open).setOnClickListener(v -> {
-            System.out.println("OPEN button pressed for " + model.getCurrentMotor());
+            System.out.println("OPEN button pressed for " + motor);
             model.moveCurrentMotor(100);
         });
         // "close" button
         view.findViewById(R.id.btn_close).setOnClickListener(v -> {
-            System.out.println("CLOSE button pressed for " + model.getCurrentMotor());
+            System.out.println("CLOSE button pressed for " + motor);
             model.moveCurrentMotor(0);
         });
     }

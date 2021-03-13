@@ -56,7 +56,6 @@ public class SingleScheduleSettingsFragment extends Fragment {
         MotorIdsBlindsCheckboxRecViewAdapter adapter = new MotorIdsBlindsCheckboxRecViewAdapter();
 
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
-        model.setCurrentSchedule(scheduleId);
         model.fetchSchedules().observe(
                 getViewLifecycleOwner(),
                 schedules -> {

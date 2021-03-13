@@ -3,7 +3,6 @@ package com.helio.app.ui.schedules;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -28,14 +27,8 @@ import com.helio.app.model.Day;
 import com.helio.app.model.Schedule;
 import com.helio.app.ui.utils.LevelLabelFormatter;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecViewAdapter.ViewHolder> {
     private final Context context;
@@ -112,7 +105,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
 
         // Set the target level, and emphasise the level itself
         SpannableStringBuilder levelStringBuilder = new SpannableStringBuilder();
-        String targetBaseString = context.getString(R.string.target);
+        String targetBaseString = context.getString(R.string.target_motor_value_prefix);
         String targetAsString = new LevelLabelFormatter(context).getFormattedValue(schedule.getTargetLevel());
         levelStringBuilder.append(targetBaseString);
         levelStringBuilder.append(targetAsString);

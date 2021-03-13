@@ -115,9 +115,9 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
                 // Toast to explain what happened
                 String message;
                 if (switchView.isChecked()) {
-                    message = parent.getResources().getString(R.string.deactivated);
+                    message = parent.getResources().getString(R.string.component_deactivated);
                 } else {
-                    message = parent.getResources().getString(R.string.activated);
+                    message = parent.getResources().getString(R.string.component_activated);
                 }
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 

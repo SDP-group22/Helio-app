@@ -94,7 +94,7 @@ public class SingleBlindSettingsFragment extends Fragment {
         // Check if null in case something is wrong or it hasn't loaded in yet
         if (motor != null) {
             model.pushCurrentMotorState(motor);
-            Toast.makeText(requireContext(), requireContext().getString(R.string.updated), Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), requireContext().getString(R.string.component_updated), Toast.LENGTH_SHORT).show();
         }
         super.onStop();
     }

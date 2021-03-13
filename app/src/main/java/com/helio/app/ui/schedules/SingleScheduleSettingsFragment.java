@@ -182,7 +182,7 @@ public class SingleScheduleSettingsFragment extends Fragment {
     public void onStop() {
         if (schedule != null) {
             model.pushScheduleState(schedule);
-            Toast.makeText(requireContext(), requireContext().getString(R.string.updated), Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), requireContext().getString(R.string.component_updated), Toast.LENGTH_SHORT).show();
         }
         super.onStop();
     }

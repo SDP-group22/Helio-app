@@ -11,14 +11,14 @@
 
     <EditTextPreference
         android:key="name"
-        android:title="@string/settingsName"
+        android:title="@string/component_name"
         app:useSimpleSummaryProvider="true" />
 
     <ListPreference
         android:entries="@array/icons"
         android:entryValues="@array/iconsValues"
         android:key="icon"
-        android:title="@string/settingsIcon"
+        android:title="@string/blinds_icon"
         app:useSimpleSummaryProvider="true" />
 
     <Preference

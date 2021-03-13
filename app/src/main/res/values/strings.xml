@@ -1,43 +1,36 @@
 <resources>
     <string name="app_name">HelioApp</string>
+
+    <!-- Shared -->
+    <string name="component_name">Name</string>
+    <string name="ip_address">IP address</string>
+    <string name="ip_hint">For example: 192.168.0.1</string>
+    <string name="component_updated">Updated</string>
+    <string name="select_blinds">Select blinds</string>
+    <string name="component_deactivated">Disabled</string>
+    <string name="component_activated">Enabled</string>
+
+    <!-- Blinds/motors -->
     <string name="title_control">Control</string>
     <string name="title_blinds_settings">Edit Blinds</string>
+    <string name="title_edit_blind">Edit Blind</string>
+    <string name="new_blinds">New blinds</string>
+    <string name="open_state">Open</string>
+    <string name="closed_state">Closed</string>
     <string name="open_button">Open</string>
     <string name="close_button">Close</string>
     <string name="settingsCalibration">Motor Calibration</string>
     <string name="settingsViewSensors">View this Blind\'s Sensors</string>
     <string name="settingsViewSchedules">View this Blind\'s Schedules</string>
-    <string name="settingsIcon">Icon</string>
-    <string name="settingsName">Name</string>
-    <string name="settingsIP">IP address</string>
-    <string name="ip_address">IP address</string>
-    <string name="title_connect_hub">Connect to Hub</string>
-    <string name="title_edit_blind">Edit Blind</string>
-    <string name="light_sensor">Light Sensor</string>
-    <string name="motion_sensor">Motion Sensor</string>
-    <string name="open_state">Open</string>
-    <string name="closed_state">Closed</string>
-    <string name="add_blinds_button">Add blinds</string>
-    <string name="title_theme_selection">App Theme</string>
-    <string name="summary_theme_selection">Select your favourite theme for the Helio App</string>
-    <string name="enter_ip_address">Enter your Hub\'s IP address to get started:</string>
-    <string name="connect_to_your_helio_hub_device">Connect to your Helio Hub device</string>
-    <string name="_255">255</string>
-    <string name="connect">Connect</string>
-    <string name="connection_status">Connection status</string>
-    <string name="not_connected">not connected</string>
-    <string name="_dot">.</string>
-    <string name="user_settings_file_key">user_settings</string>
-    <string name="user_settings_theme_key">user_settings</string>
-    <string name="new_blinds">New blinds</string>
-    <string name="add_new_schedule_button">Add a new schedule</string>
+    <string name="blinds_icon">Icon</string>
+
+    <!-- Schedules -->
+    <string name="add_new_schedule_button">New schedule</string>
     <string name="title_edit_schedule">Edit Schedule</string>
     <string name="title_schedule_setting">Schedule</string>
-    <string name="enter_event_name">Enter event name</string>
-    <string name="enter_motor_name">Enter motor name</string>
-    <string name="select_time">Select time</string>
     <string name="schedule_activated">Schedule enabled</string>
     <string name="schedule_deactivated">Schedule disabled</string>
+    <string name="target_motor_value_prefix">"Target: "</string>
     <string name="monday_short">M</string>
     <string name="tuesday_short">T</string>
     <string name="wednesday_short">W</string>
@@ -45,20 +38,24 @@
     <string name="friday_short">F</string>
     <string name="saturday_short">S</string>
     <string name="sunday_short">S</string>
-    <string name="title_settings">Settings</string>
-    <string name="target">"Target: "</string>
+
+    <!-- Sensors -->
+    <string name="light_sensor">Light Sensor</string>
+    <string name="motion_sensor">Motion Sensor</string>
     <string name="new_motion_sensor">New motion sensor</string>
     <string name="new_light_sensor">New light sensor</string>
-    <string name="label">Label</string>
     <string name="sensor">Sensor</string>
-    <string name="sensor_name">Sensor name</string>
-    <string name="edit_sensor_icon">Edit sensor icon</string>
-    <string name="ip_hint">For example: 192.168.0.1</string>
     <string name="motion_sensor_sensitivity">Sensor Sensitivity (Minutes)</string>
-    <string name="sensor_enterIP_address">Enter sensor IP address</string>
-    <string name="select_blinds">Select blinds</string>
+
+    <!-- Settings -->
+    <string name="title_theme_selection">App Theme</string>
+    <string name="connect_to_your_helio_hub_device">Connect to your Helio Hub device</string>
+    <string name="_255">255</string>
+    <string name="connect">Connect</string>
+    <string name="connection_status">Connection status</string>
+    <string name="not_connected">not connected</string>
+    <string name="_dot">.</string>
+    <string name="user_settings_theme_key">user_settings</string>
     <string name="theme">Theme</string>
-    <string name="deactivated">Disabled</string>
-    <string name="activated">Enabled</string>
-    <string name="updated">Updated</string>
+    <string name="title_settings">Settings</string>
 </resources>

@@ -22,7 +22,7 @@
         <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
         <item name="android:spinnerItemStyle">@style/mySpinnerItemStyle</item>
     </style>
-    <!-- Base application theme. -->
+    <!-- Night theme. -->
     <style name="Theme.HelioApp.Night" parent="Theme.HelioApp">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
@@ -40,6 +40,29 @@
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
         <item name="android:spinnerItemStyle">@style/mySpinnerItemStyle</item>
+        <item name="colorOnSurface">?colorText</item>
+        <item name="android:textColorPrimary">?colorText</item>
+    </style>
+    <!-- high-contrast theme. -->
+    <style name="Theme.HelioApp.HighContrast" parent="Theme.HelioApp">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorText">@color/yellow</item>
+        <item name="colorTextHint">@color/yellow_dark</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
+        <item name="android:spinnerItemStyle">@style/mySpinnerItemStyle</item>
+        <item name="colorOnSurface">?colorText</item>
+        <item name="android:textColorPrimary">?colorText</item>
     </style>
     <!--  Transitions  -->
     <style name="WindowAnimationTransition">

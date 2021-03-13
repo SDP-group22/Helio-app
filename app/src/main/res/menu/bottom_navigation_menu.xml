@@ -13,6 +13,10 @@
         android:icon="@drawable/timer"
         android:title="@string/title_schedule_setting"/>
     <item
+        android:id="@+id/navigation_sensors"
+        android:icon="@drawable/ic_sensor"
+        android:title="@string/sensor" />
+    <item
         android:id="@+id/navigation_hub"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/title_settings" />

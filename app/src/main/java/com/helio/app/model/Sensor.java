@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Sensor implements IdComponent {
+public abstract class Sensor implements IdComponent, MotorIdsComponent {
     private final int id;
     @SerializedName("motor_ids")
     private final List<Integer> motorIds;

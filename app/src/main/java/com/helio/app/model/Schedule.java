@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Schedule implements IdComponent {
+public class Schedule implements IdComponent, MotorIdsComponent {
     private final int id;
     @SerializedName("motor_ids")
     private final List<Integer> motorIds;

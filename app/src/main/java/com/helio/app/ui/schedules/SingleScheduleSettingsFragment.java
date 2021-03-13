@@ -1,6 +1,5 @@
-package com.helio.app.ui.schedule;
+package com.helio.app.ui.schedules;
 
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.InputType;
@@ -15,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.slider.Slider;
@@ -25,6 +26,7 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Day;
 import com.helio.app.model.Schedule;
+import com.helio.app.ui.utils.MotorIdsBlindsCheckboxRecViewAdapter;
 import com.helio.app.ui.utils.TextChangedListener;
 
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ public class SingleScheduleSettingsFragment extends Fragment {
         MaterialButton timeButton = view.findViewById(R.id.time_button);
         Slider levelSlider = view.findViewById(R.id.level_slider);
 
+        MotorIdsBlindsCheckboxRecViewAdapter adapter = new MotorIdsBlindsCheckboxRecViewAdapter();
 
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         model.setCurrentSchedule(scheduleId);
@@ -58,6 +61,8 @@ public class SingleScheduleSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 schedules -> {
                     schedule = schedules.get(scheduleId);
+
+                    adapter.setComponent(schedule);
 
                     Objects.requireNonNull(nameEditText).setInputType(InputType.TYPE_CLASS_TEXT);
                     nameEditText.setText(schedule.getName());
@@ -92,6 +97,16 @@ public class SingleScheduleSettingsFragment extends Fragment {
                     prepareDays(view.findViewById(R.id.days_layout));
                 }
         );
+
+        model.fetchMotors().observe(
+                getViewLifecycleOwner(),
+                motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+        );
+
+        // Insert into the recycler view
+        RecyclerView recView = view.findViewById(R.id.blindsRCView);
+        recView.setAdapter(adapter);
+        recView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }

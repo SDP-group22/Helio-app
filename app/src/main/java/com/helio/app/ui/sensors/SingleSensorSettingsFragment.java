@@ -44,7 +44,7 @@ public class SingleSensorSettingsFragment extends Fragment {
         nameEditText = view.<TextInputLayout>findViewById(R.id.name).getEditText();
         ipEditText = view.<TextInputLayout>findViewById(R.id.ip_address).getEditText();
 
-        BlindsCheckboxRecViewAdapter checkBoxRCAdapter = new BlindsCheckboxRecViewAdapter(getContext(), model);
+        BlindsCheckboxRecViewAdapter checkBoxRCAdapter = new BlindsCheckboxRecViewAdapter();
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> checkBoxRCAdapter.setMotors(new ArrayList<>(motors.values()))

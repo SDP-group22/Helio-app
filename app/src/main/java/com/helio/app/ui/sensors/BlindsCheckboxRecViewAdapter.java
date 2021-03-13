@@ -1,6 +1,5 @@
 package com.helio.app.ui.sensors;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.helio.app.R;
-import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Sensor;
 import com.helio.app.ui.MotorIcon;
@@ -22,16 +20,8 @@ import java.util.ArrayList;
 
 public class BlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<BlindsCheckboxRecViewAdapter.ViewHolder> {
 
-    private final Context context;
-    private final UserDataViewModel model;
     private ArrayList<Motor> motors = new ArrayList<>();
-    private Motor motor;
     private Sensor sensor;
-
-    public BlindsCheckboxRecViewAdapter(Context context, UserDataViewModel model) {
-        this.context = context;
-        this.model = model;
-    }
 
     @NonNull
     @Override
@@ -43,7 +33,7 @@ public class BlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<BlindsChe
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        motor = motors.get(position);
+        Motor motor = motors.get(position);
         holder.txtName.setText(motor.getName());
         MotorIcon icon = motor.getIcon();
         if (icon != null) {

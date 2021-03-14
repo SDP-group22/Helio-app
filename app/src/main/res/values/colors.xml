@@ -14,4 +14,5 @@
     <color name="grey_text">#777777</color>
     <color name="yellow">#FFFF00</color>
     <color name="yellow_dark">#A0A000</color>
+    <color name="dark_grey_navigation">#2E2E2E</color>
 </resources>

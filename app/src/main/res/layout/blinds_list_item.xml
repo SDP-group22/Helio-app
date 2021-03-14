@@ -24,7 +24,6 @@
             android:layout_alignBottom="@+id/scheduleName"
             android:layout_marginStart="5dp"
             app:srcCompat="@drawable/ic_fridge"
-            app:tint="?colorText"
             tools:ignore="ContentDescription" />
 
         <TextView

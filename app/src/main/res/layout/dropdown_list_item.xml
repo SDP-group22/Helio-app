@@ -6,6 +6,5 @@
     android:ellipsize="end"
     android:maxLines="1"
     android:text="Theme"
-    android:textColor="@color/black"
     android:padding="16dp"
     tools:ignore="HardcodedText" />

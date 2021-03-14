@@ -30,7 +30,7 @@ public class SettingsFragment extends Fragment {
 
         AutoCompleteTextView themeMenu = (AutoCompleteTextView) view.<TextInputLayout>findViewById(R.id.theme_menu).getEditText();
         assert themeMenu != null;
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.theme_list_item, view.getResources().getStringArray(R.array.theme_options));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_list_item, view.getResources().getStringArray(R.array.theme_options));
         themeMenu.setAdapter(adapter);
         selectCurrentTheme(themeMenu);
         themeMenu.setOnItemClickListener((parent, v, position, id) -> {

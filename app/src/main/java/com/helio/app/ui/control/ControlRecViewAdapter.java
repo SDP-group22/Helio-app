@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.slider.Slider;
@@ -16,7 +15,6 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAdapter.ViewHolder> {
@@ -42,41 +40,10 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
         // Set the name and icon of the motor and put the current level in the slider
         Motor motor = motors.get(position);
         holder.txtName.setText(motor.getName());
-        if(motor.getIcon() != null) {
+        if (motor.getIcon() != null) {
             holder.blindIcon.setImageResource(motor.getIcon().id);
         }
         holder.slider.setValue(motor.getLevel());
-
-        // Format the number as a percentage (possibly sensitive to Locale)
-        // Display Closed or Open if completely closed or open
-        holder.slider.setLabelFormatter(value -> {
-            if (value == 0) {
-                return context.getResources().getString(R.string.closed_state);
-            } else if (value == 100) {
-                return context.getResources().getString(R.string.open_state);
-            } else {
-                return NumberFormat.getPercentInstance().format(value / 100);
-            }
-        });
-
-        // Update the level of the motor when the user lets go of the slider
-        holder.slider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
-            @Override
-            public void onStartTrackingTouch(@NonNull Slider slider) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(@NonNull Slider slider) {
-                Motor motor = motors.get(position);
-                // disable dragging? TODO
-                // send update to Hub
-                motor.setLevel((int) slider.getValue());
-                System.out.println("Updated level using slider: " + motor);
-                model.setCurrentMotor(motor.getId());
-                model.pushCurrentMotorState(motor);
-                // asynchronously enable dragging? TODO
-            }
-        });
     }
 
     @Override
@@ -89,7 +56,7 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView txtName;
         private final ImageView blindIcon;
@@ -97,9 +64,27 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtName = itemView.findViewById(R.id.txtName);
+            txtName = itemView.findViewById(R.id.scheduleName);
             blindIcon = itemView.findViewById(R.id.blindIcon);
             slider = itemView.findViewById(R.id.controlSlider);
+            // Update the level of the motor when the user lets go of the slider
+            slider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
+                @Override
+                public void onStartTrackingTouch(@NonNull Slider slider) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(@NonNull Slider slider) {
+                    Motor motor = motors.get(getAdapterPosition());
+                    // disable dragging? TODO
+                    // send update to Hub
+                    motor.setLevel((int) slider.getValue());
+                    System.out.println("Updated level using slider: " + motor);
+                    model.setCurrentMotor(motor.getId());
+                    model.pushCurrentMotorState(motor);
+                    // asynchronously enable dragging? TODO
+                }
+            });
         }
     }
 }

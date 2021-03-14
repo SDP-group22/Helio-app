@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.blind.SingleBlindSettingsPreferencesFragment">
+    tools:context=".ui.blinds.SingleBlindSettingsPreferencesFragment">
 
     <EditTextPreference
         android:key="ip"
@@ -11,14 +11,14 @@
 
     <EditTextPreference
         android:key="name"
-        android:title="@string/settingsName"
+        android:title="@string/component_name"
         app:useSimpleSummaryProvider="true" />
 
     <ListPreference
         android:entries="@array/icons"
         android:entryValues="@array/iconsValues"
         android:key="icon"
-        android:title="@string/settingsIcon"
+        android:title="@string/blinds_icon"
         app:useSimpleSummaryProvider="true" />
 
     <Preference

@@ -56,12 +56,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);
         return sharedPrefs.getString(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_NAME);
     }
+
     public void updateTheme(String themeName) {
         AppTheme newTheme = AppTheme.getEnumFromName(themeName);
         SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);
         String currentThemeName = sharedPrefs.getString(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_NAME);
         AppTheme currentTheme = AppTheme.getEnumFromName(currentThemeName);
-        if(currentTheme == newTheme) {
+        if (currentTheme == newTheme) {
             System.out.println("New theme \"" + themeName + "\" is already active.");
         } else {
             System.out.println("Updating theme to \"" + themeName + "\"...");
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int getTheme(AppTheme theme) {
         int appTheme = R.style.Theme_HelioApp;
-        switch(theme) {
+        switch (theme) {
             case NIGHT:
                 appTheme = R.style.Theme_HelioApp_Night;
                 break;

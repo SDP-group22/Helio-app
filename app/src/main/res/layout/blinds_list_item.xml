@@ -20,15 +20,15 @@
             android:id="@+id/blindIcon"
             android:layout_width="45sp"
             android:layout_height="45sp"
-            android:layout_alignTop="@+id/txtName"
-            android:layout_alignBottom="@+id/txtName"
+            android:layout_alignTop="@+id/scheduleName"
+            android:layout_alignBottom="@+id/scheduleName"
             android:layout_marginStart="5dp"
             app:srcCompat="@drawable/ic_fridge"
             app:tint="?colorText"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/txtName"
+            android:id="@+id/scheduleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

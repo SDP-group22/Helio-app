@@ -54,6 +54,16 @@
         <item>@string/motion_sensor</item>
     </string-array>
 
+    <string-array name="weekdaysShort">
+        <item>@string/monday_short</item>
+        <item>@string/tuesday_short</item>
+        <item>@string/wednesday_short</item>
+        <item>@string/thursday_short</item>
+        <item>@string/friday_short</item>
+        <item>@string/saturday_short</item>
+        <item>@string/sunday_short</item>
+    </string-array>
+
     <string-array name="duration_sensitivity_options">
         <item>1</item>
         <item>3</item>

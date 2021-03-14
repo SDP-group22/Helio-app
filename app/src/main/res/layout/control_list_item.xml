@@ -20,7 +20,7 @@
             android:id="@+id/blindIcon"
             android:layout_width="45sp"
             android:layout_height="45sp"
-            android:layout_alignTop="@+id/txtName"
+            android:layout_alignTop="@+id/scheduleName"
             android:layout_alignBottom="@+id/controlSlider"
             android:layout_marginStart="5dp"
             app:tint="?colorText"
@@ -28,7 +28,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/txtName"
+            android:id="@+id/scheduleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/blindIcon"
@@ -38,14 +38,9 @@
             android:textStyle="bold"
             tools:ignore="HardcodedText" />
 
-        <com.google.android.material.slider.Slider
+        <com.helio.app.ui.utils.LevelSlider
             android:id="@+id/controlSlider"
-            android:valueFrom="0"
-            android:valueTo="100"
-            android:stepSize="1"
-            app:tickVisible="false"
-            app:thumbColor="?colorSecondary"
-            android:layout_below="@+id/txtName"
+            android:layout_below="@+id/scheduleName"
             android:layout_toEndOf="@+id/blindIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

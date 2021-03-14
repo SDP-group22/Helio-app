@@ -4,12 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Schedule implements IdComponent {
+public class Schedule implements IdComponent, MotorIdsComponent {
     private final int id;
     @SerializedName("motor_ids")
     private final List<Integer> motorIds;
@@ -64,6 +68,10 @@ public class Schedule implements IdComponent {
         this.days = days;
     }
 
+    public boolean containsDay(Day d) {
+        return days.contains(d);
+    }
+
     public int getTargetLevel() {
         return targetLevel;
     }
@@ -85,6 +93,23 @@ public class Schedule implements IdComponent {
     }
 
     public String getTime() {
+        return time;
+    }
+
+    /**
+     * Returns the time of the schedule in the local format, such as "12:00 PM"
+     */
+    public String getFormattedTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.US);
+        try {
+            Date date = sdf.parse(time);
+            if (date != null) {
+                return DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+            }
+        } catch (ParseException e) {
+            System.out.println("Could not parse date " + time);
+            e.printStackTrace();
+        }
         return time;
     }
 
@@ -112,12 +137,13 @@ public class Schedule implements IdComponent {
         return id;
     }
 
+
     @NotNull
     @Override
     public String toString() {
         return "Schedule{" +
                 "id='" + getId() + '\'' +
-                ", name='" + name + '\'' +
+                ", schedule event name='" + name + '\'' +
                 ", active=" + active +
                 ", days=" + days +
                 ", targetLevel=" + targetLevel +

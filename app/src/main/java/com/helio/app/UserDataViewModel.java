@@ -10,11 +10,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
+import com.helio.app.model.Schedule;
 import com.helio.app.model.Sensor;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.request.LightSensorSettingsRequest;
 import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
+import com.helio.app.networking.request.ScheduleSettingsRequest;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -23,10 +25,10 @@ import java.util.Objects;
 public class UserDataViewModel extends AndroidViewModel {
     private final HubClient client = new HubClient("http://10.0.2.2:4310/");
     private MutableLiveData<Map<Integer, Motor>> motors;
+    private MutableLiveData<Map<Integer, Schedule>> schedules;
     private MutableLiveData<Map<Integer, LightSensor>> lightSensors;
     private MutableLiveData<Map<Integer, MotionSensor>> motionSensors;
     private int currentMotorId = -1;
-
 
     public UserDataViewModel(@NonNull Application application) {
         super(application);
@@ -38,6 +40,14 @@ public class UserDataViewModel extends AndroidViewModel {
             client.getAllMotors(motors);
         }
         return motors;
+    }
+
+    public LiveData<Map<Integer, Schedule>> fetchSchedules() {
+        if (schedules == null) {
+            schedules = new MutableLiveData<>();
+            client.getAllSchedules(schedules);
+        }
+        return schedules;
     }
 
     public LiveData<Map<Integer, LightSensor>> fetchLightSensors() {
@@ -56,17 +66,16 @@ public class UserDataViewModel extends AndroidViewModel {
         return motionSensors;
     }
 
-    public void setCurrentMotor(int id) {
-        currentMotorId = id;
-    }
-
-
     public void moveCurrentMotor(int level) {
         client.moveMotor(getCurrentMotor(), level);
     }
 
     public Motor getCurrentMotor() {
         return Objects.requireNonNull(motors.getValue()).get(currentMotorId);
+    }
+
+    public void setCurrentMotor(int id) {
+        currentMotorId = id;
     }
 
     public void pushCurrentMotorState(Motor m) {
@@ -80,9 +89,31 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public LiveData<Map<Integer, Motor>> addMotor() {
         MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
-                getApplication().getString(R.string.new_blinds), "0.0.0.0", true, 0, 0, 0, "");
+                "", "0.0.0.0", true, 0, 0, 0, "");
         client.addMotor(motors, motorSettingsRequest);
         return motors;
+    }
+
+    public void pushScheduleState(Schedule s) {
+        if (schedules.getValue() != null) {
+            schedules.getValue().put(s.getId(), s);
+            ScheduleSettingsRequest scheduleSettingsRequest = new ScheduleSettingsRequest(
+                    s.getName(), s.isActive(), s.getDays(), s.getTargetLevel(), s.getGradient(), s.getMotorIds(), s.getTime()
+            );
+            client.updateSchedule(schedules, s.getId(), scheduleSettingsRequest);
+        }
+    }
+
+    public void toggleScheduleActive(Schedule s) {
+        s.setActive(!s.isActive());
+        pushScheduleState(s);
+    }
+
+    public LiveData<Map<Integer, Schedule>> addSchedule() {
+        ScheduleSettingsRequest request = new ScheduleSettingsRequest(
+                "", true, new ArrayList<>(), 0, 0, new ArrayList<>(), "12:00");
+        client.addSchedule(schedules, request);
+        return schedules;
     }
 
     public LiveData<Map<Integer, MotionSensor>> addMotionSensor() {

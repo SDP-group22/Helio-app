@@ -31,7 +31,6 @@ public class ControlFragment extends Fragment {
         );
 
 
-
         // Insert into the recycler view
         RecyclerView recView = view.findViewById(R.id.control_rc_view);
         recView.setAdapter(adapter);

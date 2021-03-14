@@ -1,4 +1,4 @@
-package com.helio.app.ui.sensors;
+package com.helio.app.ui.utils;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.helio.app.R;
 import com.helio.app.model.Motor;
-import com.helio.app.model.Sensor;
+import com.helio.app.model.MotorIdsComponent;
 import com.helio.app.ui.MotorIcon;
 
 import java.util.ArrayList;
 
-public class BlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<BlindsCheckboxRecViewAdapter.ViewHolder> {
+/**
+ * Works with anything that implements {@link MotorIdsComponent}
+ */
+public class MotorIdsBlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<MotorIdsBlindsCheckboxRecViewAdapter.ViewHolder> {
 
     private ArrayList<Motor> motors = new ArrayList<>();
-    private Sensor sensor;
+    private MotorIdsComponent component;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blinds_checkbox_list_item,
-                parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blinds_checkbox_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -39,7 +41,9 @@ public class BlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<BlindsChe
         if (icon != null) {
             holder.blindIcon.setImageResource(icon.id);
         }
-        holder.checkBox.setChecked(sensor.getMotorIds().contains(motor.getId()));
+        if (component != null) {
+            holder.checkBox.setChecked(component.getMotorIds().contains(motor.getId()));
+        }
     }
 
     @Override
@@ -52,8 +56,8 @@ public class BlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<BlindsChe
         notifyDataSetChanged();
     }
 
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
+    public void setComponent(MotorIdsComponent component) {
+        this.component = component;
         notifyDataSetChanged();
     }
 
@@ -80,10 +84,9 @@ public class BlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<BlindsChe
 
         private void updateMotorIds() {
             if (checkBox.isChecked()) {
-                sensor.getMotorIds().add(motors.get(getAdapterPosition()).getId());
+                component.getMotorIds().add(motors.get(getAdapterPosition()).getId());
             } else {
-                // It needs to be an Integer not an int so that it removes the ID and not the item at that position in the list
-                sensor.getMotorIds().remove((Integer) motors.get(getAdapterPosition()).getId());
+                component.getMotorIds().remove(Integer.valueOf(motors.get(getAdapterPosition()).getId()));
             }
         }
     }

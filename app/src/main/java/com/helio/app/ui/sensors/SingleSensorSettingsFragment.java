@@ -22,6 +22,7 @@ import com.helio.app.UserDataViewModel;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Sensor;
+import com.helio.app.ui.utils.MotorIdsBlindsCheckboxRecViewAdapter;
 import com.helio.app.ui.utils.TextChangedListener;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class SingleSensorSettingsFragment extends Fragment {
         nameEditText = view.<TextInputLayout>findViewById(R.id.name).getEditText();
         ipEditText = view.<TextInputLayout>findViewById(R.id.ip_address).getEditText();
 
-        BlindsCheckboxRecViewAdapter checkBoxRCAdapter = new BlindsCheckboxRecViewAdapter();
+        MotorIdsBlindsCheckboxRecViewAdapter checkBoxRCAdapter = new MotorIdsBlindsCheckboxRecViewAdapter();
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> checkBoxRCAdapter.setMotors(new ArrayList<>(motors.values()))
@@ -71,7 +72,7 @@ public class SingleSensorSettingsFragment extends Fragment {
                     getViewLifecycleOwner(),
                     sensors -> {
                         sensor = sensors.get(sensorId);
-                        checkBoxRCAdapter.setSensor(sensor);
+                        checkBoxRCAdapter.setComponent(sensor);
                         setup();
 
                         MotionSensor motionSensor = (MotionSensor) sensor;
@@ -101,7 +102,7 @@ public class SingleSensorSettingsFragment extends Fragment {
                     getViewLifecycleOwner(),
                     sensors -> {
                         sensor = sensors.get(sensorId);
-                        checkBoxRCAdapter.setSensor(sensor);
+                        checkBoxRCAdapter.setComponent(sensor);
                         setup();
                     });
         }
@@ -133,7 +134,7 @@ public class SingleSensorSettingsFragment extends Fragment {
         // Check if null in case something is wrong or it hasn't loaded in yet
         if (sensor != null) {
             model.pushSensorState(sensor);
-            Toast.makeText(requireContext(), requireContext().getString(R.string.updated), Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), requireContext().getString(R.string.component_updated), Toast.LENGTH_SHORT).show();
         }
         super.onStop();
     }

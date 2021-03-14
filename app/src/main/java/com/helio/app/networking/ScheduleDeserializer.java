@@ -29,7 +29,8 @@ public class ScheduleDeserializer implements JsonDeserializer<Schedule> {
         JsonElement jsonElement = jsonObject.get("days");
 
         // Convert to type Day
-        List<String> dayStrings = gson.fromJson(jsonElement, new TypeToken<List<String>>() {}.getType());
+        List<String> dayStrings = gson.fromJson(jsonElement, new TypeToken<List<String>>() {
+        }.getType());
         schedule.setDays(dayStrings.stream().map(Day::getEnumFromName).collect(Collectors.toList()));
 
         return schedule;

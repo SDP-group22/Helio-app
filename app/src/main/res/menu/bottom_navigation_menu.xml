@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_edit_pencil"
         android:title="@string/title_blinds_settings" />
     <item
+        android:id="@+id/navigation_schedule"
+        android:icon="@drawable/ic_timer"
+        android:title="@string/title_schedule_setting"/>
+    <item
         android:id="@+id/navigation_sensors"
         android:icon="@drawable/ic_sensor"
         android:title="@string/sensor" />
@@ -16,5 +20,4 @@
         android:id="@+id/navigation_hub"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/title_settings" />
-
 </menu>

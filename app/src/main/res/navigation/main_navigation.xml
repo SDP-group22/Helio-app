@@ -14,27 +14,46 @@
             android:id="@+id/action_blindsSettingsFragment_to_singleBlindSettingsFragment"
             app:destination="@id/singleBlindSettingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/singleBlindSettingsFragment"
+        android:name="com.helio.app.ui.blinds.SingleBlindSettingsFragment"
+        android:label="@string/title_edit_blind"
+        tools:layout="@layout/fragment_single_blind_settings">
+
+        <argument
+            android:name="currentMotorId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_hub"
         android:name="com.helio.app.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
-
     <fragment
         android:id="@+id/navigation_control"
         android:name="com.helio.app.ui.control.ControlFragment"
         android:label="@string/title_control"
         tools:layout="@layout/fragment_control" />
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="com.helio.app.ui.schedules.SchedulesSettingsFragment"
+        android:label="@string/title_schedule_setting"
+        tools:layout="@layout/fragment_schedule_settings">
+        <action
+            android:id="@+id/action_scheduleFragment_to_scheduleSettingsFragment"
+            app:destination="@id/scheduleSettingsFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/singleBlindSettingsFragment"
-        android:name="com.helio.app.ui.blind.SingleBlindSettingsFragment"
-        android:label="@string/title_edit_blind"
-        tools:layout="@layout/fragment_single_blind_settings">
+        android:id="@+id/scheduleSettingsFragment"
+        android:name="com.helio.app.ui.schedules.SingleScheduleSettingsFragment"
+        android:label="@string/title_edit_schedule"
+        tools:layout="@layout/schedule_list_item">
 
         <argument
-            android:name="currentMotorId"
+            android:name="currentScheduleId"
             android:defaultValue="0"
             app:argType="integer" />
     </fragment>

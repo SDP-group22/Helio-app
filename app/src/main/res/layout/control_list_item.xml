@@ -23,7 +23,6 @@
             android:layout_alignTop="@+id/scheduleName"
             android:layout_alignBottom="@+id/controlSlider"
             android:layout_marginStart="5dp"
-            app:tint="?colorText"
             app:srcCompat="@drawable/ic_fridge"
             tools:ignore="ContentDescription" />
 

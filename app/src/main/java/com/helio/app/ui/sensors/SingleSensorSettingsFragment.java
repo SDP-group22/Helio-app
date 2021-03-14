@@ -64,7 +64,7 @@ public class SingleSensorSettingsFragment extends Fragment {
 
             AutoCompleteTextView sensitivityMenu = (AutoCompleteTextView) sensitivityMenuLayout.getEditText();
             assert sensitivityMenu != null;
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.theme_list_item,
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_list_item,
                     view.getResources().getStringArray(R.array.duration_sensitivity_options));
             sensitivityMenu.setAdapter(adapter);
 

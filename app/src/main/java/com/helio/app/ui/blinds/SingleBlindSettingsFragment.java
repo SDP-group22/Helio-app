@@ -1,4 +1,4 @@
-package com.helio.app.ui.blind;
+package com.helio.app.ui.blinds;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -61,12 +61,11 @@ public class SingleBlindSettingsFragment extends Fragment {
                     namePreference.setText(motor.getName());
                     ipPreference.setText(motor.getIp());
 
+                    assert iconPreference != null;
                     if (motor.getIcon() == null) {
                         // If motor has no icon then set to None
-                        assert iconPreference != null;
                         iconPreference.setValueIndex(iconPreference.getEntryValues().length - 1);
                     } else {
-                        assert iconPreference != null;
                         iconPreference.setValue(motor.getIcon().name);
                     }
 

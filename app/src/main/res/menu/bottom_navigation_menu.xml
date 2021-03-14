@@ -10,7 +10,7 @@
         android:title="@string/title_blinds_settings" />
     <item
         android:id="@+id/navigation_schedule"
-        android:icon="@drawable/timer"
+        android:icon="@drawable/ic_timer"
         android:title="@string/title_schedule_setting"/>
     <item
         android:id="@+id/navigation_sensors"

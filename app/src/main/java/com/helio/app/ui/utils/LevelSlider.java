@@ -2,7 +2,6 @@ package com.helio.app.ui.utils;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
 import androidx.annotation.NonNull;
@@ -35,13 +34,7 @@ public class LevelSlider extends Slider {
         setStepSize(1);
         setTickVisible(false);
         // Get the accent colour from the theme
-        TypedArray themeArray = getContext().getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
-        int highlightColour;
-        try {
-            highlightColour = themeArray.getColor(0, 0);
-        } finally {
-            themeArray.recycle();
-        }
+        int highlightColour = ContextColourProvider.getColour(getContext(), android.R.attr.colorAccent);
         setThumbTintList(ColorStateList.valueOf(highlightColour));
 
         setLabelFormatter(new LevelLabelFormatter(getContext()));

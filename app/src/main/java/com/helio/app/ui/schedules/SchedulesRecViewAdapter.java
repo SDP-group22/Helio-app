@@ -1,7 +1,6 @@
 package com.helio.app.ui.schedules;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -25,7 +24,10 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Day;
 import com.helio.app.model.Schedule;
+import com.helio.app.ui.utils.ContextColourProvider;
 import com.helio.app.ui.utils.LevelLabelFormatter;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
     private final Context context;
     private final UserDataViewModel model;
     private ArrayList<Schedule> schedules = new ArrayList<>();
+    private int highlightColour;
 
     public SchedulesRecViewAdapter(Context context, UserDataViewModel model) {
         this.context = context;
@@ -58,14 +61,41 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         holder.time.setText(schedule.getFormattedTime());
 
         // Get the emphasis colour from the theme
-        TypedArray themeArray = context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
-        int highlightColour;
-        try {
-            highlightColour = themeArray.getColor(0, 0);
-        } finally {
-            themeArray.recycle();
+        highlightColour = ContextColourProvider.getColour(context, android.R.attr.colorAccent);
+
+        holder.days.setText(getStyledDaysString(schedule.getDays()));
+
+        // Set the name of the schedule, but if there isn't one remove it from the layout
+        if (schedule.getName() == null || schedule.getName().equals("")) {
+            holder.layout.removeView(holder.nameLayout);
+        } else {
+            holder.scheduleName.setText(schedule.getName());
         }
 
+        // Set the target level, and emphasise the level itself
+        SpannableStringBuilder levelStringBuilder = getStyledLevelString(schedule.getTargetLevel());
+
+        holder.level.setText(levelStringBuilder);
+    }
+
+    @NotNull
+    private SpannableStringBuilder getStyledLevelString(int targetLevel) {
+        SpannableStringBuilder levelStringBuilder = new SpannableStringBuilder();
+        String targetBaseString = context.getString(R.string.target_motor_value_prefix);
+        String targetAsString = new LevelLabelFormatter(context).getFormattedValue(targetLevel);
+        levelStringBuilder.append(targetBaseString);
+        levelStringBuilder.append(targetAsString);
+
+        int start = targetBaseString.length();
+        int end = start + targetAsString.length();
+        levelStringBuilder.setSpan(new ForegroundColorSpan(highlightColour), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        levelStringBuilder.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return levelStringBuilder;
+    }
+
+
+    @NotNull
+    private SpannableStringBuilder getStyledDaysString(List<Day> scheduleDays) {
         // Get the list of all days and the list of shortened day names (M, T, W...)
         // Rotate the arrays around for local specific first day
         Day firstLocalDay = Day.getFirstLocalDay(context);
@@ -84,7 +114,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
             daysStringBuilder.append(shortWeekdays.get(i));
 
             // If in the schedule emphasise the day with colour, bold, and underline
-            if (schedule.getDays().contains(allDays.get(i))) {
+            if (scheduleDays.contains(allDays.get(i))) {
                 int start = i * 2;
                 // The length is supposed to be 1 character, but in case it isn't
                 int end = start + shortWeekdays.get(i).length();
@@ -93,29 +123,7 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
                 daysStringBuilder.setSpan(new UnderlineSpan(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
-
-        holder.days.setText(daysStringBuilder);
-
-        // Set the name of the schedule, but if there isn't one remove it from the layout
-        if (schedule.getName() == null || schedule.getName().equals("")) {
-            holder.layout.removeView(holder.nameLayout);
-        } else {
-            holder.scheduleName.setText(schedule.getName());
-        }
-
-        // Set the target level, and emphasise the level itself
-        SpannableStringBuilder levelStringBuilder = new SpannableStringBuilder();
-        String targetBaseString = context.getString(R.string.target_motor_value_prefix);
-        String targetAsString = new LevelLabelFormatter(context).getFormattedValue(schedule.getTargetLevel());
-        levelStringBuilder.append(targetBaseString);
-        levelStringBuilder.append(targetAsString);
-
-        int start = targetBaseString.length();
-        int end = start + targetAsString.length();
-        levelStringBuilder.setSpan(new ForegroundColorSpan(highlightColour), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        levelStringBuilder.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        holder.level.setText(levelStringBuilder);
+        return daysStringBuilder;
     }
 
     @Override

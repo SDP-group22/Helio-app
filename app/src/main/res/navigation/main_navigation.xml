@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/singleBlindSettingsFragment"
-        android:name="com.helio.app.ui.blind.SingleBlindSettingsFragment"
+        android:name="com.helio.app.ui.blinds.SingleBlindSettingsFragment"
         android:label="@string/title_edit_blind"
         tools:layout="@layout/fragment_single_blind_settings">
 

@@ -1,4 +1,4 @@
-package com.helio.app.ui.blind;
+package com.helio.app.ui.blinds;
 
 import android.os.Bundle;
 import android.text.InputType;

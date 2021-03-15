@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.helio.app.ui.settings.AppTheme;
 
 public class MainActivity extends AppCompatActivity {
+    private static boolean restartOnSettings = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_control,
                 R.id.navigation_blinds,
-                R.id.navigation_hub
+                R.id.navigation_schedule,
+                R.id.navigation_sensors,
+                R.id.navigation_settings
         ).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
@@ -41,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
         // This makes the fragment change when you press the navigation buttons
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navView, navController);
+
+        if (restartOnSettings) {
+            navController.navigate(R.id.navigation_settings);
+            restartOnSettings = false;
+        }
     }
 
     @Override
@@ -67,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             System.out.println("Updating theme to \"" + themeName + "\"...");
             saveNewThemeName(sharedPrefs, themeName);
+            restartOnSettings = true;
             activateNewTheme(newTheme);
         }
     }

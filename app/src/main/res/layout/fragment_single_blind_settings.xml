@@ -42,7 +42,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragment_container_preferences"
-                android:name="com.helio.app.ui.blind.SingleBlindSettingsPreferencesFragment"
+                android:name="com.helio.app.ui.blinds.SingleBlindSettingsPreferencesFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"

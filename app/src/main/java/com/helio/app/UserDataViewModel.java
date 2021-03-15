@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+
 public class UserDataViewModel extends AndroidViewModel {
     private final HubClient client = new HubClient("http://10.0.2.2:4310/");
     private MutableLiveData<Map<Integer, Motor>> motors;
@@ -146,6 +149,30 @@ public class UserDataViewModel extends AndroidViewModel {
                     s.getMotorIds(), s.getName(), s.getIp(), s.isActive(), s.getBattery(), s.getStyle());
             client.updateLightSensor(lightSensors, s.getId(), request);
         }
+    }
+
+    public void startCalibration(Motor motor) {
+        client.startCalibration(motor);
+    }
+
+    public void stopCalibration(Motor motor) {
+        client.startCalibration(motor);
+    }
+
+    public void moveUp(Motor motor) {
+        client.moveUp(motor);
+    }
+
+    public void moveDown(Motor motor) {
+        client.moveDown(motor);
+    }
+
+    public void setHighestPoint(Motor motor) {
+        client.setHighestPoint(motor);
+    }
+
+    public void setLowestPoint(Motor motor) {
+        client.setLowestPoint(motor);
     }
 
     public void toggleSensorActive(Sensor s) {

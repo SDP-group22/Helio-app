@@ -11,6 +11,7 @@ import com.helio.app.networking.request.ScheduleSettingsRequest;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -32,12 +33,6 @@ public interface HubService {
 
     @PATCH("/motor/move/{motor_id}")
     Call<Motor> moveMotor(@Path("motor_id") int id, @Body int level);
-
-    @PATCH("/motor/start_calibrate/{motor_id}")
-    Call<Motor> startMotorCalibration(@Path("motor_id") int id);
-
-    @PATCH("/motor/stop_calibrate/{motor_id}")
-    Call<Motor> stopMotorCalibration(@Path("motor_id") int id);
 
     @GET("/motor/get_all")
     Call<List<Motor>> getAllMotors();
@@ -68,4 +63,25 @@ public interface HubService {
 
     @PATCH("/motion/update/{motion_sensor_id}")
     Call<MotionSensor> updateMotionSensor(@Path("motion_sensor_id") int id, @Body MotionSensorSettingsRequest motionSensorSettingsRequest);
+
+    @PATCH("/motor/calibrate/start/{motor_id}")
+    Call<ResponseBody> startCalibration(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/stop/{motor_id}")
+    Call<ResponseBody> stopCalibration(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/move_up/{motor_id}")
+    Call<ResponseBody> moveUp(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/move_down/{motor_id}")
+    Call<ResponseBody> moveDown(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/stop_moving/{motor_id}")
+    Call<ResponseBody> stopMoving(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/set_highest/{motor_id}")
+    Call<ResponseBody> setHighestPoint(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/set_Lowest/{motor_id}")
+    Call<ResponseBody> setLowestPoint(@Path("motor_id") int id);
 }

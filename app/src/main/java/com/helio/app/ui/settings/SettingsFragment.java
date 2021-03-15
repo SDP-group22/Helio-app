@@ -27,6 +27,7 @@ import com.helio.app.networking.IPAddress;
 import com.helio.app.networking.NetworkStatus;
 import com.helio.app.ui.utils.IdString;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class SettingsFragment extends Fragment {

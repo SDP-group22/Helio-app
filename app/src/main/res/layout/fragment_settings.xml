@@ -29,11 +29,18 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="25dp"
+        android:background="?android:attr/listDivider" />
+
     <TextView
         android:id="@+id/hub_title_view"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
         android:text="@string/connect_to_your_helio_hub_device"

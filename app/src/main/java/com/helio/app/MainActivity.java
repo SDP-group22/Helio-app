@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("New theme \"" + themeId + "\" is already active.");
         } else {
             System.out.println("Updating theme to \"" + themeId + "\"...");
-            saveNewThemeName(sharedPrefs, themeId);
+            saveNewTheme(sharedPrefs, themeId);
             restartOnSettings = true;
             activateNewTheme(newTheme);
         }
@@ -106,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    private void saveNewThemeName(SharedPreferences sharedPrefs, int themeId) {
+    private void saveNewTheme(SharedPreferences sharedPrefs, int themeId) {
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt(getString(R.string.user_settings_theme_key), themeId);
         editor.apply();
-        System.out.println("New theme name: " +
+        System.out.println("New theme: " +
                 sharedPrefs.getInt(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_ID));
     }
 }

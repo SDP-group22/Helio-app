@@ -2,6 +2,7 @@ package com.helio.app.ui.blinds;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -43,8 +44,24 @@ public class CalibrationFragment extends Fragment {
                     // Start calibration upon page opening
                     model.startCalibration(motor);
 
-                    upButton.setOnClickListener(v -> model.moveUp(motor));
-                    downButton.setOnClickListener(v -> model.moveDown(motor));
+                    upButton.setOnTouchListener((v, event) -> {
+                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                            model.moveUp(motor);
+                        } else if (event.getAction() == MotionEvent.ACTION_UP){
+                            model.stopMoving(motor);
+                        }
+                        v.performClick();
+                        return false;
+                    });
+                    downButton.setOnTouchListener((v, event) -> {
+                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                            model.moveDown(motor);
+                        } else if (event.getAction() == MotionEvent.ACTION_UP){
+                            model.stopMoving(motor);
+                        }
+                        v.performClick();
+                        return false;
+                    });
                     setHighButton.setOnClickListener(v -> model.setHighestPoint(motor));
                     setLowButton.setOnClickListener(v -> model.setLowestPoint(motor));
                 }
@@ -57,6 +74,7 @@ public class CalibrationFragment extends Fragment {
     public void onStop() {
         if (model != null) {
             // Stop calibration upon page closing
+            model.stopMoving(motor);
             model.stopCalibration(motor);
             Toast.makeText(requireContext(), requireContext().getString(R.string.calibrated), Toast.LENGTH_SHORT).show();
         }

@@ -164,6 +164,10 @@ public class UserDataViewModel extends AndroidViewModel {
         client.moveDown(motor);
     }
 
+    public void stopMoving(Motor motor) {
+        client.stopMoving(motor);
+    }
+
     public void setHighestPoint(Motor motor) {
         client.setHighestPoint(motor);
     }

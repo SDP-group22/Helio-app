@@ -150,6 +150,11 @@ public class HubClient {
         call.enqueue(new BlankCallback());
     }
 
+    public void stopMoving(Motor motor) {
+        Call<ResponseBody> call = service.stopMoving(motor.getId());
+        call.enqueue(new BlankCallback());
+    }
+
     public void setHighestPoint(Motor motor) {
         Call<ResponseBody> call = service.setHighestPoint(motor.getId());
         call.enqueue(new BlankCallback());

@@ -48,8 +48,7 @@
     <string name="motion_sensor_sensitivity">Sensor Sensitivity (Minutes)</string>
 
     <!-- Settings -->
-    <string name="title_theme_selection">App Theme</string>
-    <string name="connect_to_your_helio_hub_device">Connect to your Helio Hub device</string>
+    <string name="connect_to_your_helio_hub_device">Connect to your Helio Hub</string>
     <string name="_255">255</string>
     <string name="connect">Connect</string>
     <string name="connection_status">Connection status</string>

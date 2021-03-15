@@ -1,12 +1,15 @@
 package com.helio.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.helio.app.model.IPAddress;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
@@ -23,15 +26,47 @@ import java.util.Map;
 import java.util.Objects;
 
 public class UserDataViewModel extends AndroidViewModel {
-    private final HubClient client = new HubClient("http://10.0.2.2:4310/");
+    private HubClient client;
     private MutableLiveData<Map<Integer, Motor>> motors;
     private MutableLiveData<Map<Integer, Schedule>> schedules;
     private MutableLiveData<Map<Integer, LightSensor>> lightSensors;
     private MutableLiveData<Map<Integer, MotionSensor>> motionSensors;
     private int currentMotorId = -1;
+    private final SharedPreferences sharedPrefs;
 
     public UserDataViewModel(@NonNull Application application) {
         super(application);
+        sharedPrefs = getApplication().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        client = createClient(getHubIp());
+    }
+
+    private HubClient createClient(String ip) {
+        // IP of local machine when using emulator is 10.0.2.2
+        return new HubClient(IPAddress.getBaseAddressUrl(ip));
+    }
+
+    public String getHubIp() {
+        return sharedPrefs.getString(getIpKey(), IPAddress.DEFAULT);
+    }
+
+    public void setHubIp(String ip) {
+        if (IPAddress.correctFormat(ip)) {
+            // Set the preference
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            editor.putString(getIpKey(), ip);
+            editor.apply();
+            System.out.println("New IP: " + sharedPrefs.getString(getIpKey(), IPAddress.DEFAULT));
+
+            // Create the new client and reset the data so that it is reloaded
+            client = createClient(ip);
+            motors = null;
+            schedules = null;
+            lightSensors = null;
+            motionSensors = null;
+        } else {
+            // If this is being thrown then you need to input validation before it gets to this point
+            throw new IllegalArgumentException("IP address in incorrect format: " + ip);
+        }
     }
 
     public LiveData<Map<Integer, Motor>> fetchMotors() {
@@ -89,7 +124,7 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public LiveData<Map<Integer, Motor>> addMotor() {
         MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
-                "", "0.0.0.0", true, 0, 0, 0, "");
+                "", IPAddress.DEFAULT, true, 0, 0, 0, "");
         client.addMotor(motors, motorSettingsRequest);
         return motors;
     }
@@ -118,14 +153,14 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public LiveData<Map<Integer, MotionSensor>> addMotionSensor() {
         MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.new_motion_sensor), "0.0.0.0", true, 0, "", "00:15");
+                new ArrayList<>(), getApplication().getString(R.string.new_motion_sensor), IPAddress.DEFAULT, true, 0, "", "00:15");
         client.addMotionSensor(motionSensors, request);
         return motionSensors;
     }
 
     public LiveData<Map<Integer, LightSensor>> addLightSensor() {
         LightSensorSettingsRequest request = new LightSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.new_light_sensor), "0.0.0.0", true, 0, "");
+                new ArrayList<>(), getApplication().getString(R.string.new_light_sensor), IPAddress.DEFAULT, true, 0, "");
         client.addLightSensor(lightSensors, request);
         return lightSensors;
     }
@@ -159,5 +194,9 @@ public class UserDataViewModel extends AndroidViewModel {
         } else if (s.getClass() == LightSensor.class) {
             pushSensorState((LightSensor) s);
         }
+    }
+
+    private String getIpKey() {
+        return getApplication().getString(R.string.ip_key);
     }
 }

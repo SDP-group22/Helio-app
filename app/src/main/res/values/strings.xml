@@ -60,4 +60,6 @@
     <string name="default_theme">Default</string>
     <string name="night_theme">Night</string>
     <string name="high_contrast_theme">High Contrast</string>
+    <string name="ip_key">ip_preference_key</string>
+    <string name="ip_address_set">IP address set</string>
 </resources>

@@ -1,17 +1,24 @@
 package com.helio.app.ui.blinds;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.button.MaterialButton;
 import com.helio.app.R;
+import com.helio.app.UserDataViewModel;
+import com.helio.app.model.Motor;
 
 
 public class CalibrationFragment extends Fragment {
+
+    private Motor motor;
+    private UserDataViewModel model;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -20,6 +27,39 @@ public class CalibrationFragment extends Fragment {
         assert getArguments() != null;
         int motorId = getArguments().getInt("currentMotorId");
 
+        MaterialButton upButton = view.findViewById(R.id.move_up);
+        MaterialButton downButton = view.findViewById(R.id.move_down);
+        MaterialButton setHighButton = view.findViewById(R.id.set_high);
+        MaterialButton setLowButton = view.findViewById(R.id.set_low);
+
+        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
+
+        model.setCurrentMotor(motorId);
+        model.fetchMotors().observe(
+                getViewLifecycleOwner(),
+                motors -> {
+                    motor = motors.get(motorId);
+
+                    // Start calibration upon page opening
+                    model.startCalibration(motor);
+
+                    upButton.setOnClickListener(v -> model.moveUp(motor));
+                    downButton.setOnClickListener(v -> model.moveDown(motor));
+                    setHighButton.setOnClickListener(v -> model.setHighestPoint(motor));
+                    setLowButton.setOnClickListener(v -> model.setLowestPoint(motor));
+                }
+        );
+
         return view;
+    }
+
+    @Override
+    public void onStop() {
+        if (model != null) {
+            // Stop calibration upon page closing
+            model.stopCalibration(motor);
+            Toast.makeText(requireContext(), requireContext().getString(R.string.calibrated), Toast.LENGTH_SHORT).show();
+        }
+        super.onStop();
     }
 }

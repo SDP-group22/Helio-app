@@ -82,6 +82,6 @@ public interface HubService {
     @PATCH("/motor/calibrate/set_highest/{motor_id}")
     Call<ResponseBody> setHighestPoint(@Path("motor_id") int id);
 
-    @PATCH("/motor/calibrate/set_Lowest/{motor_id}")
+    @PATCH("/motor/calibrate/set_lowest/{motor_id}")
     Call<ResponseBody> setLowestPoint(@Path("motor_id") int id);
 }

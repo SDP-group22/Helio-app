@@ -9,8 +9,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
@@ -47,6 +49,7 @@ public class SingleBlindSettingsFragment extends Fragment {
         EditTextPreference namePreference = preferenceFragment.findPreference("name");
         EditTextPreference ipPreference = preferenceFragment.findPreference("ip");
         ListPreference iconPreference = preferenceFragment.findPreference("icon");
+        Preference calibrationPreference = preferenceFragment.findPreference("calibration");
 
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         model.setCurrentMotor(motorId);
@@ -57,6 +60,7 @@ public class SingleBlindSettingsFragment extends Fragment {
 
                     assert namePreference != null;
                     assert ipPreference != null;
+                    assert calibrationPreference != null;
                     assert motor != null;
                     namePreference.setText(motor.getName());
                     ipPreference.setText(motor.getIp());
@@ -80,6 +84,16 @@ public class SingleBlindSettingsFragment extends Fragment {
                     iconPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                         motor.setStyle((String) newValue);
                         return true;
+                    });
+                    calibrationPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+                            SingleBlindSettingsFragmentDirections.ActionSingleBlindSettingsFragmentToCalibrationFragment action =
+                                    SingleBlindSettingsFragmentDirections.actionSingleBlindSettingsFragmentToCalibrationFragment();
+                            action.setCurrentMotorId(motor.getId());
+                            Navigation.findNavController(view).navigate(action);
+                            return false;
+                        }
                     });
                 }
         );

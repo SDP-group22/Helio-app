@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="@string/connect" />
+            android:text="@string/connect_button" />
 
     </LinearLayout>
 
@@ -78,7 +78,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/connectionStatus"
+        android:id="@+id/connection_status"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginBottom="45dp"

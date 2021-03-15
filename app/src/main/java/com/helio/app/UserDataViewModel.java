@@ -9,13 +9,14 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.helio.app.model.IPAddress;
+import com.helio.app.networking.IPAddress;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
 import com.helio.app.model.Sensor;
 import com.helio.app.networking.HubClient;
+import com.helio.app.networking.NetworkStatus;
 import com.helio.app.networking.request.LightSensorSettingsRequest;
 import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
@@ -198,5 +199,11 @@ public class UserDataViewModel extends AndroidViewModel {
 
     private String getIpKey() {
         return getApplication().getString(R.string.ip_key);
+    }
+
+    public MutableLiveData<NetworkStatus> getNetworkStatus() {
+        MutableLiveData<NetworkStatus> status = new MutableLiveData<>();
+        client.getNetworkStatus(status);
+        return status;
     }
 }

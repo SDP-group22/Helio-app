@@ -68,4 +68,7 @@ public interface HubService {
 
     @PATCH("/motion/update/{motion_sensor_id}")
     Call<MotionSensor> updateMotionSensor(@Path("motion_sensor_id") int id, @Body MotionSensorSettingsRequest motionSensorSettingsRequest);
+
+    @GET("/motor/get_all")
+    Call<List<Motor>> getNetworkStatus();
 }

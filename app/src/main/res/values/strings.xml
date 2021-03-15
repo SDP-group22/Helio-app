@@ -50,9 +50,10 @@
     <!-- Settings -->
     <string name="connect_to_your_helio_hub_device">Connect to your Helio Hub</string>
     <string name="_255">255</string>
-    <string name="connect">Connect</string>
+    <string name="connect_button">Connect</string>
     <string name="connection_status">Connection status</string>
     <string name="not_connected">not connected</string>
+    <string name="connected">connected</string>
     <string name="_dot">.</string>
     <string name="user_settings_theme_key">user_settings</string>
     <string name="theme">Theme</string>
@@ -62,4 +63,5 @@
     <string name="high_contrast_theme">High Contrast</string>
     <string name="ip_key">ip_preference_key</string>
     <string name="ip_address_set">IP address set</string>
+    <string name="ip_incorrect_format">Incorrect format</string>
 </resources>

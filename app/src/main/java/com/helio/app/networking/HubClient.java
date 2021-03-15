@@ -134,4 +134,10 @@ public class HubClient {
         Call<MotionSensor> call = service.updateMotionSensor(id, motionSensorSettingsRequest);
         call.enqueue(new IdComponentCallback<>(sensors));
     }
+
+    public void getNetworkStatus(MutableLiveData<NetworkStatus> status) {
+        Call<List<Motor>> call = service.getNetworkStatus();
+        call.enqueue(new NetworkStatusCallback(status));
+    }
+
 }

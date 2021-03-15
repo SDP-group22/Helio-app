@@ -1,4 +1,4 @@
-package com.helio.app.model;
+package com.helio.app.networking;
 
 import android.util.Patterns;
 

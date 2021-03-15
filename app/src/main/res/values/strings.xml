@@ -58,4 +58,7 @@
     <string name="user_settings_theme_key">user_settings</string>
     <string name="theme">Theme</string>
     <string name="title_settings">Settings</string>
+    <string name="default_theme">Default</string>
+    <string name="night_theme">Night</string>
+    <string name="high_contrast_theme">High Contrast</string>
 </resources>

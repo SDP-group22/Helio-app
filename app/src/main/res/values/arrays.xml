@@ -12,9 +12,9 @@
 
     <!--  Theme Preference  -->
     <array name="theme_options">
-        <item>Default</item>
-        <item>Night</item>
-        <item>High Contrast</item>
+        <item>@string/default_theme</item>
+        <item>@string/night_theme</item>
+        <item>@string/high_contrast_theme</item>
     </array>
 
     <array name="icons">

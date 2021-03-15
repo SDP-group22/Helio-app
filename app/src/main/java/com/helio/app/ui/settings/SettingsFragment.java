@@ -25,6 +25,7 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.networking.IPAddress;
 import com.helio.app.networking.NetworkStatus;
+import com.helio.app.ui.utils.IdString;
 
 import java.util.Objects;
 
@@ -45,7 +46,7 @@ public class SettingsFragment extends Fragment {
         themeMenu = (AutoCompleteTextView) view.<TextInputLayout>findViewById(R.id.theme_menu).getEditText();
         connectionStatus = view.findViewById(R.id.connection_status);
 
-        setupThemeDropdown(view.getResources().getStringArray(R.array.theme_options));
+        setupThemeDropdown();
         setupIpAddress();
         updateConnectionStatus();
         return view;
@@ -105,27 +106,31 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    private void setupThemeDropdown(String[] themeOptions) {
+    private void setupThemeDropdown() {
         assert themeMenu != null;
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_list_item, themeOptions);
+        IdString[] themes = new IdString[]{new IdString(R.string.default_theme, requireContext()),
+                new IdString(R.string.night_theme, requireContext()),
+                new IdString(R.string.high_contrast_theme, requireContext())};
+
+        ArrayAdapter<IdString> adapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_list_item, themes);
         themeMenu.setAdapter(adapter);
         selectCurrentTheme(themeMenu);
         themeMenu.setOnItemClickListener((parent, v, position, id) -> {
-            final String newThemeName = parent.getItemAtPosition(position).toString();
-            ((MainActivity) requireActivity()).updateTheme(newThemeName);
+            final int newTheme = ((IdString) parent.getItemAtPosition(position)).getId();
+            ((MainActivity) requireActivity()).updateTheme(newTheme);
         });
     }
 
     private void selectCurrentTheme(AutoCompleteTextView themeMenu) {
         ListAdapter adapter = Objects.requireNonNull(themeMenu).getAdapter();
-        String currentThemeName = ((MainActivity) requireActivity()).getCurrentThemeName();
+        int currentThemeId = ((MainActivity) requireActivity()).getCurrentThemeId();
         final int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
-            String itemValue = (String) adapter.getItem(i);
-            if (itemValue.equals(currentThemeName)) {
+            int itemValue = ((IdString) adapter.getItem(i)).getId();
+            if (itemValue == currentThemeId) {
                 System.out.println("Setting spinner to \"" + itemValue + "\"...");
-                themeMenu.setText(currentThemeName, false);
+                themeMenu.setText(getString(itemValue), false);
                 break;
             }
         }

@@ -4,23 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:orientation="vertical"
-    android:paddingHorizontal="50dp">
-
-    <TextView
-        android:id="@+id/motorControl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="Motor Control"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText" />
-    <com.helio.app.ui.utils.LevelSlider
-        android:id="@+id/blinds_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+    android:paddingHorizontal="50dp"
+    tools:context=".MainActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/blinds_ip_address"
@@ -38,8 +24,8 @@
             style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number|numberDecimal"
             android:digits="0123456789."
+            android:inputType="number|numberDecimal"
             android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -50,8 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
-        app:startIconDrawable="@drawable/ic_label"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/ic_label">
 
         <com.google.android.material.textfield.TextInputEditText
             style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
@@ -68,8 +54,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
-        app:startIconDrawable="@drawable/ic_icon"
-        android:inputType="none">
+        android:inputType="none"
+        app:startIconDrawable="@drawable/ic_icon">
 
         <AutoCompleteTextView
             style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
@@ -80,11 +66,10 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/calibration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/calibration"
-        android:text="@string/settingsCalibration"
         android:layout_marginVertical="10dp"
-        />
+        android:text="@string/settingsCalibration" />
 
 </LinearLayout>

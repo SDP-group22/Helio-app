@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -19,6 +20,7 @@ import com.helio.app.R;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Sensor;
+import com.helio.app.networking.IPAddress;
 import com.helio.app.ui.SingleComponentSettingsFragment;
 import com.helio.app.ui.utils.MotorIdsBlindsCheckboxRecViewAdapter;
 import com.helio.app.ui.utils.TextChangedListener;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 
 public class SingleSensorSettingsFragment extends SingleComponentSettingsFragment<Sensor> {
     private EditText nameEditText;
+    private TextInputLayout ipEditLayout;
     private EditText ipEditText;
 
     @Override
@@ -37,7 +40,9 @@ public class SingleSensorSettingsFragment extends SingleComponentSettingsFragmen
         int sensorId = getArguments().getInt("currentSensorId");
         int sensorType = getArguments().getInt("sensorType");
 
-        nameEditText = view.<TextInputLayout>findViewById(R.id.name).getEditText();
+
+        ipEditLayout = view.findViewById(R.id.name);
+        nameEditText = ipEditLayout.getEditText();
         ipEditText = view.<TextInputLayout>findViewById(R.id.ip_address).getEditText();
 
         MotorIdsBlindsCheckboxRecViewAdapter checkBoxRCAdapter = new MotorIdsBlindsCheckboxRecViewAdapter();
@@ -127,7 +132,16 @@ public class SingleSensorSettingsFragment extends SingleComponentSettingsFragmen
         ipEditText.addTextChangedListener(new TextChangedListener() {
             @Override
             public void onTextChanged(CharSequence s) {
-                component.setIp(s.toString());
+                if (IPAddress.correctFormat(s.toString())) {
+                    // Clear the error message if there is one
+                    ipEditLayout.setError(null);
+
+                    component.setIp(s.toString());
+
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.ip_address_set), Toast.LENGTH_SHORT).show();
+                } else {
+                    ipEditLayout.setError(requireContext().getString(R.string.ip_incorrect_format));
+                }
             }
         });
     }

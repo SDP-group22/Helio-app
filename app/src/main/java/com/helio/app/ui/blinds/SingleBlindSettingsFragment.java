@@ -1,99 +1,83 @@
 package com.helio.app.ui.blinds;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.R;
-import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
-import com.helio.app.ui.utils.ContextColourProvider;
-import com.helio.app.ui.utils.MotorIdsBlindsCheckboxRecViewAdapter;
+import com.helio.app.networking.IPAddress;
+import com.helio.app.ui.SingleComponentSettingsFragment;
 import com.helio.app.ui.utils.TextChangedListener;
 
-import java.util.ArrayList;
-
-public class SingleBlindSettingsFragment extends Fragment {
-    private Motor motor;
-    private UserDataViewModel model;
-    private EditText nameEditText;
-    private EditText ipEditText;
-    private int fillColour;
-    private int backgroundColour;
+public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment<Motor> {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_single_blind_settings, container, false);
-        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         assert getArguments() != null;
         int motorId = getArguments().getInt("currentMotorId");
-        fillColour = ContextColourProvider.getColour(getContext(), android.R.attr.colorPrimary);
-        backgroundColour = ContextColourProvider.getColour(getContext(), android.R.attr.windowBackground);
 
-        nameEditText = view.<TextInputLayout>findViewById(R.id.blinds_name).getEditText();
-        ipEditText = view.<TextInputLayout>findViewById(R.id.blinds_ip_address).getEditText();
-        Slider levelSlider = view.findViewById(R.id.blinds_level);
+        EditText nameEditText = view.<TextInputLayout>findViewById(R.id.blinds_name).getEditText();
+        TextInputLayout ipEditLayout = view.findViewById(R.id.blinds_ip_address);
+        EditText ipEditText = ipEditLayout.getEditText();
+        assert nameEditText != null;
+        assert ipEditText != null;
 
-        MotorIdsBlindsCheckboxRecViewAdapter checkBoxRCAdapter = new MotorIdsBlindsCheckboxRecViewAdapter();
-        TextInputLayout iconMenuLayoutview = view.findViewById(R.id.dropdown_icons);
+        TextInputLayout iconMenuLayoutView = view.findViewById(R.id.dropdown_icons);
+
         // Set the blinds icon
-        AutoCompleteTextView iconMenu = (AutoCompleteTextView) iconMenuLayoutview.getEditText();
+        AutoCompleteTextView iconMenu = (AutoCompleteTextView) iconMenuLayoutView.getEditText();
         assert iconMenu != null;
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_list_item,
                 view.getResources().getStringArray(R.array.icons));
         iconMenu.setAdapter(adapter);
 
-        model.fetchMotors().observe(
+        getModel().fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> {
-                    motor = motors.get(motorId);
-                    levelSlider.setValue(motor.getLevel());
-                    levelSlider.addOnChangeListener((slider, value, fromUser) -> motor.setLevel((int) value));
-                    nameEditText.setText(motor.getName());
+                    component = motors.get(motorId);
+                    assert component != null;
+
+                    nameEditText.setText(component.getName());
                     nameEditText.addTextChangedListener(new TextChangedListener() {
                         @Override
                         public void onTextChanged(CharSequence s) {
-                            motor.setName(s.toString());
+                            component.setName(s.toString());
                         }
                     });
-                    ipEditText.setText(motor.getIp());
+
+                    ipEditText.setText(component.getIp());
                     ipEditText.addTextChangedListener(new TextChangedListener() {
                         @Override
                         public void onTextChanged(CharSequence s) {
-                            motor.setIp(s.toString());
+
+                            if (IPAddress.correctFormat(s.toString())) {
+                                // Clear the error message if there is one
+                                ipEditLayout.setError(null);
+
+                                component.setIp(s.toString());
+
+                                Toast.makeText(requireContext(), requireContext().getString(R.string.ip_address_set), Toast.LENGTH_SHORT).show();
+                            } else {
+                                ipEditLayout.setError(requireContext().getString(R.string.ip_incorrect_format));
+                            }
                         }
                     });
                 }
         );
-        model.fetchMotors().observe(
-                getViewLifecycleOwner(),
-                motors -> checkBoxRCAdapter.setMotors(new ArrayList<>(motors.values()))
-        );
 
         return view;
-    }
-
-    @Override
-    public void onStop() {
-        // Send changes to the motor state when the settings are closed
-        // Check if null in case something is wrong or it hasn't loaded in yet
-        if (motor != null) {
-            model.setCurrentMotor(motor.getId());
-            model.pushCurrentMotorState(motor);
-            Toast.makeText(requireContext(), requireContext().getString(R.string.component_updated), Toast.LENGTH_SHORT).show();
-        }
-        super.onStop();
     }
 }

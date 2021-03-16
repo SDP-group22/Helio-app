@@ -7,29 +7,25 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.R;
-import com.helio.app.UserDataViewModel;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Sensor;
+import com.helio.app.ui.SingleComponentSettingsFragment;
 import com.helio.app.ui.utils.MotorIdsBlindsCheckboxRecViewAdapter;
 import com.helio.app.ui.utils.TextChangedListener;
 
 import java.util.ArrayList;
 
-public class SingleSensorSettingsFragment extends Fragment {
-    private UserDataViewModel model;
-    private Sensor sensor;
+public class SingleSensorSettingsFragment extends SingleComponentSettingsFragment<Sensor> {
     private EditText nameEditText;
     private EditText ipEditText;
 
@@ -37,7 +33,6 @@ public class SingleSensorSettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_single_sensor_settings, container, false);
-        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         assert getArguments() != null;
         int sensorId = getArguments().getInt("currentSensorId");
         int sensorType = getArguments().getInt("sensorType");
@@ -46,7 +41,7 @@ public class SingleSensorSettingsFragment extends Fragment {
         ipEditText = view.<TextInputLayout>findViewById(R.id.ip_address).getEditText();
 
         MotorIdsBlindsCheckboxRecViewAdapter checkBoxRCAdapter = new MotorIdsBlindsCheckboxRecViewAdapter();
-        model.fetchMotors().observe(
+        getModel().fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> checkBoxRCAdapter.setMotors(new ArrayList<>(motors.values()))
         );
@@ -59,8 +54,10 @@ public class SingleSensorSettingsFragment extends Fragment {
         TextInputLayout sensitivityMenuLayout = view.findViewById(R.id.dropdown_sensitivity);
 
         // Only motion sensors have duration sensitivity
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        assert actionBar != null;
         if (sensorType == MotionSensor.TYPE) {
-            ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.motion_sensor);
+            actionBar.setTitle(R.string.motion_sensor);
 
             AutoCompleteTextView sensitivityMenu = (AutoCompleteTextView) sensitivityMenuLayout.getEditText();
             assert sensitivityMenu != null;
@@ -68,14 +65,15 @@ public class SingleSensorSettingsFragment extends Fragment {
                     view.getResources().getStringArray(R.array.duration_sensitivity_options));
             sensitivityMenu.setAdapter(adapter);
 
-            model.fetchMotionSensors().observe(
+            getModel().fetchMotionSensors().observe(
                     getViewLifecycleOwner(),
                     sensors -> {
-                        sensor = sensors.get(sensorId);
-                        checkBoxRCAdapter.setComponent(sensor);
+                        component = sensors.get(sensorId);
+
+                        checkBoxRCAdapter.setComponent(component);
                         setup();
 
-                        MotionSensor motionSensor = (MotionSensor) sensor;
+                        MotionSensor motionSensor = (MotionSensor) component;
                         assert motionSensor != null;
                         // Only try to set the text if it is not blank
                         if (motionSensor.getDurationSensitivity() != null && !motionSensor.getDurationSensitivity().equals("")) {
@@ -95,14 +93,15 @@ public class SingleSensorSettingsFragment extends Fragment {
                                 motionSensor.setDurationSensitivity(0, Integer.parseInt(parent.getItemAtPosition(position).toString())));
                     });
         } else if (sensorType == LightSensor.TYPE) {
-            ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.light_sensor);
+            actionBar.setTitle(R.string.light_sensor);
             ((ViewGroup) sensitivityMenuLayout.getParent()).removeView(sensitivityMenuLayout);
 
-            model.fetchLightSensors().observe(
+            getModel().fetchLightSensors().observe(
                     getViewLifecycleOwner(),
                     sensors -> {
-                        sensor = sensors.get(sensorId);
-                        checkBoxRCAdapter.setComponent(sensor);
+                        component = sensors.get(sensorId);
+
+                        checkBoxRCAdapter.setComponent(component);
                         setup();
                     });
         }
@@ -111,31 +110,20 @@ public class SingleSensorSettingsFragment extends Fragment {
     }
 
     private void setup() {
-        nameEditText.setText(sensor.getName());
+        nameEditText.setText(component.getName());
         nameEditText.addTextChangedListener(new TextChangedListener() {
             @Override
             public void onTextChanged(CharSequence s) {
-                sensor.setName(s.toString());
+                component.setName(s.toString());
             }
         });
 
-        ipEditText.setText(sensor.getIp());
+        ipEditText.setText(component.getIp());
         ipEditText.addTextChangedListener(new TextChangedListener() {
             @Override
             public void onTextChanged(CharSequence s) {
-                sensor.setIp(s.toString());
+                component.setIp(s.toString());
             }
         });
-    }
-
-    @Override
-    public void onStop() {
-        // Send changes to the motor state when the settings are closed
-        // Check if null in case something is wrong or it hasn't loaded in yet
-        if (sensor != null) {
-            model.pushSensorState(sensor);
-            Toast.makeText(requireContext(), requireContext().getString(R.string.component_updated), Toast.LENGTH_SHORT).show();
-        }
-        super.onStop();
     }
 }

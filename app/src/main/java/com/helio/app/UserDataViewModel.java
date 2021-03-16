@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.helio.app.model.IdComponent;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
@@ -94,16 +95,6 @@ public class UserDataViewModel extends AndroidViewModel {
         return motors;
     }
 
-    public void pushScheduleState(Schedule s) {
-        if (schedules.getValue() != null) {
-            schedules.getValue().put(s.getId(), s);
-            ScheduleSettingsRequest scheduleSettingsRequest = new ScheduleSettingsRequest(
-                    s.getName(), s.isActive(), s.getDays(), s.getTargetLevel(), s.getGradient(), s.getMotorIds(), s.getTime()
-            );
-            client.updateSchedule(schedules, s.getId(), scheduleSettingsRequest);
-        }
-    }
-
     public void toggleScheduleActive(Schedule s) {
         s.setActive(!s.isActive());
         pushScheduleState(s);
@@ -130,7 +121,55 @@ public class UserDataViewModel extends AndroidViewModel {
         return lightSensors;
     }
 
-    public void pushSensorState(MotionSensor s) {
+    public void toggleSensorActive(Sensor s) {
+        s.setActive(!s.isActive());
+        pushSensorState(s);
+    }
+
+    public void pushSensorState(Sensor s) {
+        if (s.getClass() == MotionSensor.class) {
+            pushMotionSensorState((MotionSensor) s);
+        } else if (s.getClass() == LightSensor.class) {
+            pushLightSensorState((LightSensor) s);
+        }
+    }
+
+    public void pushComponentState(IdComponent component) {
+        if (component.getClass() == MotionSensor.class) {
+            pushMotionSensorState((MotionSensor) component);
+
+        } else if (component.getClass() == LightSensor.class) {
+            pushLightSensorState((LightSensor) component);
+
+        } else if (component.getClass() == Motor.class) {
+            pushMotorState((Motor) component);
+
+        } else if (component.getClass() == Schedule.class) {
+            pushScheduleState((Schedule) component);
+
+        }
+    }
+
+    private void pushMotorState(Motor m) {
+        Objects.requireNonNull(motors.getValue()).put(m.getId(), m);
+        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
+                m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
+                m.getLevel(), m.getStyle()
+        );
+        client.updateMotor(motors, currentMotorId, motorSettingsRequest);
+    }
+
+    private void pushScheduleState(Schedule s) {
+        if (schedules.getValue() != null) {
+            schedules.getValue().put(s.getId(), s);
+            ScheduleSettingsRequest scheduleSettingsRequest = new ScheduleSettingsRequest(
+                    s.getName(), s.isActive(), s.getDays(), s.getTargetLevel(), s.getGradient(), s.getMotorIds(), s.getTime()
+            );
+            client.updateSchedule(schedules, s.getId(), scheduleSettingsRequest);
+        }
+    }
+
+    private void pushMotionSensorState(MotionSensor s) {
         if (motionSensors.getValue() != null) {
             motionSensors.getValue().put(s.getId(), s);
             MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
@@ -139,7 +178,7 @@ public class UserDataViewModel extends AndroidViewModel {
         }
     }
 
-    public void pushSensorState(LightSensor s) {
+    private void pushLightSensorState(LightSensor s) {
         if (lightSensors.getValue() != null) {
             lightSensors.getValue().put(s.getId(), s);
             LightSensorSettingsRequest request = new LightSensorSettingsRequest(
@@ -148,16 +187,19 @@ public class UserDataViewModel extends AndroidViewModel {
         }
     }
 
-    public void toggleSensorActive(Sensor s) {
-        s.setActive(!s.isActive());
-        pushSensorState(s);
-    }
+    public void deleteComponent(IdComponent component) {
+        if (component.getClass() == MotionSensor.class) {
+            client.deleteMotionSensor(motionSensors, (Sensor) component);
 
-    public void pushSensorState(Sensor s) {
-        if (s.getClass() == MotionSensor.class) {
-            pushSensorState((MotionSensor) s);
-        } else if (s.getClass() == LightSensor.class) {
-            pushSensorState((LightSensor) s);
+        } else if (component.getClass() == LightSensor.class) {
+            client.deleteLightSensor(lightSensors, (Sensor) component);
+
+        } else if (component.getClass() == Motor.class) {
+            client.deleteMotor(motors, (Motor) component);
+
+        } else if (component.getClass() == Schedule.class) {
+            client.deleteSchedule(schedules, (Schedule) component);
+
         }
     }
 }

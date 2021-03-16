@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 
 import com.helio.app.R;
 import com.helio.app.model.Motor;
@@ -41,8 +43,8 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
         EditTextPreference namePreference = preferenceFragment.findPreference("name");
         EditTextPreference ipPreference = preferenceFragment.findPreference("ip");
         ListPreference iconPreference = preferenceFragment.findPreference("icon");
+        Preference calibrationPreference = preferenceFragment.findPreference("calibration");
 
-        getModel().setCurrentMotor(motorId);
         getModel().fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> {
@@ -50,6 +52,11 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
 
                     assert namePreference != null;
                     assert ipPreference != null;
+                    assert calibrationPreference != null;
+                    assert component != null;
+                    namePreference.setText(component.getName());
+                    ipPreference.setText(component.getIp());
+
                     assert iconPreference != null;
 
                     // It has crashed before because this was null after deleting.
@@ -76,6 +83,16 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
                         iconPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                             component.setStyle((String) newValue);
                             return true;
+                        });
+                        calibrationPreference.setOnPreferenceClickListener(preference -> {
+                            // Start calibration before opening page
+                            getModel().startCalibration(component);
+
+                            SingleBlindSettingsFragmentDirections.ActionSingleBlindSettingsFragmentToCalibrationFragment action =
+                                    SingleBlindSettingsFragmentDirections.actionSingleBlindSettingsFragmentToCalibrationFragment();
+                            action.setCurrentMotorId(component.getId());
+                            Navigation.findNavController(view).navigate(action);
+                            return false;
                         });
                     }
                 }

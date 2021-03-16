@@ -9,6 +9,8 @@
     <string name="select_blinds">Select blinds</string>
     <string name="component_deactivated">Disabled</string>
     <string name="component_activated">Enabled</string>
+    <string name="delete_component">Delete</string>
+    <string name="deleted_message">Deleted</string>
 
     <!-- Blinds/motors -->
     <string name="title_control">Control</string>
@@ -28,8 +30,6 @@
     <string name="add_new_schedule_button">New schedule</string>
     <string name="title_edit_schedule">Edit Schedule</string>
     <string name="title_schedule_setting">Schedule</string>
-    <string name="schedule_activated">Schedule enabled</string>
-    <string name="schedule_deactivated">Schedule disabled</string>
     <string name="target_motor_value_prefix">"Target: "</string>
     <string name="monday_short">M</string>
     <string name="tuesday_short">T</string>

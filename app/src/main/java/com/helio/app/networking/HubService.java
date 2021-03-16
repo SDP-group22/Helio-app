@@ -11,8 +11,10 @@ import com.helio.app.networking.request.ScheduleSettingsRequest;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -68,6 +70,18 @@ public interface HubService {
 
     @PATCH("/motion/update/{motion_sensor_id}")
     Call<MotionSensor> updateMotionSensor(@Path("motion_sensor_id") int id, @Body MotionSensorSettingsRequest motionSensorSettingsRequest);
+
+    @DELETE("/motor/unregister/{motor_id}")
+    Call<ResponseBody> deleteMotor(@Path("motor_id") int id);
+
+    @DELETE("/schedule/unregister/{schedule_id}")
+    Call<ResponseBody> deleteSchedule(@Path("schedule_id") int id);
+
+    @DELETE("/motion/unregister/{motion_sensor_id}")
+    Call<ResponseBody> deleteMotionSensor(@Path("motion_sensor_id") int id);
+
+    @DELETE("/light/unregister/{light_sensor_id}")
+    Call<ResponseBody> deleteLightSensor(@Path("light_sensor_id") int id);
 
     @GET("/motor/get_all")
     Call<List<Motor>> getNetworkStatus();

@@ -4,33 +4,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 
 import com.helio.app.R;
-import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
+import com.helio.app.ui.SingleComponentSettingsFragment;
 
-public class SingleBlindSettingsFragment extends Fragment {
-
-    private Motor motor;
-    private UserDataViewModel model;
+public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment<Motor> {
 
     private void setActionListeners(View view) {
         // "open" button
         view.findViewById(R.id.btn_open).setOnClickListener(v -> {
-            System.out.println("OPEN button pressed for " + motor);
-            model.moveCurrentMotor(100);
+            System.out.println("OPEN button pressed for " + component);
+            getModel().moveCurrentMotor(100);
         });
         // "close" button
         view.findViewById(R.id.btn_close).setOnClickListener(v -> {
-            System.out.println("CLOSE button pressed for " + motor);
-            model.moveCurrentMotor(0);
+            System.out.println("CLOSE button pressed for " + component);
+            getModel().moveCurrentMotor(0);
         });
     }
 
@@ -48,53 +42,41 @@ public class SingleBlindSettingsFragment extends Fragment {
         EditTextPreference ipPreference = preferenceFragment.findPreference("ip");
         ListPreference iconPreference = preferenceFragment.findPreference("icon");
 
-        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
-        model.setCurrentMotor(motorId);
-        model.fetchMotors().observe(
+        getModel().setCurrentMotor(motorId);
+        getModel().fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> {
-                    motor = motors.get(motorId);
+                    component = motors.get(motorId);
 
                     assert namePreference != null;
                     assert ipPreference != null;
-                    assert motor != null;
-                    namePreference.setText(motor.getName());
-                    ipPreference.setText(motor.getIp());
+                    assert component != null;
+                    namePreference.setText(component.getName());
+                    ipPreference.setText(component.getIp());
 
                     assert iconPreference != null;
-                    if (motor.getIcon() == null) {
+                    if (component.getIcon() == null) {
                         // If motor has no icon then set to None
                         iconPreference.setValueIndex(iconPreference.getEntryValues().length - 1);
                     } else {
-                        iconPreference.setValue(motor.getIcon().name);
+                        iconPreference.setValue(component.getIcon().name);
                     }
 
                     namePreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                        motor.setName((String) newValue);
+                        component.setName((String) newValue);
                         return true;
                     });
                     ipPreference.setOnPreferenceChangeListener(((preference, newValue) -> {
-                        motor.setIp((String) newValue);
+                        component.setIp((String) newValue);
                         return true;
                     }));
                     iconPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                        motor.setStyle((String) newValue);
+                        component.setStyle((String) newValue);
                         return true;
                     });
                 }
         );
         setActionListeners(view);
         return view;
-    }
-
-    @Override
-    public void onStop() {
-        // Send changes to the motor state when the settings are closed
-        // Check if null in case something is wrong or it hasn't loaded in yet
-        if (motor != null) {
-            model.pushCurrentMotorState(motor);
-            Toast.makeText(requireContext(), requireContext().getString(R.string.component_updated), Toast.LENGTH_SHORT).show();
-        }
-        super.onStop();
     }
 }

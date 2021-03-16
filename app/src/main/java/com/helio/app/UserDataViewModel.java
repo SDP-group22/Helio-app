@@ -39,7 +39,6 @@ public class UserDataViewModel extends AndroidViewModel {
     private MutableLiveData<Map<Integer, Schedule>> schedules;
     private MutableLiveData<Map<Integer, LightSensor>> lightSensors;
     private MutableLiveData<Map<Integer, MotionSensor>> motionSensors;
-    private int currentMotorId = -1;
 
     public UserDataViewModel(@NonNull Application application) {
         super(application);
@@ -109,24 +108,8 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     public void moveCurrentMotor(int level) {
-        client.moveMotor(getCurrentMotor(), level);
-    }
-
-    public Motor getCurrentMotor() {
-        return Objects.requireNonNull(motors.getValue()).get(currentMotorId);
-    }
-
-    public void setCurrentMotor(int id) {
-        currentMotorId = id;
-    }
-
-    public void pushCurrentMotorState(Motor m) {
-        Objects.requireNonNull(motors.getValue()).put(currentMotorId, m);
-        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
-                m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
-                m.getLevel(), m.getStyle()
-        );
-        client.updateMotor(motors, currentMotorId, motorSettingsRequest);
+        // This kind of operation is deprecated and no longer available
+        throw new UnsupportedOperationException();
     }
 
     public LiveData<Map<Integer, Motor>> addMotor() {
@@ -197,7 +180,7 @@ public class UserDataViewModel extends AndroidViewModel {
                 m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
                 m.getLevel(), m.getStyle()
         );
-        client.updateMotor(motors, currentMotorId, motorSettingsRequest);
+        client.updateMotor(motors, m.getId(), motorSettingsRequest);
     }
 
     private void pushScheduleState(Schedule s) {

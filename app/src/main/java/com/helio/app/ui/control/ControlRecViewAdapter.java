@@ -80,8 +80,7 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
                     // send update to Hub
                     motor.setLevel((int) slider.getValue());
                     System.out.println("Updated level using slider: " + motor);
-                    model.setCurrentMotor(motor.getId());
-                    model.pushCurrentMotorState(motor);
+                    model.pushComponentState(motor);
                     // asynchronously enable dragging? TODO
                 }
             });

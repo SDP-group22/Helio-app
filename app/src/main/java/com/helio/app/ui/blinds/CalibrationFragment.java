@@ -35,7 +35,6 @@ public class CalibrationFragment extends Fragment {
 
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
 
-        model.setCurrentMotor(motorId);
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> {

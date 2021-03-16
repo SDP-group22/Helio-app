@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
@@ -46,7 +45,6 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
         ListPreference iconPreference = preferenceFragment.findPreference("icon");
         Preference calibrationPreference = preferenceFragment.findPreference("calibration");
 
-        getModel().setCurrentMotor(motorId);
         getModel().fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> {
@@ -101,16 +99,5 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
         );
         setActionListeners(view);
         return view;
-    }
-
-    @Override
-    public void onStop() {
-        // Send changes to the motor state when the settings are closed
-        // Check if null in case something is wrong or it hasn't loaded in yet
-        if (component != null) {
-            getModel().pushCurrentMotorState(component);
-            Toast.makeText(requireContext(), requireContext().getString(R.string.component_updated), Toast.LENGTH_SHORT).show();
-        }
-        super.onStop();
     }
 }

@@ -28,13 +28,14 @@ public class ControlFragment extends Fragment {
 
     private UserDataViewModel model;
     protected static final int RESULT_SPEECH = 100;
+    ControlRecViewAdapter adapter;
     TextToSpeech tts;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_control, container, false);
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
-        ControlRecViewAdapter adapter = new ControlRecViewAdapter(getContext(), model);
+        adapter = new ControlRecViewAdapter(getContext(), model);
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> adapter.setMotors(new ArrayList<>(motors.values()))
@@ -73,10 +74,9 @@ public class ControlFragment extends Fragment {
             if (resultCode == RESULT_OK && data != null) {
                 ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 // Take action
-                String returnString = model.interpretVoiceCommand(text.get(0));
-                Toast t = Toast.makeText(getActivity(), returnString, Toast.LENGTH_LONG);
-                t.show();
-                tts.speak(returnString, TextToSpeech.QUEUE_FLUSH, null);
+                model.interpretVoiceCommand(text.get(0), tts).observe(
+                        getViewLifecycleOwner(),
+                        motors -> adapter.setMotors(new ArrayList<>(motors.values())));
             }
         }
     }

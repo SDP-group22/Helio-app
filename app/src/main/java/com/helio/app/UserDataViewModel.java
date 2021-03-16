@@ -2,6 +2,8 @@ package com.helio.app;
 
 import android.app.Application;
 import android.content.res.Resources;
+import android.speech.tts.TextToSpeech;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -162,6 +164,16 @@ public class UserDataViewModel extends AndroidViewModel {
         client.updateMotor(motors, currentMotorId, motorSettingsRequest);
     }
 
+    private LiveData<Map<Integer, Motor>> pushMotorStateWithCallback(Motor m) {
+        Objects.requireNonNull(motors.getValue()).put(m.getId(), m);
+        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
+                m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
+                m.getLevel(), m.getStyle()
+        );
+        client.updateMotor(motors, currentMotorId, motorSettingsRequest);
+        return motors;
+    }
+
     private void pushScheduleState(Schedule s) {
         if (schedules.getValue() != null) {
             schedules.getValue().put(s.getId(), s);
@@ -210,8 +222,10 @@ public class UserDataViewModel extends AndroidViewModel {
      * Attempts to interpret the given voice command from speech recognition, and take actions as specified.
      *
      * @param voiceCommand the String from voice recognition
+     * @param tts text to speech engine
+     * @return the motors data for updating the GUI
      */
-    public String interpretVoiceCommand(String voiceCommand) {
+    public MutableLiveData<Map<Integer, Motor>> interpretVoiceCommand(String voiceCommand, TextToSpeech tts) {
         voiceCommand = voiceCommand.toLowerCase();
 
         Resources res = getApplication().getApplicationContext().getResources();
@@ -253,38 +267,40 @@ public class UserDataViewModel extends AndroidViewModel {
             }
         }
 
+        String returnString = null;
+        Motor targetMotor = null;
         // Check if voiceCommand contains a blind's name
         for (Motor m : Objects.requireNonNull(motors.getValue()).values()) {
             if (!m.getName().equals("") && voiceCommand.contains(m.getName().toLowerCase())) {
                 hasName = true;
+                targetMotor = m;
 
                 if (hasNumInRange) {
                     // Set blind to specific level
-                    setCurrentMotor(m.getId());
-                    moveCurrentMotor(Integer.parseInt(numberString));
-                    return res.getString(R.string.setting_level_message, m.getName(), numberString);
-                }
-
-                if (hasOpen) {
+                    m.setLevel(Integer.parseInt(numberString));
+                    returnString = res.getString(R.string.setting_level_message, m.getName(), numberString);
+                } else if (hasOpen) {
                     // Open the blind
-                    setCurrentMotor(m.getId());
-                    moveCurrentMotor(0);
-                    return res.getString(R.string.open_message, m.getName());
-                }
-
-                if (hasClosed) {
+                    m.setLevel(0);
+                    returnString = res.getString(R.string.open_message, m.getName());
+                } else if (hasClosed) {
                     // Close the blind
-                    setCurrentMotor(m.getId());
-                    moveCurrentMotor(100);
-                    return res.getString(R.string.close_message, m.getName());
+                    m.setLevel(100);
+                    returnString = res.getString(R.string.close_message, m.getName());
                 }
-
+                break;
             }
         }
 
         if (!hasName) {
-            return res.getString(R.string.blinds_not_found_message);
+            returnString = res.getString(R.string.blinds_not_found_message);
+        } else if (returnString == null) {
+            returnString = res.getString(R.string.command_not_recognised_message);
+        } else {
+            pushMotorState(targetMotor);
         }
-        return res.getString(R.string.command_not_recognised_message);
+        Toast.makeText(getApplication(), returnString, Toast.LENGTH_LONG).show();
+        tts.speak(returnString, TextToSpeech.QUEUE_FLUSH, null);
+        return motors;
     }
 }

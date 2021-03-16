@@ -22,9 +22,9 @@ public class LevelLabelFormatter implements LabelFormatter {
         // Format the number as a percentage (possibly sensitive to Locale)
         // Display Closed or Open if completely closed or open
         if (value == 0) {
-            return context.getString(R.string.closed_state);
-        } else if (value == 100) {
             return context.getString(R.string.open_state);
+        } else if (value == 100) {
+            return context.getString(R.string.closed_state);
         } else {
             return NumberFormat.getPercentInstance().format(value / 100);
         }

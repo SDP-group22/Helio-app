@@ -8,6 +8,7 @@ import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
+import com.helio.app.model.Sensor;
 import com.helio.app.networking.request.LightSensorSettingsRequest;
 import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
@@ -129,6 +130,32 @@ public class HubClient {
         Call<MotionSensor> call = service.updateMotionSensor(id, motionSensorSettingsRequest);
         call.enqueue(new IdComponentCallback<>(sensors));
     }
+
+    public void deleteMotor(MutableLiveData<Map<Integer, Motor>> motors, Motor m) {
+        Call<ResponseBody> call = service.deleteMotor(m.getId());
+        call.enqueue(new DeletionCallback<>(motors, m.getId()));
+    }
+
+    public void deleteSchedule(MutableLiveData<Map<Integer, Schedule>> schedules, Schedule s) {
+        Call<ResponseBody> call = service.deleteSchedule(s.getId());
+        call.enqueue(new DeletionCallback<>(schedules, s.getId()));
+    }
+
+    public void deleteMotionSensor(MutableLiveData<Map<Integer, MotionSensor>> sensors, Sensor s) {
+        Call<ResponseBody> call = service.deleteMotionSensor(s.getId());
+        call.enqueue(new DeletionCallback<>(sensors, s.getId()));
+    }
+
+    public void deleteLightSensor(MutableLiveData<Map<Integer, LightSensor>> sensors, Sensor s) {
+        Call<ResponseBody> call = service.deleteLightSensor(s.getId());
+        call.enqueue(new DeletionCallback<>(sensors, s.getId()));
+    }
+
+    public void getNetworkStatus(MutableLiveData<NetworkStatus> status) {
+        Call<List<Motor>> call = service.getNetworkStatus();
+        call.enqueue(new NetworkStatusCallback(status));
+    }
+
 
     public void startCalibration(Motor motor) {
         Call<ResponseBody> call = service.startCalibration(motor.getId());

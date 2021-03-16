@@ -1,9 +1,13 @@
 package com.helio.app.ui.blinds;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,79 +15,79 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.slider.Slider;
+import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
+import com.helio.app.ui.utils.ContextColourProvider;
+import com.helio.app.ui.utils.MotorIdsBlindsCheckboxRecViewAdapter;
+import com.helio.app.ui.utils.TextChangedListener;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class SingleBlindSettingsFragment extends Fragment {
-
     private Motor motor;
     private UserDataViewModel model;
-
-    private void setActionListeners(View view) {
-        // "open" button
-        view.findViewById(R.id.btn_open).setOnClickListener(v -> {
-            System.out.println("OPEN button pressed for " + motor);
-            model.moveCurrentMotor(100);
-        });
-        // "close" button
-        view.findViewById(R.id.btn_close).setOnClickListener(v -> {
-            System.out.println("CLOSE button pressed for " + motor);
-            model.moveCurrentMotor(0);
-        });
-    }
+    private EditText nameEditText;
+    private EditText ipEditText;
+    private int fillColour;
+    private int backgroundColour;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_single_blind_settings, container, false);
+        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         assert getArguments() != null;
         int motorId = getArguments().getInt("currentMotorId");
+        fillColour = ContextColourProvider.getColour(getContext(), android.R.attr.colorPrimary);
+        backgroundColour = ContextColourProvider.getColour(getContext(), android.R.attr.windowBackground);
 
-        SingleBlindSettingsPreferencesFragment preferenceFragment = (SingleBlindSettingsPreferencesFragment)
-                getChildFragmentManager().findFragmentById(R.id.fragment_container_preferences);
-        assert preferenceFragment != null;
-        EditTextPreference namePreference = preferenceFragment.findPreference("name");
-        EditTextPreference ipPreference = preferenceFragment.findPreference("ip");
-        ListPreference iconPreference = preferenceFragment.findPreference("icon");
+        nameEditText = view.<TextInputLayout>findViewById(R.id.blinds_name).getEditText();
+        ipEditText = view.<TextInputLayout>findViewById(R.id.blinds_ip_address).getEditText();
+        Slider levelSlider = view.findViewById(R.id.blinds_level);
 
-        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
-        model.setCurrentMotor(motorId);
+        MotorIdsBlindsCheckboxRecViewAdapter checkBoxRCAdapter = new MotorIdsBlindsCheckboxRecViewAdapter();
+        TextInputLayout iconMenuLayoutview = view.findViewById(R.id.dropdown_icons);
+        // Set the blinds icon
+        AutoCompleteTextView iconMenu = (AutoCompleteTextView) iconMenuLayoutview.getEditText();
+        assert iconMenu != null;
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_list_item,
+                view.getResources().getStringArray(R.array.icons));
+        iconMenu.setAdapter(adapter);
+
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
-                motors -> {
+                motors-> {
                     motor = motors.get(motorId);
-
-                    assert namePreference != null;
-                    assert ipPreference != null;
-                    assert motor != null;
-                    namePreference.setText(motor.getName());
-                    ipPreference.setText(motor.getIp());
-
-                    assert iconPreference != null;
-                    if (motor.getIcon() == null) {
-                        // If motor has no icon then set to None
-                        iconPreference.setValueIndex(iconPreference.getEntryValues().length - 1);
-                    } else {
-                        iconPreference.setValue(motor.getIcon().name);
-                    }
-
-                    namePreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                        motor.setName((String) newValue);
-                        return true;
+                    levelSlider.setValue(motor.getLevel());
+                    levelSlider.addOnChangeListener((slider, value, fromUser) -> motor.setLevel((int) value));
+                    nameEditText.setText(motor.getName());
+                    nameEditText.addTextChangedListener(new TextChangedListener() {
+                        @Override
+                        public void onTextChanged(CharSequence s) {
+                            motor.setName(s.toString());
+                        }
                     });
-                    ipPreference.setOnPreferenceChangeListener(((preference, newValue) -> {
-                        motor.setIp((String) newValue);
-                        return true;
-                    }));
-                    iconPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                        motor.setStyle((String) newValue);
-                        return true;
+                    ipEditText.setText(motor.getIp());
+                    ipEditText.addTextChangedListener(new TextChangedListener() {
+                        @Override
+                        public void onTextChanged(CharSequence s) {
+                            motor.setIp(s.toString());
+                        }
                     });
                 }
         );
-        setActionListeners(view);
+        model.fetchMotors().observe(
+                getViewLifecycleOwner(),
+                motors -> checkBoxRCAdapter.setMotors(new ArrayList<>(motors.values()))
+        );
+
         return view;
     }
 

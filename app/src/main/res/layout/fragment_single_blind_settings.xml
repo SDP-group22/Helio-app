@@ -17,7 +17,7 @@
         android:textStyle="bold"
         tools:ignore="HardcodedText" />
     <com.helio.app.ui.utils.LevelSlider
-        android:id="@+id/controlSlider"
+        android:id="@+id/blinds_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

@@ -160,4 +160,9 @@ public class UserDataViewModel extends AndroidViewModel {
             pushSensorState((LightSensor) s);
         }
     }
+
+    public void toggleMotorActive(Motor m) {
+        m.setActive(!m.isActive());
+        pushCurrentMotorState(m);
+    }
 }

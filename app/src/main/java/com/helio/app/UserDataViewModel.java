@@ -1,6 +1,7 @@
 package com.helio.app;
 
 import android.app.Application;
+import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -22,6 +23,8 @@ import com.helio.app.networking.request.ScheduleSettingsRequest;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserDataViewModel extends AndroidViewModel {
     private final HubClient client = new HubClient("http://10.0.2.2:4310/");
@@ -201,5 +204,88 @@ public class UserDataViewModel extends AndroidViewModel {
             client.deleteSchedule(schedules, (Schedule) component);
 
         }
+    }
+
+    /**
+     * Attempts to interpret the given voice command from speech recognition, and take actions as specified.
+     *
+     * @param voiceCommand the String from voice recognition
+     */
+    public String interpretVoiceCommand(String voiceCommand) {
+        voiceCommand = voiceCommand.toLowerCase();
+        Resources res = getApplication().getApplicationContext().getResources();
+        String[] openArr = res.getStringArray(R.array.open);
+        String[] closeArr = res.getStringArray(R.array.close);
+//        String[] openArr = new String[2];
+//        String[] closeArr = new String[2];
+//        openArr [0] = "open";
+//        openArr [1] = "up";
+//        closeArr [0] = "close";
+//        closeArr [1] = "down";
+        boolean ifHasOpen = false;
+        boolean ifHasClose = false;
+        boolean ifHasNumInRange = false;
+        String Num = "";
+        boolean ifHasName = false;
+
+        // Check if voiceCommand contains open or synonym of open
+        for (String s : openArr) {
+            if (voiceCommand.contains(s)) {
+                ifHasOpen = true;
+                break;
+            }
+        }
+
+        // Check if voiceCommand contains close or synonym of close
+        for (String s : closeArr) {
+            if (voiceCommand.contains(s)) {
+                ifHasClose = true;
+                break;
+            }
+        }
+
+        // Extract number
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(voiceCommand);
+        while (matcher.find()) {
+            Num = matcher.group(0);
+        }
+        if(Integer.parseInt(Num) <= 100 && Integer.parseInt(Num) >= 0){
+            ifHasNumInRange = true;
+        }
+
+        // Check if voiceCommand contains a blind's name
+        for (Motor m : motors.getValue().values()) {
+            if (voiceCommand.contains(m.getName())) {
+                ifHasName = true;
+
+                if(ifHasNumInRange){
+                    // Set blind to specific level
+                    setCurrentMotor(m.getId());
+                    moveCurrentMotor(Integer.parseInt(Num));
+                    return String.format("Set %s to level %s", m.getName(),Num);
+                }
+
+                if (ifHasOpen) {
+                    // Open the blind
+                    setCurrentMotor(m.getId());
+                    moveCurrentMotor(0);
+                    return String.format("Open %s", m.getName());
+                }
+
+                if (ifHasClose) {
+                    // Close the blind
+                    setCurrentMotor(m.getId());
+                    moveCurrentMotor(100);
+                    return String.format("Close %s", m.getName());
+                }
+
+            }
+        }
+
+        if(!ifHasName){
+            return "Please include a name of blind";
+        }
+        return "Please include a command for this blind";
     }
 }

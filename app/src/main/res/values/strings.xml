@@ -30,8 +30,6 @@
     <string name="add_new_schedule_button">New schedule</string>
     <string name="title_edit_schedule">Edit Schedule</string>
     <string name="title_schedule_setting">Schedule</string>
-    <string name="schedule_activated">Schedule enabled</string>
-    <string name="schedule_deactivated">Schedule disabled</string>
     <string name="target_motor_value_prefix">"Target: "</string>
     <string name="monday_short">M</string>
     <string name="tuesday_short">T</string>

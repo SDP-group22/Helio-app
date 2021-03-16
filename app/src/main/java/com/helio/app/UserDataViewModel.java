@@ -1,6 +1,9 @@
 package com.helio.app;
 
 import android.app.Application;
+import android.content.res.Resources;
+import android.speech.tts.TextToSpeech;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -22,6 +25,8 @@ import com.helio.app.networking.request.ScheduleSettingsRequest;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserDataViewModel extends AndroidViewModel {
     private final HubClient client = new HubClient("http://10.0.2.2:4310/");
@@ -201,5 +206,91 @@ public class UserDataViewModel extends AndroidViewModel {
             client.deleteSchedule(schedules, (Schedule) component);
 
         }
+    }
+
+    /**
+     * Attempts to interpret the given voice command from speech recognition, and take actions as specified.
+     *
+     * @param voiceCommand the String from voice recognition
+     * @param tts text to speech engine
+     * @return the motors data for updating the GUI
+     */
+    public MutableLiveData<Map<Integer, Motor>> interpretVoiceCommand(String voiceCommand, TextToSpeech tts) {
+        voiceCommand = voiceCommand.toLowerCase();
+
+        Resources res = getApplication().getApplicationContext().getResources();
+        String[] openWords = res.getStringArray(R.array.open);
+        String[] closeWords = res.getStringArray(R.array.close);
+
+        boolean hasOpen = false;
+        boolean hasClosed = false;
+        boolean hasNumInRange = false;
+        boolean hasName = false;
+        String numberString = "";
+
+        // Check if voiceCommand contains open or synonym of open
+        for (String s : openWords) {
+            if (voiceCommand.contains(s)) {
+                hasOpen = true;
+                break;
+            }
+        }
+
+        // Check if voiceCommand contains close or synonym of close
+        for (String s : closeWords) {
+            if (voiceCommand.contains(s)) {
+                hasClosed = true;
+                break;
+            }
+        }
+
+        // Extract number
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(voiceCommand);
+        while (matcher.find()) {
+            numberString = matcher.group(0);
+        }
+        assert numberString != null;
+        if (!numberString.equals("")) {
+            if (Integer.parseInt(numberString) <= 100 && Integer.parseInt(numberString) >= 0) {
+                hasNumInRange = true;
+            }
+        }
+
+        String returnString = null;
+        Motor targetMotor = null;
+        // Check if voiceCommand contains a blind's name
+        for (Motor m : Objects.requireNonNull(motors.getValue()).values()) {
+            if (!m.getName().equals("") && voiceCommand.contains(m.getName().toLowerCase())) {
+                hasName = true;
+                targetMotor = m;
+
+                if (hasNumInRange) {
+                    // Set blind to specific level
+                    m.setLevel(Integer.parseInt(numberString));
+                    returnString = res.getString(R.string.setting_level_message, m.getName(), numberString);
+                } else if (hasOpen) {
+                    // Open the blind
+                    m.setLevel(0);
+                    returnString = res.getString(R.string.open_message, m.getName());
+                } else if (hasClosed) {
+                    // Close the blind
+                    m.setLevel(100);
+                    returnString = res.getString(R.string.close_message, m.getName());
+                }
+                break;
+            }
+        }
+
+        if (!hasName) {
+            returnString = res.getString(R.string.blinds_not_found_message);
+        } else if (returnString == null) {
+            returnString = res.getString(R.string.command_not_recognised_message);
+        } else {
+            pushMotorState(targetMotor);
+        }
+        Toast.makeText(getApplication(), returnString, Toast.LENGTH_LONG).show();
+        tts.speak(returnString, TextToSpeech.QUEUE_FLUSH, null, "");
+        return motors;
     }
 }

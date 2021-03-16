@@ -109,7 +109,7 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public void moveCurrentMotor(int level) {
         // This kind of operation is deprecated and no longer available
-        throw new UnsupportedOperationException();
+
     }
 
     public LiveData<Map<Integer, Motor>> addMotor() {

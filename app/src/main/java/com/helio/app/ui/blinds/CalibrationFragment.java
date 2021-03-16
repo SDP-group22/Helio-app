@@ -41,9 +41,6 @@ public class CalibrationFragment extends Fragment {
                 motors -> {
                     motor = motors.get(motorId);
 
-                    // Start calibration upon page opening
-                    model.startCalibration(motor);
-
                     upButton.setOnTouchListener((v, event) -> {
                         if (event.getAction() == MotionEvent.ACTION_DOWN) {
                             model.moveUp(motor);

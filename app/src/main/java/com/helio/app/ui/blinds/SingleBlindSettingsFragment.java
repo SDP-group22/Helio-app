@@ -85,15 +85,15 @@ public class SingleBlindSettingsFragment extends Fragment {
                         motor.setStyle((String) newValue);
                         return true;
                     });
-                    calibrationPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                        @Override
-                        public boolean onPreferenceClick(Preference preference) {
-                            SingleBlindSettingsFragmentDirections.ActionSingleBlindSettingsFragmentToCalibrationFragment action =
-                                    SingleBlindSettingsFragmentDirections.actionSingleBlindSettingsFragmentToCalibrationFragment();
-                            action.setCurrentMotorId(motor.getId());
-                            Navigation.findNavController(view).navigate(action);
-                            return false;
-                        }
+                    calibrationPreference.setOnPreferenceClickListener(preference -> {
+                        // Start calibration before opening page
+                        model.startCalibration(motor);
+
+                        SingleBlindSettingsFragmentDirections.ActionSingleBlindSettingsFragmentToCalibrationFragment action =
+                                SingleBlindSettingsFragmentDirections.actionSingleBlindSettingsFragmentToCalibrationFragment();
+                        action.setCurrentMotorId(motor.getId());
+                        Navigation.findNavController(view).navigate(action);
+                        return false;
                     });
                 }
         );

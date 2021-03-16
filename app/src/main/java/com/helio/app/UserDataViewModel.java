@@ -153,7 +153,7 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     public void stopCalibration(Motor motor) {
-        client.startCalibration(motor);
+        client.stopCalibration(motor);
     }
 
     public void moveUp(Motor motor) {

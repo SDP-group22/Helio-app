@@ -1,37 +1,37 @@
 package com.helio.app.ui.settings;
 
+import com.helio.app.R;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public enum AppTheme {
-    DEFAULT("Default"),
-    NIGHT("Night"),
-    HIGH_CONTRAST("High Contrast");
+    DEFAULT(R.string.default_theme),
+    NIGHT(R.string.night_theme),
+    HIGH_CONTRAST(R.string.high_contrast_theme);
 
-    public static final String DEFAULT_THEME_NAME = "Default";
+    public static final int DEFAULT_THEME_ID = R.string.default_theme;
     // Lookup map for getting an AppTheme from an integer
-    private static final Map<String, AppTheme> lookup = new HashMap<>();
+    private static final Map<Integer, AppTheme> lookup = new HashMap<>();
 
     static {
         for (AppTheme theme : AppTheme.values()) {
-            lookup.put(theme.name, theme);
+            lookup.put(theme.resourceId, theme);
         }
     }
 
-    private final String name;
+    private final int resourceId;
 
-    AppTheme(String name) {
-        this.name = name;
+    AppTheme(int resourceId) {
+        this.resourceId = resourceId;
     }
 
-    public static AppTheme getEnumFromName(String name) {
-        if (!lookup.containsKey(name)) {
-            throw new IllegalArgumentException("\"" + name + "\" is not a valid theme name");
+    public static AppTheme getEnumFromId(int id) {
+        if (!lookup.containsKey(id)) {
+            // Use default instead of throw here since I don't want it to crash if the saved preferences are wrong
+            System.out.println("\"" + id + "\" is not a valid theme id, loading default");
+            return DEFAULT;
         }
-        return lookup.get(name);
-    }
-
-    public String getName() {
-        return name;
+        return lookup.get(id);
     }
 }

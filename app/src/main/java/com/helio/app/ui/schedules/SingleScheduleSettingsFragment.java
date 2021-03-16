@@ -7,12 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,9 +19,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.helio.app.R;
-import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Day;
 import com.helio.app.model.Schedule;
+import com.helio.app.ui.SingleComponentSettingsFragment;
 import com.helio.app.ui.utils.ContextColourProvider;
 import com.helio.app.ui.utils.MotorIdsBlindsCheckboxRecViewAdapter;
 import com.helio.app.ui.utils.TextChangedListener;
@@ -35,9 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SingleScheduleSettingsFragment extends Fragment {
-    private Schedule schedule;
-    private UserDataViewModel model;
+public class SingleScheduleSettingsFragment extends SingleComponentSettingsFragment<Schedule> {
     private int fillColour;
     private int backgroundColour;
 
@@ -47,8 +42,8 @@ public class SingleScheduleSettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_single_schedule_settings, container, false);
         assert getArguments() != null;
         int scheduleId = getArguments().getInt("currentScheduleId");
-        fillColour = ContextColourProvider.getColour(getContext(), android.R.attr.colorPrimary);
-        backgroundColour = ContextColourProvider.getColour(getContext(), android.R.attr.windowBackground);
+        fillColour = ContextColourProvider.getColour(requireContext(), android.R.attr.colorPrimary);
+        backgroundColour = ContextColourProvider.getColour(requireContext(), android.R.attr.windowBackground);
 
         TextInputLayout name = view.findViewById(R.id.schedule_name);
         EditText nameEditText = name.getEditText();
@@ -57,34 +52,35 @@ public class SingleScheduleSettingsFragment extends Fragment {
 
         MotorIdsBlindsCheckboxRecViewAdapter adapter = new MotorIdsBlindsCheckboxRecViewAdapter();
 
-        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
-        model.fetchSchedules().observe(
+        getModel().fetchSchedules().observe(
                 getViewLifecycleOwner(),
                 schedules -> {
-                    schedule = schedules.get(scheduleId);
+                    component = schedules.get(scheduleId);
 
-                    adapter.setComponent(schedule);
+                    if (component != null) {
+                        adapter.setComponent(component);
 
-                    Objects.requireNonNull(nameEditText).setInputType(InputType.TYPE_CLASS_TEXT);
-                    nameEditText.setText(schedule.getName());
-                    nameEditText.addTextChangedListener(new TextChangedListener() {
-                        @Override
-                        public void onTextChanged(CharSequence s) {
-                            schedule.setName(s.toString());
-                        }
-                    });
+                        Objects.requireNonNull(nameEditText).setInputType(InputType.TYPE_CLASS_TEXT);
+                        nameEditText.setText(component.getName());
+                        nameEditText.addTextChangedListener(new TextChangedListener() {
+                            @Override
+                            public void onTextChanged(CharSequence s) {
+                                component.setName(s.toString());
+                            }
+                        });
 
-                    timeButton.setText(schedule.getFormattedTime());
-                    timeButton.setOnClickListener(timeButtonClickListener(timeButton));
+                        timeButton.setText(component.getFormattedTime());
+                        timeButton.setOnClickListener(timeButtonClickListener(timeButton));
 
-                    levelSlider.setValue(schedule.getTargetLevel());
-                    levelSlider.addOnChangeListener((slider, value, fromUser) -> schedule.setTargetLevel((int) value));
+                        levelSlider.setValue(component.getTargetLevel());
+                        levelSlider.addOnChangeListener((slider, value, fromUser) -> component.setTargetLevel((int) value));
 
-                    prepareDays(view.findViewById(R.id.days_layout));
+                        prepareDays(view.findViewById(R.id.days_layout));
+                    }
                 }
         );
 
-        model.fetchMotors().observe(
+        getModel().fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> adapter.setMotors(new ArrayList<>(motors.values()))
         );
@@ -103,15 +99,15 @@ public class SingleScheduleSettingsFragment extends Fragment {
             // Show a time picker, with the appropriate time format, and setting it to the current schedule time
             MaterialTimePicker picker = new MaterialTimePicker.Builder()
                     .setTimeFormat(DateFormat.is24HourFormat(getContext()) ? TimeFormat.CLOCK_24H : TimeFormat.CLOCK_12H)
-                    .setHour(schedule.getTimeHour())
-                    .setMinute(schedule.getTimeMinute())
+                    .setHour(component.getTimeHour())
+                    .setMinute(component.getTimeMinute())
                     .build();
             picker.show(getParentFragmentManager(), "schedule_time_select");
 
             // Unlike with the text and sliders elsewhere, the button text needs to be updated
             picker.addOnDismissListener(dialog -> {
-                schedule.setTime(picker.getHour(), picker.getMinute());
-                timeButton.setText(schedule.getFormattedTime());
+                component.setTime(picker.getHour(), picker.getMinute());
+                timeButton.setText(component.getFormattedTime());
             });
         };
     }
@@ -137,16 +133,16 @@ public class SingleScheduleSettingsFragment extends Fragment {
             final MaterialButton button = dayButtonList.get(i);
 
             // Change the style depending on whether it is in the schedule or not
-            styleButton(button, schedule.containsDay(day));
+            styleButton(button, component.containsDay(day));
 
             // Change the style and update the schedule on click
             button.setOnClickListener(v -> {
-                if (schedule.containsDay(day)) {
-                    schedule.getDays().remove(day);
+                if (component.containsDay(day)) {
+                    component.getDays().remove(day);
                 } else {
-                    schedule.getDays().add(day);
+                    component.getDays().add(day);
                 }
-                styleButton(button, schedule.containsDay(day));
+                styleButton(button, component.containsDay(day));
             });
         }
     }
@@ -159,14 +155,5 @@ public class SingleScheduleSettingsFragment extends Fragment {
             button.setTextAppearance(getContext(), R.style.dayButtonStyleOutline);
             button.setBackgroundColor(backgroundColour);
         }
-    }
-
-    @Override
-    public void onStop() {
-        if (schedule != null) {
-            model.pushScheduleState(schedule);
-            Toast.makeText(requireContext(), requireContext().getString(R.string.component_updated), Toast.LENGTH_SHORT).show();
-        }
-        super.onStop();
     }
 }

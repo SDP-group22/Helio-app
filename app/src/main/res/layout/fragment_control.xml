@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     tools:context=".MainActivity">
 
@@ -10,5 +11,19 @@
         android:id="@+id/control_rc_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_voice_integration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:maxImageSize="40dp"
+        app:tint="@color/white"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/voice_control_button_description"
+        app:srcCompat="@android:drawable/ic_btn_speak_now"
+        />
 
 </RelativeLayout>

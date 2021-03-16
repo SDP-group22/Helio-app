@@ -16,13 +16,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.helio.app.ui.settings.AppTheme;
 
 public class MainActivity extends AppCompatActivity {
+    private static boolean restartOnSettings = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // get the theme that is supposed to be active and activate if necessary
-        String currentThemeName = getCurrentThemeName();
-        int currentTheme = getTheme(currentThemeName);
+        int currentTheme = getTheme(getCurrentThemeId());
         setTheme(currentTheme);
         setContentView(R.layout.activity_main);
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_control,
                 R.id.navigation_schedule,
                 R.id.navigation_sensors,
-                R.id.navigation_hub
+                R.id.navigation_settings
         ).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
@@ -42,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         // This makes the fragment change when you press the navigation buttons
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navView, navController);
+
+        if (restartOnSettings) {
+            navController.navigate(R.id.navigation_settings);
+            restartOnSettings = false;
+        }
     }
 
     @Override
@@ -53,27 +58,28 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public String getCurrentThemeName() {
+    public int getCurrentThemeId() {
         SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);
-        return sharedPrefs.getString(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_NAME);
+        return sharedPrefs.getInt(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_ID);
     }
 
-    public void updateTheme(String themeName) {
-        AppTheme newTheme = AppTheme.getEnumFromName(themeName);
+    public void updateTheme(int themeId) {
+        AppTheme newTheme = AppTheme.getEnumFromId(themeId);
         SharedPreferences sharedPrefs = getPreferences(Context.MODE_PRIVATE);
-        String currentThemeName = sharedPrefs.getString(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_NAME);
-        AppTheme currentTheme = AppTheme.getEnumFromName(currentThemeName);
+        int currentThemeId = sharedPrefs.getInt(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_ID);
+        AppTheme currentTheme = AppTheme.getEnumFromId(currentThemeId);
         if (currentTheme == newTheme) {
-            System.out.println("New theme \"" + themeName + "\" is already active.");
+            System.out.println("New theme \"" + themeId + "\" is already active.");
         } else {
-            System.out.println("Updating theme to \"" + themeName + "\"...");
-            saveNewThemeName(sharedPrefs, themeName);
+            System.out.println("Updating theme to \"" + themeId + "\"...");
+            saveNewTheme(sharedPrefs, themeId);
+            restartOnSettings = true;
             activateNewTheme(newTheme);
         }
     }
 
-    private int getTheme(String themeName) {
-        AppTheme theme = AppTheme.getEnumFromName(themeName);
+    private int getTheme(int themeName) {
+        AppTheme theme = AppTheme.getEnumFromId(themeName);
         return getTheme(theme);
     }
 
@@ -99,12 +105,12 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    private void saveNewThemeName(SharedPreferences sharedPrefs, String themeName) {
+    private void saveNewTheme(SharedPreferences sharedPrefs, int themeId) {
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putString(getString(R.string.user_settings_theme_key), themeName);
+        editor.putInt(getString(R.string.user_settings_theme_key), themeId);
         editor.apply();
-        System.out.println("New theme name: " +
-                sharedPrefs.getString(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_NAME));
+        System.out.println("New theme: " +
+                sharedPrefs.getInt(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_ID));
     }
 }
 

@@ -1,18 +1,26 @@
 package com.helio.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.speech.tts.TextToSpeech;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.helio.app.model.IdComponent;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
 import com.helio.app.model.Sensor;
 import com.helio.app.networking.HubClient;
+import com.helio.app.networking.IPAddress;
+import com.helio.app.networking.NetworkStatus;
 import com.helio.app.networking.request.LightSensorSettingsRequest;
 import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
@@ -21,9 +29,12 @@ import com.helio.app.networking.request.ScheduleSettingsRequest;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserDataViewModel extends AndroidViewModel {
-    private final HubClient client = new HubClient("http://10.0.2.2:4310/");
+    private final SharedPreferences sharedPrefs;
+    private HubClient client;
     private MutableLiveData<Map<Integer, Motor>> motors;
     private MutableLiveData<Map<Integer, Schedule>> schedules;
     private MutableLiveData<Map<Integer, LightSensor>> lightSensors;
@@ -32,6 +43,37 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public UserDataViewModel(@NonNull Application application) {
         super(application);
+        sharedPrefs = getApplication().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        client = createClient(getHubIp());
+    }
+
+    private HubClient createClient(String ip) {
+        // IP of local machine when using emulator is 10.0.2.2
+        return new HubClient(IPAddress.getBaseAddressUrl(ip));
+    }
+
+    public String getHubIp() {
+        return sharedPrefs.getString(getIpKey(), IPAddress.DEFAULT);
+    }
+
+    public void setHubIp(String ip) {
+        if (IPAddress.correctFormat(ip)) {
+            // Set the preference
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            editor.putString(getIpKey(), ip);
+            editor.apply();
+            System.out.println("New IP: " + sharedPrefs.getString(getIpKey(), IPAddress.DEFAULT));
+
+            // Create the new client and reset the data so that it is reloaded
+            client = createClient(ip);
+            motors = null;
+            schedules = null;
+            lightSensors = null;
+            motionSensors = null;
+        } else {
+            // If this is being thrown then you need to input validation before it gets to this point
+            throw new IllegalArgumentException("IP address in incorrect format: " + ip);
+        }
     }
 
     public LiveData<Map<Integer, Motor>> fetchMotors() {
@@ -94,16 +136,6 @@ public class UserDataViewModel extends AndroidViewModel {
         return motors;
     }
 
-    public void pushScheduleState(Schedule s) {
-        if (schedules.getValue() != null) {
-            schedules.getValue().put(s.getId(), s);
-            ScheduleSettingsRequest scheduleSettingsRequest = new ScheduleSettingsRequest(
-                    s.getName(), s.isActive(), s.getDays(), s.getTargetLevel(), s.getGradient(), s.getMotorIds(), s.getTime()
-            );
-            client.updateSchedule(schedules, s.getId(), scheduleSettingsRequest);
-        }
-    }
-
     public void toggleScheduleActive(Schedule s) {
         s.setActive(!s.isActive());
         pushScheduleState(s);
@@ -118,34 +150,16 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public LiveData<Map<Integer, MotionSensor>> addMotionSensor() {
         MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.new_motion_sensor), "0.0.0.0", true, 0, "", "00:15");
+                new ArrayList<>(), getApplication().getString(R.string.new_motion_sensor), IPAddress.DEFAULT, true, 0, "", "00:15");
         client.addMotionSensor(motionSensors, request);
         return motionSensors;
     }
 
     public LiveData<Map<Integer, LightSensor>> addLightSensor() {
         LightSensorSettingsRequest request = new LightSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.new_light_sensor), "0.0.0.0", true, 0, "");
+                new ArrayList<>(), getApplication().getString(R.string.new_light_sensor), IPAddress.DEFAULT, true, 0, "");
         client.addLightSensor(lightSensors, request);
         return lightSensors;
-    }
-
-    public void pushSensorState(MotionSensor s) {
-        if (motionSensors.getValue() != null) {
-            motionSensors.getValue().put(s.getId(), s);
-            MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
-                    s.getMotorIds(), s.getName(), s.getIp(), s.isActive(), s.getBattery(), s.getStyle(), s.getDurationSensitivity());
-            client.updateMotionSensor(motionSensors, s.getId(), request);
-        }
-    }
-
-    public void pushSensorState(LightSensor s) {
-        if (lightSensors.getValue() != null) {
-            lightSensors.getValue().put(s.getId(), s);
-            LightSensorSettingsRequest request = new LightSensorSettingsRequest(
-                    s.getMotorIds(), s.getName(), s.getIp(), s.isActive(), s.getBattery(), s.getStyle());
-            client.updateLightSensor(lightSensors, s.getId(), request);
-        }
     }
 
     public void toggleSensorActive(Sensor s) {
@@ -155,10 +169,175 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public void pushSensorState(Sensor s) {
         if (s.getClass() == MotionSensor.class) {
-            pushSensorState((MotionSensor) s);
+            pushMotionSensorState((MotionSensor) s);
         } else if (s.getClass() == LightSensor.class) {
-            pushSensorState((LightSensor) s);
+            pushLightSensorState((LightSensor) s);
         }
+    }
+
+    public void pushComponentState(IdComponent component) {
+        if (component.getClass() == MotionSensor.class) {
+            pushMotionSensorState((MotionSensor) component);
+
+        } else if (component.getClass() == LightSensor.class) {
+            pushLightSensorState((LightSensor) component);
+
+        } else if (component.getClass() == Motor.class) {
+            pushMotorState((Motor) component);
+
+        } else if (component.getClass() == Schedule.class) {
+            pushScheduleState((Schedule) component);
+
+        }
+    }
+
+    private void pushMotorState(Motor m) {
+        Objects.requireNonNull(motors.getValue()).put(m.getId(), m);
+        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
+                m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
+                m.getLevel(), m.getStyle()
+        );
+        client.updateMotor(motors, currentMotorId, motorSettingsRequest);
+    }
+
+    private void pushScheduleState(Schedule s) {
+        if (schedules.getValue() != null) {
+            schedules.getValue().put(s.getId(), s);
+            ScheduleSettingsRequest scheduleSettingsRequest = new ScheduleSettingsRequest(
+                    s.getName(), s.isActive(), s.getDays(), s.getTargetLevel(), s.getGradient(), s.getMotorIds(), s.getTime()
+            );
+            client.updateSchedule(schedules, s.getId(), scheduleSettingsRequest);
+        }
+    }
+
+    private void pushMotionSensorState(MotionSensor s) {
+        if (motionSensors.getValue() != null) {
+            motionSensors.getValue().put(s.getId(), s);
+            MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
+                    s.getMotorIds(), s.getName(), s.getIp(), s.isActive(), s.getBattery(), s.getStyle(), s.getDurationSensitivity());
+            client.updateMotionSensor(motionSensors, s.getId(), request);
+        }
+    }
+
+    private void pushLightSensorState(LightSensor s) {
+        if (lightSensors.getValue() != null) {
+            lightSensors.getValue().put(s.getId(), s);
+            LightSensorSettingsRequest request = new LightSensorSettingsRequest(
+                    s.getMotorIds(), s.getName(), s.getIp(), s.isActive(), s.getBattery(), s.getStyle());
+            client.updateLightSensor(lightSensors, s.getId(), request);
+        }
+    }
+
+    public void deleteComponent(IdComponent component) {
+        if (component.getClass() == MotionSensor.class) {
+            client.deleteMotionSensor(motionSensors, (Sensor) component);
+
+        } else if (component.getClass() == LightSensor.class) {
+            client.deleteLightSensor(lightSensors, (Sensor) component);
+
+        } else if (component.getClass() == Motor.class) {
+            client.deleteMotor(motors, (Motor) component);
+
+        } else if (component.getClass() == Schedule.class) {
+            client.deleteSchedule(schedules, (Schedule) component);
+
+        }
+    }
+
+    private String getIpKey() {
+        return getApplication().getString(R.string.ip_key);
+    }
+
+    public MutableLiveData<NetworkStatus> getNetworkStatus() {
+        MutableLiveData<NetworkStatus> status = new MutableLiveData<>();
+        client.getNetworkStatus(status);
+        return status;
+    }
+
+    /**
+     * Attempts to interpret the given voice command from speech recognition, and take actions as specified.
+     *
+     * @param voiceCommand the String from voice recognition
+     * @param tts          text to speech engine
+     * @return the motors data for updating the GUI
+     */
+    public MutableLiveData<Map<Integer, Motor>> interpretVoiceCommand(String voiceCommand, TextToSpeech tts) {
+        voiceCommand = voiceCommand.toLowerCase();
+
+        Resources res = getApplication().getApplicationContext().getResources();
+        String[] openWords = res.getStringArray(R.array.open);
+        String[] closeWords = res.getStringArray(R.array.close);
+
+        boolean hasOpen = false;
+        boolean hasClosed = false;
+        boolean hasNumInRange = false;
+        boolean hasName = false;
+        String numberString = "";
+
+        // Check if voiceCommand contains open or synonym of open
+        for (String s : openWords) {
+            if (voiceCommand.contains(s)) {
+                hasOpen = true;
+                break;
+            }
+        }
+
+        // Check if voiceCommand contains close or synonym of close
+        for (String s : closeWords) {
+            if (voiceCommand.contains(s)) {
+                hasClosed = true;
+                break;
+            }
+        }
+
+        // Extract number
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(voiceCommand);
+        while (matcher.find()) {
+            numberString = matcher.group(0);
+        }
+        assert numberString != null;
+        if (!numberString.equals("")) {
+            if (Integer.parseInt(numberString) <= 100 && Integer.parseInt(numberString) >= 0) {
+                hasNumInRange = true;
+            }
+        }
+
+        String returnString = null;
+        Motor targetMotor = null;
+        // Check if voiceCommand contains a blind's name
+        for (Motor m : Objects.requireNonNull(motors.getValue()).values()) {
+            if (!m.getName().equals("") && voiceCommand.contains(m.getName().toLowerCase())) {
+                hasName = true;
+                targetMotor = m;
+
+                if (hasNumInRange) {
+                    // Set blind to specific level
+                    m.setLevel(Integer.parseInt(numberString));
+                    returnString = res.getString(R.string.setting_level_message, m.getName(), numberString);
+                } else if (hasOpen) {
+                    // Open the blind
+                    m.setLevel(0);
+                    returnString = res.getString(R.string.open_message, m.getName());
+                } else if (hasClosed) {
+                    // Close the blind
+                    m.setLevel(100);
+                    returnString = res.getString(R.string.close_message, m.getName());
+                }
+                break;
+            }
+        }
+
+        if (!hasName) {
+            returnString = res.getString(R.string.blinds_not_found_message);
+        } else if (returnString == null) {
+            returnString = res.getString(R.string.command_not_recognised_message);
+        } else {
+            pushMotorState(targetMotor);
+        }
+        Toast.makeText(getApplication(), returnString, Toast.LENGTH_LONG).show();
+        tts.speak(returnString, TextToSpeech.QUEUE_FLUSH, null, "");
+        return motors;
     }
 
     public void toggleMotorActive(Motor m) {

@@ -62,4 +62,14 @@
     <string name="ip_key">ip_preference_key</string>
     <string name="ip_address_set">IP address set</string>
     <string name="ip_incorrect_format">Incorrect format</string>
+
+    <!-- Voice control -->
+    <string name="does_not_support_voice_recognition">Your device does not support voice recognition</string>
+    <string name="voice_control_button_description">Voice recognition</string>
+    <string name="setting_level_message">Setting %1$s to level %2$s</string>
+    <string name="open_message">Opening %s</string>
+    <string name="close_message">Closing %s</string>
+    <string name="blinds_not_found_message">Blinds not found</string>
+    <string name="command_not_recognised_message">Command not recognised</string>
+
 </resources>

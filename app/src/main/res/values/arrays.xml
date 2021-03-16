@@ -66,4 +66,18 @@
         <item>30</item>
         <item>60</item>
     </string-array>
+
+    <string-array name="open">
+        <item>open</item>
+        <item>raise</item>
+        <item>up</item>
+    </string-array>
+
+    <string-array name="close">
+        <item>close</item>
+        <item>shut</item>
+        <item>lower</item>
+        <item>down</item>
+    </string-array>
+
 </resources>

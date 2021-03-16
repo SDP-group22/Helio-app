@@ -9,6 +9,8 @@
     <string name="select_blinds">Select blinds</string>
     <string name="component_deactivated">Disabled</string>
     <string name="component_activated">Enabled</string>
+    <string name="delete_component">Delete</string>
+    <string name="deleted_message">Deleted</string>
 
     <!-- Blinds/motors -->
     <string name="title_control">Control</string>

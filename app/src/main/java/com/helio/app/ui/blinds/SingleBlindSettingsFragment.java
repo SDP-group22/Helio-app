@@ -1,7 +1,6 @@
 package com.helio.app.ui.blinds;
 
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.EditTextPreference;
-import androidx.preference.ListPreference;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,7 +23,6 @@ import com.helio.app.ui.utils.MotorIdsBlindsCheckboxRecViewAdapter;
 import com.helio.app.ui.utils.TextChangedListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SingleBlindSettingsFragment extends Fragment {
     private Motor motor;
@@ -63,7 +57,7 @@ public class SingleBlindSettingsFragment extends Fragment {
 
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
-                motors-> {
+                motors -> {
                     motor = motors.get(motorId);
                     levelSlider.setValue(motor.getLevel());
                     levelSlider.addOnChangeListener((slider, value, fromUser) -> motor.setLevel((int) value));
@@ -96,6 +90,7 @@ public class SingleBlindSettingsFragment extends Fragment {
         // Send changes to the motor state when the settings are closed
         // Check if null in case something is wrong or it hasn't loaded in yet
         if (motor != null) {
+            model.setCurrentMotor(motor.getId());
             model.pushCurrentMotorState(motor);
             Toast.makeText(requireContext(), requireContext().getString(R.string.component_updated), Toast.LENGTH_SHORT).show();
         }

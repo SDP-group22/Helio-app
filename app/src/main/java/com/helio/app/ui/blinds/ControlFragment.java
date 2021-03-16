@@ -1,4 +1,4 @@
-package com.helio.app.ui.control;
+package com.helio.app.ui.blinds;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +24,7 @@ public class ControlFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_control, container, false);
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
-        ControlRecViewAdapter adapter = new ControlRecViewAdapter(getContext(), model);
+        ControlRecViewAdapter adapter = new ControlRecViewAdapter(model);
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> adapter.setMotors(new ArrayList<>(motors.values()))

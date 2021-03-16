@@ -1,6 +1,5 @@
-package com.helio.app.ui.control;
+package com.helio.app.ui.blinds;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.slider.Slider;
@@ -18,12 +19,10 @@ import com.helio.app.model.Motor;
 import java.util.ArrayList;
 
 public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAdapter.ViewHolder> {
-    private final Context context;
     private final UserDataViewModel model;
     private ArrayList<Motor> motors = new ArrayList<>();
 
-    public ControlRecViewAdapter(Context context, UserDataViewModel model) {
-        this.context = context;
+    public ControlRecViewAdapter(UserDataViewModel model) {
         this.model = model;
     }
 
@@ -67,6 +66,8 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
             txtName = itemView.findViewById(R.id.scheduleName);
             blindIcon = itemView.findViewById(R.id.blindIcon);
             slider = itemView.findViewById(R.id.controlSlider);
+            CardView parent = itemView.findViewById(R.id.parent);
+
             // Update the level of the motor when the user lets go of the slider
             slider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
                 @Override
@@ -76,14 +77,20 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
                 @Override
                 public void onStopTrackingTouch(@NonNull Slider slider) {
                     Motor motor = motors.get(getAdapterPosition());
-                    // disable dragging? TODO
                     // send update to Hub
                     motor.setLevel((int) slider.getValue());
                     System.out.println("Updated level using slider: " + motor);
                     model.setCurrentMotor(motor.getId());
                     model.pushCurrentMotorState(motor);
-                    // asynchronously enable dragging? TODO
                 }
+            });
+
+            parent.setOnClickListener(v -> {
+                ControlFragmentDirections.ActionNavigationControlToSingleBlindSettingsFragment action =
+                        ControlFragmentDirections.actionNavigationControlToSingleBlindSettingsFragment();
+                Motor m = motors.get(getAdapterPosition());
+                action.setCurrentMotorId(m.getId());
+                Navigation.findNavController(itemView).navigate(action);
             });
         }
     }

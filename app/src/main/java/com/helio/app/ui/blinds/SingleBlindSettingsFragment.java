@@ -7,16 +7,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.navigation.Navigation;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 
 import com.helio.app.R;
-import com.helio.app.UserDataViewModel;
 import com.helio.app.model.Motor;
 import com.helio.app.ui.SingleComponentSettingsFragment;
 

@@ -44,7 +44,7 @@ public class CalibrationFragment extends Fragment {
                     upButton.setOnTouchListener((v, event) -> {
                         if (event.getAction() == MotionEvent.ACTION_DOWN) {
                             model.moveUp(motor);
-                        } else if (event.getAction() == MotionEvent.ACTION_UP){
+                        } else if (event.getAction() == MotionEvent.ACTION_UP) {
                             model.stopMoving(motor);
                         }
                         v.performClick();
@@ -53,7 +53,7 @@ public class CalibrationFragment extends Fragment {
                     downButton.setOnTouchListener((v, event) -> {
                         if (event.getAction() == MotionEvent.ACTION_DOWN) {
                             model.moveDown(motor);
-                        } else if (event.getAction() == MotionEvent.ACTION_UP){
+                        } else if (event.getAction() == MotionEvent.ACTION_UP) {
                             model.stopMoving(motor);
                         }
                         v.performClick();

@@ -276,10 +276,6 @@ public class UserDataViewModel extends AndroidViewModel {
         client.setLowestPoint(motor);
     }
 
-    public void toggleSensorActive(Sensor s) {
-        s.setActive(!s.isActive());
-        pushSensorState(s);
-    }
 
     public MutableLiveData<NetworkStatus> getNetworkStatus() {
         MutableLiveData<NetworkStatus> status = new MutableLiveData<>();

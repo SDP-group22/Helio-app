@@ -26,10 +26,10 @@ import static android.app.Activity.RESULT_OK;
 
 public class ControlFragment extends Fragment {
 
-    private UserDataViewModel model;
     protected static final int RESULT_SPEECH = 100;
     ControlRecViewAdapter adapter;
     TextToSpeech tts;
+    private UserDataViewModel model;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

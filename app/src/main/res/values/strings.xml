@@ -14,16 +14,11 @@
 
     <!-- Blinds/motors -->
     <string name="title_control">Control</string>
-    <string name="title_blinds_settings">Edit Blinds</string>
     <string name="title_edit_blind">Edit Blind</string>
     <string name="new_blinds">New blinds</string>
     <string name="closed_state">Closed</string>
     <string name="open_state">Open</string>
-    <string name="open_button">Open</string>
-    <string name="close_button">Close</string>
     <string name="settingsCalibration">Motor Calibration</string>
-    <string name="settingsViewSensors">View this Blind\'s Sensors</string>
-    <string name="settingsViewSchedules">View this Blind\'s Schedules</string>
     <string name="blinds_icon">Icon</string>
 
     <!-- Schedules -->

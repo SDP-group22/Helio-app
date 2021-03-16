@@ -213,15 +213,11 @@ public class UserDataViewModel extends AndroidViewModel {
      */
     public String interpretVoiceCommand(String voiceCommand) {
         voiceCommand = voiceCommand.toLowerCase();
+
         Resources res = getApplication().getApplicationContext().getResources();
         String[] openArr = res.getStringArray(R.array.open);
         String[] closeArr = res.getStringArray(R.array.close);
-//        String[] openArr = new String[2];
-//        String[] closeArr = new String[2];
-//        openArr [0] = "open";
-//        openArr [1] = "up";
-//        closeArr [0] = "close";
-//        closeArr [1] = "down";
+
         boolean ifHasOpen = false;
         boolean ifHasClose = false;
         boolean ifHasNumInRange = false;
@@ -250,12 +246,15 @@ public class UserDataViewModel extends AndroidViewModel {
         while (matcher.find()) {
             Num = matcher.group(0);
         }
-        if(Integer.parseInt(Num) <= 100 && Integer.parseInt(Num) >= 0){
-            ifHasNumInRange = true;
+        assert Num != null;
+        if(!Num.equals("")) {
+            if(Integer.parseInt(Num) <= 100 && Integer.parseInt(Num) >= 0){
+                ifHasNumInRange = true;
+            }
         }
 
         // Check if voiceCommand contains a blind's name
-        for (Motor m : motors.getValue().values()) {
+        for (Motor m : Objects.requireNonNull(motors.getValue()).values()) {
             if (voiceCommand.contains(m.getName())) {
                 ifHasName = true;
 

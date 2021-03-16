@@ -215,27 +215,27 @@ public class UserDataViewModel extends AndroidViewModel {
         voiceCommand = voiceCommand.toLowerCase();
 
         Resources res = getApplication().getApplicationContext().getResources();
-        String[] openArr = res.getStringArray(R.array.open);
-        String[] closeArr = res.getStringArray(R.array.close);
+        String[] openWords = res.getStringArray(R.array.open);
+        String[] closeWords = res.getStringArray(R.array.close);
 
-        boolean ifHasOpen = false;
-        boolean ifHasClose = false;
-        boolean ifHasNumInRange = false;
-        String Num = "";
-        boolean ifHasName = false;
+        boolean hasOpen = false;
+        boolean hasClosed = false;
+        boolean hasNumInRange = false;
+        boolean hasName = false;
+        String numberString = "";
 
         // Check if voiceCommand contains open or synonym of open
-        for (String s : openArr) {
+        for (String s : openWords) {
             if (voiceCommand.contains(s)) {
-                ifHasOpen = true;
+                hasOpen = true;
                 break;
             }
         }
 
         // Check if voiceCommand contains close or synonym of close
-        for (String s : closeArr) {
+        for (String s : closeWords) {
             if (voiceCommand.contains(s)) {
-                ifHasClose = true;
+                hasClosed = true;
                 break;
             }
         }
@@ -244,47 +244,47 @@ public class UserDataViewModel extends AndroidViewModel {
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(voiceCommand);
         while (matcher.find()) {
-            Num = matcher.group(0);
+            numberString = matcher.group(0);
         }
-        assert Num != null;
-        if(!Num.equals("")) {
-            if(Integer.parseInt(Num) <= 100 && Integer.parseInt(Num) >= 0){
-                ifHasNumInRange = true;
+        assert numberString != null;
+        if (!numberString.equals("")) {
+            if (Integer.parseInt(numberString) <= 100 && Integer.parseInt(numberString) >= 0) {
+                hasNumInRange = true;
             }
         }
 
         // Check if voiceCommand contains a blind's name
         for (Motor m : Objects.requireNonNull(motors.getValue()).values()) {
-            if (voiceCommand.contains(m.getName())) {
-                ifHasName = true;
+            if (!m.getName().equals("") && voiceCommand.contains(m.getName().toLowerCase())) {
+                hasName = true;
 
-                if(ifHasNumInRange){
+                if (hasNumInRange) {
                     // Set blind to specific level
                     setCurrentMotor(m.getId());
-                    moveCurrentMotor(Integer.parseInt(Num));
-                    return String.format("Set %s to level %s", m.getName(),Num);
+                    moveCurrentMotor(Integer.parseInt(numberString));
+                    return res.getString(R.string.setting_level_message, m.getName(), numberString);
                 }
 
-                if (ifHasOpen) {
+                if (hasOpen) {
                     // Open the blind
                     setCurrentMotor(m.getId());
                     moveCurrentMotor(0);
-                    return String.format("Open %s", m.getName());
+                    return res.getString(R.string.open_message, m.getName());
                 }
 
-                if (ifHasClose) {
+                if (hasClosed) {
                     // Close the blind
                     setCurrentMotor(m.getId());
                     moveCurrentMotor(100);
-                    return String.format("Close %s", m.getName());
+                    return res.getString(R.string.close_message, m.getName());
                 }
 
             }
         }
 
-        if(!ifHasName){
-            return "Please include a name of blind";
+        if (!hasName) {
+            return res.getString(R.string.blinds_not_found_message);
         }
-        return "Please include a command for this blind";
+        return res.getString(R.string.command_not_recognised_message);
     }
 }

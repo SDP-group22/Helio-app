@@ -21,7 +21,6 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -48,18 +47,14 @@ public class ControlFragment extends Fragment {
             try {
                 startActivityForResult(intent, RESULT_SPEECH);
             } catch (ActivityNotFoundException a) {
-                Toast t = Toast.makeText(getActivity(),
+                Toast.makeText(getActivity(),
                         view.getResources().getString(R.string.does_not_support_voice_recognition),
-                        Toast.LENGTH_LONG);
-                t.show();
+                        Toast.LENGTH_LONG).show();
             }
         });
 
         // Text to speech
         tts = new TextToSpeech(getContext(), status -> {
-            if(status != TextToSpeech.ERROR) {
-                tts.setLanguage(Locale.UK);
-            }
         });
 
         // Insert into the recycler view
@@ -81,7 +76,7 @@ public class ControlFragment extends Fragment {
                 String returnString = model.interpretVoiceCommand(text.get(0));
                 Toast t = Toast.makeText(getActivity(), returnString, Toast.LENGTH_LONG);
                 t.show();
-                tts.speak(returnString,TextToSpeech.QUEUE_FLUSH, null);
+                tts.speak(returnString, TextToSpeech.QUEUE_FLUSH, null);
             }
         }
     }

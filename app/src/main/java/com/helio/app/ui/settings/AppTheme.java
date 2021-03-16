@@ -28,7 +28,9 @@ public enum AppTheme {
 
     public static AppTheme getEnumFromId(int id) {
         if (!lookup.containsKey(id)) {
-            throw new IllegalArgumentException("\"" + id + "\" is not a valid theme id");
+            // Use default instead of throw here since I don't want it to crash if the saved preferences are wrong
+            System.out.println("\"" + id + "\" is not a valid theme id, loading default");
+            return DEFAULT;
         }
         return lookup.get(id);
     }

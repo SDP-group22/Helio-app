@@ -258,7 +258,7 @@ public class UserDataViewModel extends AndroidViewModel {
      * Attempts to interpret the given voice command from speech recognition, and take actions as specified.
      *
      * @param voiceCommand the String from voice recognition
-     * @param tts text to speech engine
+     * @param tts          text to speech engine
      * @return the motors data for updating the GUI
      */
     public MutableLiveData<Map<Integer, Motor>> interpretVoiceCommand(String voiceCommand, TextToSpeech tts) {

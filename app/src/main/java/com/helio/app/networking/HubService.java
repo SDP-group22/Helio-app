@@ -82,4 +82,7 @@ public interface HubService {
 
     @DELETE("/light/unregister/{light_sensor_id}")
     Call<ResponseBody> deleteLightSensor(@Path("light_sensor_id") int id);
+
+    @GET("/motor/get_all")
+    Call<List<Motor>> getNetworkStatus();
 }

@@ -1,6 +1,8 @@
 package com.helio.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.speech.tts.TextToSpeech;
 import android.widget.Toast;
@@ -17,6 +19,8 @@ import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
 import com.helio.app.model.Sensor;
 import com.helio.app.networking.HubClient;
+import com.helio.app.networking.IPAddress;
+import com.helio.app.networking.NetworkStatus;
 import com.helio.app.networking.request.LightSensorSettingsRequest;
 import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
@@ -29,7 +33,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserDataViewModel extends AndroidViewModel {
-    private final HubClient client = new HubClient("http://10.0.2.2:4310/");
+    private final SharedPreferences sharedPrefs;
+    private HubClient client;
     private MutableLiveData<Map<Integer, Motor>> motors;
     private MutableLiveData<Map<Integer, Schedule>> schedules;
     private MutableLiveData<Map<Integer, LightSensor>> lightSensors;
@@ -38,6 +43,37 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public UserDataViewModel(@NonNull Application application) {
         super(application);
+        sharedPrefs = getApplication().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        client = createClient(getHubIp());
+    }
+
+    private HubClient createClient(String ip) {
+        // IP of local machine when using emulator is 10.0.2.2
+        return new HubClient(IPAddress.getBaseAddressUrl(ip));
+    }
+
+    public String getHubIp() {
+        return sharedPrefs.getString(getIpKey(), IPAddress.DEFAULT);
+    }
+
+    public void setHubIp(String ip) {
+        if (IPAddress.correctFormat(ip)) {
+            // Set the preference
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            editor.putString(getIpKey(), ip);
+            editor.apply();
+            System.out.println("New IP: " + sharedPrefs.getString(getIpKey(), IPAddress.DEFAULT));
+
+            // Create the new client and reset the data so that it is reloaded
+            client = createClient(ip);
+            motors = null;
+            schedules = null;
+            lightSensors = null;
+            motionSensors = null;
+        } else {
+            // If this is being thrown then you need to input validation before it gets to this point
+            throw new IllegalArgumentException("IP address in incorrect format: " + ip);
+        }
     }
 
     public LiveData<Map<Integer, Motor>> fetchMotors() {
@@ -114,14 +150,14 @@ public class UserDataViewModel extends AndroidViewModel {
 
     public LiveData<Map<Integer, MotionSensor>> addMotionSensor() {
         MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.new_motion_sensor), "0.0.0.0", true, 0, "", "00:15");
+                new ArrayList<>(), getApplication().getString(R.string.new_motion_sensor), IPAddress.DEFAULT, true, 0, "", "00:15");
         client.addMotionSensor(motionSensors, request);
         return motionSensors;
     }
 
     public LiveData<Map<Integer, LightSensor>> addLightSensor() {
         LightSensorSettingsRequest request = new LightSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.new_light_sensor), "0.0.0.0", true, 0, "");
+                new ArrayList<>(), getApplication().getString(R.string.new_light_sensor), IPAddress.DEFAULT, true, 0, "");
         client.addLightSensor(lightSensors, request);
         return lightSensors;
     }
@@ -208,11 +244,21 @@ public class UserDataViewModel extends AndroidViewModel {
         }
     }
 
+    private String getIpKey() {
+        return getApplication().getString(R.string.ip_key);
+    }
+
+    public MutableLiveData<NetworkStatus> getNetworkStatus() {
+        MutableLiveData<NetworkStatus> status = new MutableLiveData<>();
+        client.getNetworkStatus(status);
+        return status;
+    }
+
     /**
      * Attempts to interpret the given voice command from speech recognition, and take actions as specified.
      *
      * @param voiceCommand the String from voice recognition
-     * @param tts text to speech engine
+     * @param tts          text to speech engine
      * @return the motors data for updating the GUI
      */
     public MutableLiveData<Map<Integer, Motor>> interpretVoiceCommand(String voiceCommand, TextToSpeech tts) {

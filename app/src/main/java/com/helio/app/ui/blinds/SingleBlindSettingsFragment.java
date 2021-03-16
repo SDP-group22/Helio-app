@@ -50,30 +50,34 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
 
                     assert namePreference != null;
                     assert ipPreference != null;
-                    assert component != null;
-                    namePreference.setText(component.getName());
-                    ipPreference.setText(component.getIp());
-
                     assert iconPreference != null;
-                    if (component.getIcon() == null) {
-                        // If motor has no icon then set to None
-                        iconPreference.setValueIndex(iconPreference.getEntryValues().length - 1);
-                    } else {
-                        iconPreference.setValue(component.getIcon().name);
-                    }
 
-                    namePreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                        component.setName((String) newValue);
-                        return true;
-                    });
-                    ipPreference.setOnPreferenceChangeListener(((preference, newValue) -> {
-                        component.setIp((String) newValue);
-                        return true;
-                    }));
-                    iconPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                        component.setStyle((String) newValue);
-                        return true;
-                    });
+                    // It has crashed before because this was null after deleting.
+                    // It is hard to reproduce and I think it might be a race condition, so solving by checking for null here
+                    // If it is null it will only be as this page is closing so it won't matter
+                    if (component != null) {
+                        namePreference.setText(component.getName());
+                        ipPreference.setText(component.getIp());
+                        if (component.getIcon() == null) {
+                            // If motor has no icon then set to None
+                            iconPreference.setValueIndex(iconPreference.getEntryValues().length - 1);
+                        } else {
+                            iconPreference.setValue(component.getIcon().name);
+                        }
+
+                        namePreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                            component.setName((String) newValue);
+                            return true;
+                        });
+                        ipPreference.setOnPreferenceChangeListener(((preference, newValue) -> {
+                            component.setIp((String) newValue);
+                            return true;
+                        }));
+                        iconPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                            component.setStyle((String) newValue);
+                            return true;
+                        });
+                    }
                 }
         );
         setActionListeners(view);

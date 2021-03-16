@@ -57,24 +57,26 @@ public class SingleScheduleSettingsFragment extends SingleComponentSettingsFragm
                 schedules -> {
                     component = schedules.get(scheduleId);
 
-                    adapter.setComponent(component);
+                    if (component != null) {
+                        adapter.setComponent(component);
 
-                    Objects.requireNonNull(nameEditText).setInputType(InputType.TYPE_CLASS_TEXT);
-                    nameEditText.setText(component.getName());
-                    nameEditText.addTextChangedListener(new TextChangedListener() {
-                        @Override
-                        public void onTextChanged(CharSequence s) {
-                            component.setName(s.toString());
-                        }
-                    });
+                        Objects.requireNonNull(nameEditText).setInputType(InputType.TYPE_CLASS_TEXT);
+                        nameEditText.setText(component.getName());
+                        nameEditText.addTextChangedListener(new TextChangedListener() {
+                            @Override
+                            public void onTextChanged(CharSequence s) {
+                                component.setName(s.toString());
+                            }
+                        });
 
-                    timeButton.setText(component.getFormattedTime());
-                    timeButton.setOnClickListener(timeButtonClickListener(timeButton));
+                        timeButton.setText(component.getFormattedTime());
+                        timeButton.setOnClickListener(timeButtonClickListener(timeButton));
 
-                    levelSlider.setValue(component.getTargetLevel());
-                    levelSlider.addOnChangeListener((slider, value, fromUser) -> component.setTargetLevel((int) value));
+                        levelSlider.setValue(component.getTargetLevel());
+                        levelSlider.addOnChangeListener((slider, value, fromUser) -> component.setTargetLevel((int) value));
 
-                    prepareDays(view.findViewById(R.id.days_layout));
+                        prepareDays(view.findViewById(R.id.days_layout));
+                    }
                 }
         );
 

@@ -10,13 +10,6 @@
         <item>reply_all</item>
     </string-array>
 
-    <!--  Theme Preference  -->
-    <array name="theme_options">
-        <item>Default</item>
-        <item>Night</item>
-        <item>High Contrast</item>
-    </array>
-
     <array name="icons">
         <item>Wash</item>
         <item>Window</item>

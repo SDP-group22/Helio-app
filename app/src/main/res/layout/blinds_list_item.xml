@@ -20,14 +20,12 @@
             android:id="@+id/blindIcon"
             android:layout_width="45sp"
             android:layout_height="45sp"
-            android:layout_alignTop="@+id/scheduleName"
-            android:layout_alignBottom="@+id/scheduleName"
             android:layout_marginStart="5dp"
             app:srcCompat="@drawable/ic_fridge"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/scheduleName"
+            android:id="@+id/motor_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -36,6 +34,28 @@
             android:textSize="32sp"
             tools:ignore="HardcodedText" />
 
+        <TextView
+            android:id="@+id/blinds_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="0dp"
+            android:paddingHorizontal="10dp"
+            android:text="Target: Closed"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/activate_blinds_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="5dp"
+            android:layout_below="@+id/blinds_level"
+            android:padding="20dp"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

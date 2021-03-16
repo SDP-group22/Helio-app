@@ -61,5 +61,6 @@
 
     <!--voice control-->
     <string name="does_not_support_voice_recognition">Your device does not support voice recognition</string>
+    <string name="Voice_recognition">Voice recognition</string>
 
 </resources>

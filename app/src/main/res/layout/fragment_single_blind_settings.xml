@@ -8,6 +8,20 @@
     android:orientation="vertical"
     android:paddingHorizontal="50dp">
 
+    <TextView
+        android:id="@+id/motorControl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Motor Control"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
+    <com.helio.app.ui.utils.LevelSlider
+        android:id="@+id/controlSlider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/blinds_ip_address"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

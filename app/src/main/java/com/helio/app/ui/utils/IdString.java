@@ -11,13 +11,13 @@ public class IdString {
     private final int id;
     private final Context context;
 
-    public int getId() {
-        return id;
-    }
-
     public IdString(int id, Context context) {
         this.id = id;
         this.context = context;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @NonNull

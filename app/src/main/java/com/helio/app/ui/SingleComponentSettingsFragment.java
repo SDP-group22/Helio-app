@@ -15,8 +15,8 @@ import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 
 public class SingleComponentSettingsFragment<T extends IdComponent> extends Fragment {
-    private UserDataViewModel model;
     protected T component;
+    private UserDataViewModel model;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

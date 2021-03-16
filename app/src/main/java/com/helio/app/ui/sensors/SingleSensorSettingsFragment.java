@@ -69,28 +69,11 @@ public class SingleSensorSettingsFragment extends SingleComponentSettingsFragmen
                     getViewLifecycleOwner(),
                     sensors -> {
                         component = sensors.get(sensorId);
-
-                        checkBoxRCAdapter.setComponent(component);
-                        setup();
-
-                        MotionSensor motionSensor = (MotionSensor) component;
-                        assert motionSensor != null;
-                        // Only try to set the text if it is not blank
-                        if (motionSensor.getDurationSensitivity() != null && !motionSensor.getDurationSensitivity().equals("")) {
-                            // Format is just the number of it is less than 60 minutes, and HH:mm otherwise
-                            int minute = motionSensor.getDurationSensitivityMinute();
-                            int hour = motionSensor.getDurationSensitivityHour();
-                            String text;
-                            if (hour == 0) {
-                                text = String.valueOf(minute);
-                            } else {
-                                text = hour + ":" + minute;
-                            }
-                            sensitivityMenu.setText(text, false);
+                        if (component != null) {
+                            checkBoxRCAdapter.setComponent(component);
+                            setupNameIp();
+                            setupSensitivity(sensitivityMenu);
                         }
-
-                        sensitivityMenu.setOnItemClickListener((parent, v, position, id) ->
-                                motionSensor.setDurationSensitivity(0, Integer.parseInt(parent.getItemAtPosition(position).toString())));
                     });
         } else if (sensorType == LightSensor.TYPE) {
             actionBar.setTitle(R.string.light_sensor);
@@ -100,16 +83,38 @@ public class SingleSensorSettingsFragment extends SingleComponentSettingsFragmen
                     getViewLifecycleOwner(),
                     sensors -> {
                         component = sensors.get(sensorId);
-
-                        checkBoxRCAdapter.setComponent(component);
-                        setup();
+                        if (component != null) {
+                            checkBoxRCAdapter.setComponent(component);
+                            setupNameIp();
+                        }
                     });
         }
 
         return view;
     }
 
-    private void setup() {
+    private void setupSensitivity(AutoCompleteTextView sensitivityMenu) {
+        MotionSensor motionSensor = (MotionSensor) component;
+        assert motionSensor != null;
+        // Only try to set the text if it is not blank
+        if (motionSensor.getDurationSensitivity() != null && !motionSensor.getDurationSensitivity().equals("")) {
+            // Format is just the number of it is less than 60 minutes, and HH:mm otherwise
+            int minute = motionSensor.getDurationSensitivityMinute();
+            int hour = motionSensor.getDurationSensitivityHour();
+            String text;
+            if (hour == 0) {
+                text = String.valueOf(minute);
+            } else {
+                text = hour + ":" + minute;
+            }
+            sensitivityMenu.setText(text, false);
+        }
+
+        sensitivityMenu.setOnItemClickListener((parent, v, position, id) ->
+                motionSensor.setDurationSensitivity(0, Integer.parseInt(parent.getItemAtPosition(position).toString())));
+    }
+
+    private void setupNameIp() {
         nameEditText.setText(component.getName());
         nameEditText.addTextChangedListener(new TextChangedListener() {
             @Override

@@ -1,13 +1,14 @@
 package com.helio.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.helio.app.networking.IPAddress;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
@@ -15,6 +16,7 @@ import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
 import com.helio.app.model.Sensor;
 import com.helio.app.networking.HubClient;
+import com.helio.app.networking.IPAddress;
 import com.helio.app.networking.NetworkStatus;
 import com.helio.app.networking.request.LightSensorSettingsRequest;
 import com.helio.app.networking.request.MotionSensorSettingsRequest;
@@ -26,13 +28,13 @@ import java.util.Map;
 import java.util.Objects;
 
 public class UserDataViewModel extends AndroidViewModel {
+    private final SharedPreferences sharedPrefs;
     private HubClient client;
     private MutableLiveData<Map<Integer, Motor>> motors;
     private MutableLiveData<Map<Integer, Schedule>> schedules;
     private MutableLiveData<Map<Integer, LightSensor>> lightSensors;
     private MutableLiveData<Map<Integer, MotionSensor>> motionSensors;
     private int currentMotorId = -1;
-    private final SharedPreferences sharedPrefs;
 
     public UserDataViewModel(@NonNull Application application) {
         super(application);

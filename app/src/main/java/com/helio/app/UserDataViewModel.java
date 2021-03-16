@@ -164,16 +164,6 @@ public class UserDataViewModel extends AndroidViewModel {
         client.updateMotor(motors, currentMotorId, motorSettingsRequest);
     }
 
-    private LiveData<Map<Integer, Motor>> pushMotorStateWithCallback(Motor m) {
-        Objects.requireNonNull(motors.getValue()).put(m.getId(), m);
-        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
-                m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
-                m.getLevel(), m.getStyle()
-        );
-        client.updateMotor(motors, currentMotorId, motorSettingsRequest);
-        return motors;
-    }
-
     private void pushScheduleState(Schedule s) {
         if (schedules.getValue() != null) {
             schedules.getValue().put(s.getId(), s);
@@ -300,7 +290,7 @@ public class UserDataViewModel extends AndroidViewModel {
             pushMotorState(targetMotor);
         }
         Toast.makeText(getApplication(), returnString, Toast.LENGTH_LONG).show();
-        tts.speak(returnString, TextToSpeech.QUEUE_FLUSH, null);
+        tts.speak(returnString, TextToSpeech.QUEUE_FLUSH, null, "");
         return motors;
     }
 }

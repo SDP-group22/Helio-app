@@ -71,16 +71,6 @@ public class SingleScheduleSettingsFragment extends SingleComponentSettingsFragm
                             }
                         });
 
-                        // Close the keyboard on enter
-                        gradientEditText.setOnEditorActionListener((v, actionId, event) -> {
-                            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                                InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                                imm.hideSoftInputFromWindow(gradientEditText.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-                                return false;
-                            }
-                            return false;
-                        });
-
                         gradientEditText.setText(String.valueOf(component.getGradient()));
                         gradientEditText.addTextChangedListener(new TextChangedListener() {
                             @Override

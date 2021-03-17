@@ -319,7 +319,8 @@ public class UserDataViewModel extends AndroidViewModel {
         Motor targetMotor = null;
         // Check if voiceCommand contains a blind's name
         for (Motor m : Objects.requireNonNull(motors.getValue()).values()) {
-            if (!m.getName().equals("") && voiceCommand.contains(m.getName().toLowerCase())) {
+            String motorName = removeTrailingSpaces(m.getName().toLowerCase());
+            if (!m.getName().equals("") && voiceCommand.contains(motorName)) {
                 hasName = true;
                 targetMotor = m;
 
@@ -350,5 +351,16 @@ public class UserDataViewModel extends AndroidViewModel {
         Toast.makeText(getApplication(), returnString, Toast.LENGTH_LONG).show();
         tts.speak(returnString, TextToSpeech.QUEUE_FLUSH, null, "");
         return motors;
+    }
+
+    public static String removeTrailingSpaces(String param) {
+        if (param == null)
+            return null;
+        int len = param.length();
+        for (; len > 0; len--) {
+            if (!Character.isWhitespace(param.charAt(len - 1)))
+                break;
+        }
+        return param.substring(0, len);
     }
 }

@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.R;
@@ -17,6 +22,9 @@ import com.helio.app.model.Motor;
 import com.helio.app.networking.IPAddress;
 import com.helio.app.ui.SingleComponentSettingsFragment;
 import com.helio.app.ui.utils.TextChangedListener;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment<Motor> {
 
@@ -33,14 +41,32 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
         assert nameEditText != null;
         assert ipEditText != null;
 
-        TextInputLayout iconMenuLayoutView = view.findViewById(R.id.dropdown_icons);
-
+//        TextInputLayout iconMenuLayoutView = view.findViewById(R.id.dropdown_icons);
         // Set the blinds icon
-        AutoCompleteTextView iconMenu = (AutoCompleteTextView) iconMenuLayoutView.getEditText();
-        assert iconMenu != null;
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_list_item,
-                view.getResources().getStringArray(R.array.icons));
-        iconMenu.setAdapter(adapter);
+//        AutoCompleteTextView iconMenu = (AutoCompleteTextView) iconMenuLayoutView.getEditText();
+//        assert iconMenu != null;
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_list_item,
+//                view.getResources().getStringArray(R.array.icons));
+//        iconMenu.setAdapter(adapter);
+
+        // Spinner
+        Spinner customSpinner = view.findViewById(R.id.blinds_icon_spinner);
+        ArrayList<CustomBlindsItem> customList = new ArrayList<>();
+        String[] iconNameList = view.getResources().getStringArray(R.array.icons);
+//        int arraySize = Array.getLength(R.array.icons); it will have bugs.
+
+        for(int i = 0;i<13;i++){
+            CustomBlindsItem customBlindsItem = new CustomBlindsItem(iconNameList[i],i);
+            customList.add(customBlindsItem);
+        }
+
+        CustomAdapter adapter = new CustomAdapter(requireContext(),customList);
+        if(customSpinner != null){
+            customSpinner.setAdapter(adapter);
+            customSpinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        }
+
+
 
         getModel().fetchMotors().observe(
                 getViewLifecycleOwner(),
@@ -78,4 +104,13 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
 
         return view;
     }
+
+
+
+
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
+        CustomBlindsItem item = (CustomBlindsItem) adapterView.getSelectedItem();
+        Toast.makeText(requireContext(),item.getSpinnerItemName(),Toast.LENGTH_SHORT).show();
+    }
+
 }

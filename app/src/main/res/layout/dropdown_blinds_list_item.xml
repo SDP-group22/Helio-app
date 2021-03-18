@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:ignore="UseCompoundDrawables"
+    android:id="@+id/customSpinnerItemLayout">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/blindsImagesItems"
+        app:srcCompat="@drawable/ic_fridge"
+        android:padding="10dp"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/blindsNameItems"
+        android:text="@string/blinds_icon"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:textSize="20sp"/>
+
+
+</LinearLayout>

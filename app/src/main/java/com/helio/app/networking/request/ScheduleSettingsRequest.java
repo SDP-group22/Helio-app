@@ -31,4 +31,9 @@ public class ScheduleSettingsRequest {
         this.motorIds = motorIds;
         this.time = time;
     }
+
+    public static ScheduleSettingsRequest newScheduleRequest() {
+        return new ScheduleSettingsRequest(
+                "", true, new ArrayList<>(), 0, 0, new ArrayList<>(), "12:00");
+    }
 }

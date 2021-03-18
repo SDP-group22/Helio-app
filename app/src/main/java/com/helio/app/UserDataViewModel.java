@@ -26,6 +26,7 @@ import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
 import com.helio.app.networking.request.ScheduleSettingsRequest;
 
+import java.text.NumberFormat;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -305,8 +306,9 @@ public class UserDataViewModel extends AndroidViewModel {
 
                 if (hasNumInRange) {
                     // Set blind to specific level
-                    m.setLevel(Integer.parseInt(numberString));
-                    returnString = res.getString(R.string.setting_level_message, m.getName(), numberString);
+                    int level = Integer.parseInt(numberString);
+                    m.setLevel(level);
+                    returnString = res.getString(R.string.setting_level_message, m.getName(), NumberFormat.getPercentInstance().format(((float) level) / 100));
                 } else if (hasOpen) {
                     // Open the blind
                     m.setLevel(0);

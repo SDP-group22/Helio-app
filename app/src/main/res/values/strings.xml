@@ -68,7 +68,7 @@
     <string name="voice_control_button_description">Control with voice</string>
 
     <string name="does_not_support_voice_recognition">Your device does not support voice recognition</string>
-    <string name="setting_level_message">Setting %1$s to level %2$s</string>
+    <string name="setting_level_message">Setting %1$s to %2$s</string>
     <string name="open_message">Opening %s</string>
     <string name="close_message">Closing %s</string>
     <string name="blinds_not_found_message">Blinds not found</string>

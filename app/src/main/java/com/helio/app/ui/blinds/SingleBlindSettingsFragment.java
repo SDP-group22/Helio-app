@@ -105,10 +105,7 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
         return view;
     }
 
-
-
     // @Override
-
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
         CustomBlindsItem item = (CustomBlindsItem) adapterView.getSelectedItem();
         Toast.makeText(requireContext(),item.getSpinnerItemName(),Toast.LENGTH_SHORT).show();

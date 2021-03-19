@@ -94,6 +94,7 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
                 }
         );
 
+
         return view;
 
     }

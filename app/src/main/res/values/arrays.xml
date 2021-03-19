@@ -1,32 +1,6 @@
 <resources>
-    <!-- Reply Preference -->
-    <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
-    </string-array>
 
-    <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
-    </string-array>
-
-    <array name="icons">
-        <item>Wash</item>
-        <item>Window</item>
-        <item>Tv</item>
-        <item>Star</item>
-        <item>Square</item>
-        <item>House</item>
-        <item>Computer</item>
-        <item>Circle</item>
-        <item>Chair</item>
-        <item>Book</item>
-        <item>Bed</item>
-        <item>Fridge</item>
-        <item>None</item>
-    </array>
-
-    <array name="iconsValues">
+    <array name="icon_ids">
         <item>@drawable/ic_wash</item>
         <item>@drawable/ic_window</item>
         <item>@drawable/ic_tv</item>
@@ -39,13 +13,7 @@
         <item>@drawable/ic_book</item>
         <item>@drawable/ic_bed</item>
         <item>@drawable/ic_fridge</item>
-        <item />
     </array>
-
-    <string-array name="sensorTypeString">
-        <item>@string/light_sensor</item>
-        <item>@string/motion_sensor</item>
-    </string-array>
 
     <string-array name="weekdaysShort">
         <item>@string/monday_short</item>

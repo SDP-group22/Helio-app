@@ -26,7 +26,7 @@ import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
 import com.helio.app.networking.request.ScheduleSettingsRequest;
 
-import java.util.ArrayList;
+import java.text.NumberFormat;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -107,14 +107,8 @@ public class UserDataViewModel extends AndroidViewModel {
         return motionSensors;
     }
 
-    public void moveCurrentMotor(int level) {
-        // This kind of operation is deprecated and no longer available
-
-    }
-
     public LiveData<Map<Integer, Motor>> addMotor() {
-        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
-                "", "0.0.0.0", true, 0, 0, 0, "");
+        MotorSettingsRequest motorSettingsRequest = MotorSettingsRequest.newMotorRequest();
         client.addMotor(motors, motorSettingsRequest);
         return motors;
     }
@@ -125,23 +119,17 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     public LiveData<Map<Integer, Schedule>> addSchedule() {
-        ScheduleSettingsRequest request = new ScheduleSettingsRequest(
-                "", true, new ArrayList<>(), 0, 0, new ArrayList<>(), "12:00");
-        client.addSchedule(schedules, request);
+        client.addSchedule(schedules, ScheduleSettingsRequest.newScheduleRequest());
         return schedules;
     }
 
     public LiveData<Map<Integer, MotionSensor>> addMotionSensor() {
-        MotionSensorSettingsRequest request = new MotionSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.new_motion_sensor), IPAddress.DEFAULT, true, 0, "", "00:15");
-        client.addMotionSensor(motionSensors, request);
+        client.addMotionSensor(motionSensors, MotionSensorSettingsRequest.newSensorRequest());
         return motionSensors;
     }
 
     public LiveData<Map<Integer, LightSensor>> addLightSensor() {
-        LightSensorSettingsRequest request = new LightSensorSettingsRequest(
-                new ArrayList<>(), getApplication().getString(R.string.new_light_sensor), IPAddress.DEFAULT, true, 0, "");
-        client.addLightSensor(lightSensors, request);
+        client.addLightSensor(lightSensors, LightSensorSettingsRequest.newSensorRequest());
         return lightSensors;
     }
 
@@ -326,8 +314,9 @@ public class UserDataViewModel extends AndroidViewModel {
 
                 if (hasNumInRange) {
                     // Set blind to specific level
-                    m.setLevel(Integer.parseInt(numberString));
-                    returnString = res.getString(R.string.setting_level_message, m.getName(), numberString);
+                    int level = Integer.parseInt(numberString);
+                    m.setLevel(level);
+                    returnString = res.getString(R.string.setting_level_message, m.getName(), NumberFormat.getPercentInstance().format(((float) level) / 100));
                 } else if (hasOpen) {
                     // Open the blind
                     m.setLevel(0);

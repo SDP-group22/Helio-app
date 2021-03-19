@@ -72,7 +72,7 @@ public class CalibrationFragment extends Fragment {
             // Stop calibration upon page closing
             model.stopMoving(motor);
             model.stopCalibration(motor);
-            Toast.makeText(requireContext(), requireContext().getString(R.string.calibrated), Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), requireContext().getString(R.string.calibrated_message), Toast.LENGTH_SHORT).show();
         }
         super.onStop();
     }

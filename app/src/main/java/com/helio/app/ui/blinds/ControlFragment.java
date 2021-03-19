@@ -1,4 +1,4 @@
-package com.helio.app.ui.control;
+package com.helio.app.ui.blinds;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -35,7 +35,7 @@ public class ControlFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_control, container, false);
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
-        adapter = new ControlRecViewAdapter(getContext(), model);
+        adapter = new ControlRecViewAdapter(model);
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> adapter.setMotors(new ArrayList<>(motors.values()))
@@ -62,6 +62,14 @@ public class ControlFragment extends Fragment {
         RecyclerView recView = view.findViewById(R.id.control_rc_view);
         recView.setAdapter(adapter);
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        FloatingActionButton addButton = view.findViewById(R.id.add_blinds_button);
+        addButton.setOnClickListener(
+                v -> model.addMotor().observe(
+                        getViewLifecycleOwner(),
+                        motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+                )
+        );
         return view;
     }
 

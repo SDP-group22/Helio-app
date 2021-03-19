@@ -14,7 +14,7 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 
-public class SingleComponentSettingsFragment<T extends IdComponent> extends Fragment {
+public abstract class SingleComponentSettingsFragment<T extends IdComponent> extends Fragment {
     protected T component;
     private UserDataViewModel model;
 

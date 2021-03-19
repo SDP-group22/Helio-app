@@ -5,10 +5,6 @@
         android:icon="@drawable/blinds_icon"
         android:title="@string/title_control" />
     <item
-        android:id="@+id/navigation_blinds"
-        android:icon="@drawable/ic_edit_pencil"
-        android:title="@string/title_blinds_settings" />
-    <item
         android:id="@+id/navigation_schedule"
         android:icon="@drawable/ic_timer"
         android:title="@string/title_schedule_setting"/>

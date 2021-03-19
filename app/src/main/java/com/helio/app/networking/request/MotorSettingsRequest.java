@@ -22,4 +22,8 @@ public class MotorSettingsRequest {
         this.level = level;
         this.style = style;
     }
+
+    public static MotorSettingsRequest newMotorRequest() {
+        return new MotorSettingsRequest("", "0.0.0.0", true, 0, 0, 0, "");
+    }
 }

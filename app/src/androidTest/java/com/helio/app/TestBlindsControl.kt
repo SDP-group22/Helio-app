@@ -92,7 +92,7 @@ class TestBlindsControl {
         val startCount = Utils.getCountFromRecyclerView(R.id.control_rc_view)
         onView(withId(R.id.add_blinds_button))
                 .perform(ViewActions.click())
-        onView(withId(R.id.blindsRCView))
+        onView(withId(R.id.control_rc_view))
                 .check(matches(Utils.withExpectedCount(startCount + 1)));
     }
 

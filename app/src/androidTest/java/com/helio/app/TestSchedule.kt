@@ -72,10 +72,14 @@ class TestSchedule {
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
                 (0, ViewActions.click()))
         // update this schedule's activate days
-        onView(withId(R.id.day1)).perform(ViewActions.click())
-        onView(withId(R.id.day3)).perform(ViewActions.click())
-        onView(withId(R.id.day4)).perform(ViewActions.click())
-        onView(withId(R.id.day7)).perform(ViewActions.click())
+        onView(withId(R.id.day1))
+                .perform(ViewActions.click())
+        onView(withId(R.id.day3))
+                .perform(ViewActions.click())
+        onView(withId(R.id.day4))
+                .perform(ViewActions.click())
+        onView(withId(R.id.day7))
+                .perform(ViewActions.click())
     }
 
     private fun clickOnViewChild(viewId: Int) = object : ViewAction {

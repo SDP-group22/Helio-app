@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 
@@ -74,6 +75,27 @@ class TestBlindsControl {
                 .check(matches(atPosition(slider2Position, withValue(slider2ExpectedValue))));
     }
 
+    @Test
+    // check that we can navigate into a single blind settings fragment
+    fun enterBlind0Settings() {
+        onView(withId(R.id.control_rc_view))
+                // click on the icon (instead of the centre) to avoid pressing the slider
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
+                (0, clickOnViewChild(R.id.blindIcon)))
+        // check that the calibration button is displayed to confirm we're in settings fragment
+        onView(withId(R.id.calibration)).check(matches(ViewMatchers.isDisplayed()))
+    }
+
+    @Test
+    // check that we can add a new blind using the "+"-button
+    fun registerNewBlind() {
+        val startCount = Utils.getCountFromRecyclerView(R.id.control_rc_view)
+        onView(withId(R.id.add_blinds_button))
+                .perform(ViewActions.click())
+        onView(withId(R.id.control_rc_view))
+                .check(matches(Utils.withExpectedCount(startCount + 1)));
+    }
+
     private fun withValue(expectedValue: Float): Matcher<View?> {
         return object : BoundedMatcher<View?, View>(View::class.java) {
             override fun describeTo(description: Description) {
@@ -101,5 +123,14 @@ class TestBlindsControl {
                 seekBar.value = value
             }
         }
+    }
+
+    private fun clickOnViewChild(viewId: Int) = object : ViewAction {
+        override fun getConstraints() = null
+
+        override fun getDescription() = "Click on a child view with specified id."
+
+        override fun perform(uiController: UiController, view: View) =
+                ViewActions.click().perform(uiController, view.findViewById<View>(viewId))
     }
 }

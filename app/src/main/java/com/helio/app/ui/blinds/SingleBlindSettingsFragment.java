@@ -60,6 +60,7 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
             customList.add(customBlindsItem);
         }
 
+
         CustomAdapter adapter = new CustomAdapter(requireContext(),customList);
         if(customSpinner != null){
             customSpinner.setAdapter(adapter);

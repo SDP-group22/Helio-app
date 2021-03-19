@@ -10,7 +10,7 @@
         <item>reply_all</item>
     </string-array>
 
-    <array name="icons">
+    <array name="icon_names">
         <item>Wash</item>
         <item>Window</item>
         <item>Tv</item>
@@ -26,7 +26,7 @@
         <item>None</item>
     </array>
 
-    <array name="iconsValues">
+    <array name="icons">
         <item>@drawable/ic_wash</item>
         <item>@drawable/ic_window</item>
         <item>@drawable/ic_tv</item>
@@ -39,7 +39,6 @@
         <item>@drawable/ic_book</item>
         <item>@drawable/ic_bed</item>
         <item>@drawable/ic_fridge</item>
-        <item />
     </array>
 
     <string-array name="sensorTypeString">

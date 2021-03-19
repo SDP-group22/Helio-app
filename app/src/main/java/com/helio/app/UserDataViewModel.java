@@ -107,14 +107,9 @@ public class UserDataViewModel extends AndroidViewModel {
         return motionSensors;
     }
 
-    public void moveCurrentMotor(int level) {
-        // This kind of operation is deprecated and no longer available
-
-    }
-
     public LiveData<Map<Integer, Motor>> addMotor() {
         MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
-                "", "0.0.0.0", true, 0, 0, 0, "");
+                "", "0.0.0.0", true, 0, 0, 0, String.valueOf(R.drawable.ic_chair));
         client.addMotor(motors, motorSettingsRequest);
         return motors;
     }

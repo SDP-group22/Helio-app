@@ -134,6 +134,14 @@ public class Motor implements IdComponent {
         this.icon = icon;
     }
 
+    public int getIconId() {
+        return Integer.parseInt(style);
+    }
+
+    public void setIconId(int iconId) {
+        style = String.valueOf(iconId);
+    }
+
     @Override
     public int getId() {
         return id;

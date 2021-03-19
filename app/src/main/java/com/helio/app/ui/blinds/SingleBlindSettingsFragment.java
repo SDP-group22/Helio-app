@@ -1,24 +1,18 @@
 package com.helio.app.ui.blinds;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
-import androidx.preference.EditTextPreference;
-import androidx.preference.ListPreference;
-import androidx.preference.Preference;
-import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.R;
@@ -27,10 +21,9 @@ import com.helio.app.networking.IPAddress;
 import com.helio.app.ui.SingleComponentSettingsFragment;
 import com.helio.app.ui.utils.TextChangedListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment<Motor> {
+public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment<Motor> implements AdapterView.OnItemSelectedListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -42,35 +35,32 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
         EditText nameEditText = view.<TextInputLayout>findViewById(R.id.blinds_name).getEditText();
         TextInputLayout ipEditLayout = view.findViewById(R.id.blinds_ip_address);
         EditText ipEditText = ipEditLayout.getEditText();
+        Button calibrationButton = view.findViewById(R.id.calibration);
         assert nameEditText != null;
         assert ipEditText != null;
-
-//        TextInputLayout iconMenuLayoutView = view.findViewById(R.id.dropdown_icons);
-        // Set the blinds icon
-//        AutoCompleteTextView iconMenu = (AutoCompleteTextView) iconMenuLayoutView.getEditText();
-//        assert iconMenu != null;
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_list_item,
-//                view.getResources().getStringArray(R.array.icons));
-//        iconMenu.setAdapter(adapter);
+        assert calibrationButton != null;
 
         // Spinner
         Spinner customSpinner = view.findViewById(R.id.blinds_icon_spinner);
-        ArrayList<CustomBlindsItem> customList = new ArrayList<>();
-        String[] iconNameList = view.getResources().getStringArray(R.array.icons);
-//        int arraySize = Array.getLength(R.array.icons); it will have bugs.
+        assert customSpinner != null;
+        ArrayList<CustomBlindsItem> iconItemList = new ArrayList<>();
 
-        for(int i = 0;i<13;i++){
-            CustomBlindsItem customBlindsItem = new CustomBlindsItem(iconNameList[i],i);
-            customList.add(customBlindsItem);
+        // Get array of resource ids (this annoying way is necessary)
+        TypedArray ar = view.getResources().obtainTypedArray(R.array.icons);
+        int[] iconIds = new int[ar.length()];
+        for (int i = 0; i < ar.length(); i++) {
+            iconIds[i] = ar.getResourceId(i, 0);
+        }
+        ar.recycle();
+
+        for (int iconId : iconIds) {
+            CustomBlindsItem customBlindsItem = new CustomBlindsItem(iconId);
+            iconItemList.add(customBlindsItem);
         }
 
-        CustomAdapter adapter = new CustomAdapter(requireContext(),customList);
-        if(customSpinner != null){
-            customSpinner.setAdapter(adapter);
-            customSpinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        }
-
-
+        IconArrayAdapter adapter = new IconArrayAdapter(requireContext(), iconItemList);
+        customSpinner.setAdapter(adapter);
+        customSpinner.setOnItemSelectedListener(this);
 
         getModel().fetchMotors().observe(
                 getViewLifecycleOwner(),
@@ -104,26 +94,37 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
                         }
                     });
 
-//                    calibrationPreference.setOnPreferenceClickListener(preference -> {
-//                        // Start calibration before opening page
-//                        getModel().startCalibration(component);
-//
-//                        SingleBlindSettingsFragmentDirections.ActionSingleBlindSettingsFragmentToCalibrationFragment action =
-//                                SingleBlindSettingsFragmentDirections.actionSingleBlindSettingsFragmentToCalibrationFragment();
-//                        action.setCurrentMotorId(component.getId());
-//                        Navigation.findNavController(view).navigate(action);
-//                        return false;
-//                    });
+
+                    calibrationButton.setOnClickListener(v -> {
+                        // Start calibration before opening page
+                        getModel().startCalibration(component);
+
+                        SingleBlindSettingsFragmentDirections.ActionSingleBlindSettingsFragmentToCalibrationFragment action =
+                                SingleBlindSettingsFragmentDirections.actionSingleBlindSettingsFragmentToCalibrationFragment();
+                        action.setCurrentMotorId(component.getId());
+                        Navigation.findNavController(view).navigate(action);
+                    });
+
+                    // Set the icon
+                    for (int i = 0; i < iconIds.length; i++) {
+                        if (iconIds[i] == component.getIconId()) {
+                            customSpinner.setSelection(i);
+                        }
+                    }
                 }
         );
 
         return view;
     }
 
-    // @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         CustomBlindsItem item = (CustomBlindsItem) adapterView.getSelectedItem();
-        Toast.makeText(requireContext(),item.getSpinnerItemName(),Toast.LENGTH_SHORT).show();
+        component.setStyle(String.valueOf(item.getSpinnerItemImage()));
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
     }
 
 }

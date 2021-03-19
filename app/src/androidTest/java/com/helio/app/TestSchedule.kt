@@ -61,11 +61,11 @@ class TestSchedule {
 
     @Test
     // check that we can add a new blind using the "+"-button
-    fun registerNewBlind() {
-        val startCount = Utils.getCountFromRecyclerView(R.id.control_rc_view)
-        onView(withId(R.id.add_blinds_button))
+    fun registerNewSchedule() {
+        val startCount = Utils.getCountFromRecyclerView(R.id.schedulesRCView)
+        onView(withId(R.id.add_button))
                 .perform(ViewActions.click())
-        onView(withId(R.id.control_rc_view))
+        onView(withId(R.id.schedulesRCView))
                 .check(matches(Utils.withExpectedCount(startCount + 1)));
     }
 

@@ -50,36 +50,13 @@ class TestSchedule {
     }
 
     @Test
-    // check that we can adjust multiple sliders
-    fun adjustMultipleSliders() {
-        val slider1Position = 0
-        val slider2Position = 1
-        val slider1ExpectedValue = 100.0F
-        val slider2ExpectedValue = 33.0F
-        // adjust slider 1 to 100%
-        onView(withId(R.id.control_rc_view))
+    // check that we can navigate into a single schedule settings fragment
+    fun enterSchedule0Settings() {
+        onView(withId(R.id.schedulesRCView))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (slider1Position, setValue(slider1ExpectedValue)))
-        // adjust slider 2 to 33.2%
-        onView(withId(R.id.control_rc_view))
-                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (slider2Position, setValue(slider2ExpectedValue)))
-        // verify values match expectations
-        onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(slider1Position, withValue(slider1ExpectedValue))));
-        onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(slider2Position, withValue(slider2ExpectedValue))));
-    }
-
-    @Test
-    // check that we can navigate into a single blind settings fragment
-    fun enterBlind0Settings() {
-        onView(withId(R.id.control_rc_view))
-                // click on the icon (instead of the centre) to avoid pressing the slider
-                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (0, clickOnViewChild(R.id.blindIcon)))
-        // check that the calibration button is displayed to confirm we're in settings fragment
-        onView(withId(R.id.calibration)).check(matches(ViewMatchers.isDisplayed()))
+                (0, ViewActions.click()))
+        // check that the time button is displayed to confirm we're in settings fragment
+        onView(withId(R.id.time_button)).check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test

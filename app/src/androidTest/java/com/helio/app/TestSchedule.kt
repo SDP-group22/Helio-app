@@ -42,6 +42,16 @@ class TestSchedule {
     }
 
     @Test
+    // check that we can add a new blind using the "+"-button
+    fun registerNewSchedule() {
+        val startCount = Utils.getCountFromRecyclerView(R.id.schedulesRCView)
+        onView(withId(R.id.add_button))
+                .perform(ViewActions.click())
+        onView(withId(R.id.schedulesRCView))
+                .check(matches(Utils.withExpectedCount(startCount + 1)));
+    }
+
+    @Test
     // check that we can toggle the switch for schedule #1
     fun toggleSwitch0() {
         onView(withId(R.id.schedulesRCView))
@@ -57,16 +67,6 @@ class TestSchedule {
                 (0, ViewActions.click()))
         // check that the time button is displayed to confirm we're in settings fragment
         onView(withId(R.id.time_button)).check(matches(ViewMatchers.isDisplayed()))
-    }
-
-    @Test
-    // check that we can add a new blind using the "+"-button
-    fun registerNewSchedule() {
-        val startCount = Utils.getCountFromRecyclerView(R.id.schedulesRCView)
-        onView(withId(R.id.add_button))
-                .perform(ViewActions.click())
-        onView(withId(R.id.schedulesRCView))
-                .check(matches(Utils.withExpectedCount(startCount + 1)));
     }
 
     private fun clickOnViewChild(viewId: Int) = object : ViewAction {

@@ -42,9 +42,8 @@ class TestSchedule {
     }
 
     @Test
-    // check that we can activate the switch for schedule #1
-    fun activateSwitch0() {
-        // TODO: ensure the switch starts out in deactivated state
+    // check that we can toggle the switch for schedule #1
+    fun toggleSwitch0() {
         onView(withId(R.id.schedulesRCView))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
                 (0, clickOnViewChild(R.id.activate_switch)))

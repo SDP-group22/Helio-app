@@ -2,18 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/customSpinnerItemLayout"
+    android:paddingHorizontal="10dp"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    tools:ignore="UseCompoundDrawables"
-    android:id="@+id/customSpinnerItemLayout">
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/icon_image"
+        style="@style/iconSize"
         app:srcCompat="@drawable/ic_fridge"
-        android:padding="10dp"
         tools:ignore="ContentDescription" />
 
 </LinearLayout>

@@ -14,7 +14,6 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.helio.app.R;
 import com.helio.app.model.Motor;
 import com.helio.app.model.MotorIdsComponent;
-import com.helio.app.ui.MotorIcon;
 
 import java.util.ArrayList;
 
@@ -37,10 +36,7 @@ public class MotorIdsBlindsCheckboxRecViewAdapter extends RecyclerView.Adapter<M
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Motor motor = motors.get(position);
         holder.txtName.setText(motor.getName());
-        MotorIcon icon = motor.getIcon();
-        if (icon != null) {
-            holder.blindIcon.setImageResource(icon.id);
-        }
+        holder.blindIcon.setImageResource(motor.getIconId());
         if (component != null) {
             holder.checkBox.setChecked(component.getMotorIds().contains(motor.getId()));
         }

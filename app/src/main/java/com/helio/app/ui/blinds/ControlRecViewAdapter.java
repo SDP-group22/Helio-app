@@ -39,9 +39,7 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
         // Set the name and icon of the motor and put the current level in the slider
         Motor motor = motors.get(position);
         holder.txtName.setText(motor.getName());
-        if (motor.getIcon() != null) {
-            holder.blindIcon.setImageResource(motor.getIcon().id);
-        }
+        holder.blindIcon.setImageResource(motor.getIconId());
         holder.slider.setValue(motor.getLevel());
     }
 

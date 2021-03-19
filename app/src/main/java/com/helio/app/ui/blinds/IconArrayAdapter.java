@@ -15,22 +15,21 @@ import com.helio.app.R;
 
 import java.util.ArrayList;
 
-public class IconArrayAdapter extends ArrayAdapter<CustomBlindsItem> {
-    public IconArrayAdapter(@NonNull Context context, ArrayList<CustomBlindsItem> customBlindsItemArrayList) {
-        super(context, R.layout.dropdown_blinds_list_item, customBlindsItemArrayList);
-        System.out.println(customBlindsItemArrayList);
+public class IconArrayAdapter extends ArrayAdapter<Integer> {
+    public IconArrayAdapter(@NonNull Context context, ArrayList<Integer> customBlindsItemArrayList) {
+        super(context, R.layout.icon_list_item, customBlindsItemArrayList);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.dropdown_blinds_list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.icon_list_item, parent, false);
         }
-        CustomBlindsItem item = getItem(position);
+        Integer item = getItem(position);
         ImageView spinnerImage = convertView.findViewById(R.id.icon_image);
         if (item != null) {
-            spinnerImage.setImageResource(item.getSpinnerItemImage());
+            spinnerImage.setImageResource(item);
         }
         return convertView;
     }
@@ -38,13 +37,13 @@ public class IconArrayAdapter extends ArrayAdapter<CustomBlindsItem> {
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.dropdown_blinds_list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.icon_list_item, parent, false);
         }
-        CustomBlindsItem item = getItem(position);
+        Integer item = getItem(position);
         ImageView dropDownImage = convertView.findViewById(R.id.icon_image);
         if (item != null) {
             // Set the drawable
-            dropDownImage.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(), item.getSpinnerItemImage()));
+            dropDownImage.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(), item));
         }
         return convertView;
     }

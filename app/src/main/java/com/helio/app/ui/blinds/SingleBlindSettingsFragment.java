@@ -43,7 +43,7 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
         // Spinner
         Spinner customSpinner = view.findViewById(R.id.blinds_icon_spinner);
         assert customSpinner != null;
-        ArrayList<CustomBlindsItem> iconItemList = new ArrayList<>();
+        ArrayList<Integer> iconItemList = new ArrayList<>();
 
         // Get array of resource ids (this annoying way is necessary)
         TypedArray ar = view.getResources().obtainTypedArray(R.array.icons);
@@ -54,8 +54,7 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
         ar.recycle();
 
         for (int iconId : iconIds) {
-            CustomBlindsItem customBlindsItem = new CustomBlindsItem(iconId);
-            iconItemList.add(customBlindsItem);
+            iconItemList.add(iconId);
         }
 
         IconArrayAdapter adapter = new IconArrayAdapter(requireContext(), iconItemList);
@@ -119,8 +118,7 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        CustomBlindsItem item = (CustomBlindsItem) adapterView.getSelectedItem();
-        component.setStyle(String.valueOf(item.getSpinnerItemImage()));
+        component.setIconId((Integer) adapterView.getSelectedItem());
     }
 
     @Override

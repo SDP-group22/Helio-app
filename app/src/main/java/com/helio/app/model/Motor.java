@@ -1,7 +1,5 @@
 package com.helio.app.model;
 
-import com.helio.app.ui.MotorIcon;
-
 import org.jetbrains.annotations.NotNull;
 
 
@@ -14,10 +12,9 @@ public class Motor implements IdComponent {
     private String ip;
     private boolean active;
     private int level;
-    private int battery;
-    private int length;
+    private final int battery;
+    private final int length;
     private String style;
-    private MotorIcon icon;
 
     public Motor(
             int id,
@@ -27,8 +24,7 @@ public class Motor implements IdComponent {
             int level,
             int battery,
             int length,
-            String style,
-            MotorIcon icon) {
+            String style) {
         this.id = id;
         this.name = name;
         this.ip = ip;
@@ -37,21 +33,20 @@ public class Motor implements IdComponent {
         this.battery = battery;
         this.length = length;
         this.style = style;
-        this.icon = icon;
     }
 
     /**
      * Create a motor with the ID only, leaving everything else as default.
      */
     public Motor(int id) {
-        this(id, "", "", false, 0, 0, 0, "", null);
+        this(id, "", "", false, 0, 0, 0, "");
     }
 
     /**
      * Create a motor with name and icon only (DEBUG)
      */
-    public Motor(String name, MotorIcon icon) {
-        this(0, name, "", false, 0, 0, 0, "", icon);
+    public Motor(String name) {
+        this(0, name, "", false, 0, 0, 0, "");
     }
 
     @NotNull
@@ -66,7 +61,6 @@ public class Motor implements IdComponent {
                 ", battery=" + battery +
                 ", length=" + length +
                 ", style='" + style + '\'' +
-                ", icon=" + icon +
                 '}';
     }
 
@@ -106,16 +100,8 @@ public class Motor implements IdComponent {
         return battery;
     }
 
-    public void setBattery(int battery) {
-        this.battery = battery;
-    }
-
     public int getLength() {
         return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
     }
 
     public String getStyle() {
@@ -124,14 +110,6 @@ public class Motor implements IdComponent {
 
     public void setStyle(String style) {
         this.style = style;
-    }
-
-    public MotorIcon getIcon() {
-        return icon;
-    }
-
-    public void setIcon(MotorIcon icon) {
-        this.icon = icon;
     }
 
     public int getIconId() {

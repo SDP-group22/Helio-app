@@ -69,6 +69,20 @@ class TestSchedule {
         onView(withId(R.id.time_button)).check(matches(ViewMatchers.isDisplayed()))
     }
 
+    @Test
+    // check that we can update a schedule's activate days
+    fun adjustSchedule0ActiveDays() {
+        // enter the settings fragment for this schedule
+        onView(withId(R.id.schedulesRCView))
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
+                (0, ViewActions.click()))
+        // update this schedule's activate days
+        onView(withId(R.id.day1)).perform(ViewActions.click())
+        onView(withId(R.id.day3)).perform(ViewActions.click())
+        onView(withId(R.id.day4)).perform(ViewActions.click())
+        onView(withId(R.id.day7)).perform(ViewActions.click())
+    }
+
     private fun clickOnViewChild(viewId: Int) = object : ViewAction {
         override fun getConstraints() = null
 

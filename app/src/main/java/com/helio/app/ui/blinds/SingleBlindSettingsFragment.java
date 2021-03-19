@@ -46,7 +46,7 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
         ArrayList<Integer> iconItemList = new ArrayList<>();
 
         // Get array of resource ids (this annoying way is necessary)
-        TypedArray ar = view.getResources().obtainTypedArray(R.array.icons);
+        TypedArray ar = view.getResources().obtainTypedArray(R.array.icon_ids);
         int[] iconIds = new int[ar.length()];
         for (int i = 0; i < ar.length(); i++) {
             iconIds[i] = ar.getResourceId(i, 0);

@@ -1,5 +1,7 @@
 package com.helio.app.networking.request;
 
+import com.helio.app.R;
+
 /**
  * retrofit serialises these objects to be passed to the Hub for /motor/register/ requests
  */
@@ -24,6 +26,6 @@ public class MotorSettingsRequest {
     }
 
     public static MotorSettingsRequest newMotorRequest() {
-        return new MotorSettingsRequest("", "0.0.0.0", true, 0, 0, 0, "");
+        return new MotorSettingsRequest("", "0.0.0.0", true, 0, 0, 0, String.valueOf(R.drawable.ic_tv));
     }
 }

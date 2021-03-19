@@ -113,7 +113,12 @@ public class Motor implements IdComponent {
     }
 
     public int getIconId() {
-        return Integer.parseInt(style);
+        try {
+            return Integer.parseInt(style);
+        } catch (NumberFormatException e) {
+            // This should only happen with hub has out of date data
+            return 0;
+        }
     }
 
     public void setIconId(int iconId) {

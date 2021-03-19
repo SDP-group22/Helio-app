@@ -1,6 +1,6 @@
 <resources>
 
-    <array name="icons">
+    <array name="icon_ids">
         <item>@drawable/ic_wash</item>
         <item>@drawable/ic_window</item>
         <item>@drawable/ic_tv</item>

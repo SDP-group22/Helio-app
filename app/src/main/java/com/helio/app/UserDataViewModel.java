@@ -39,7 +39,6 @@ public class UserDataViewModel extends AndroidViewModel {
     private MutableLiveData<Map<Integer, Schedule>> schedules;
     private MutableLiveData<Map<Integer, LightSensor>> lightSensors;
     private MutableLiveData<Map<Integer, MotionSensor>> motionSensors;
-    private int currentMotorId = -1;
 
     public UserDataViewModel(@NonNull Application application) {
         super(application);
@@ -109,24 +108,8 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     public void moveCurrentMotor(int level) {
-        client.moveMotor(getCurrentMotor(), level);
-    }
+        // This kind of operation is deprecated and no longer available
 
-    public Motor getCurrentMotor() {
-        return Objects.requireNonNull(motors.getValue()).get(currentMotorId);
-    }
-
-    public void setCurrentMotor(int id) {
-        currentMotorId = id;
-    }
-
-    public void pushCurrentMotorState(Motor m) {
-        Objects.requireNonNull(motors.getValue()).put(currentMotorId, m);
-        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
-                m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
-                m.getLevel(), m.getStyle()
-        );
-        client.updateMotor(motors, currentMotorId, motorSettingsRequest);
     }
 
     public LiveData<Map<Integer, Motor>> addMotor() {
@@ -197,7 +180,7 @@ public class UserDataViewModel extends AndroidViewModel {
                 m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
                 m.getLevel(), m.getStyle()
         );
-        client.updateMotor(motors, currentMotorId, motorSettingsRequest);
+        client.updateMotor(motors, m.getId(), motorSettingsRequest);
     }
 
     private void pushScheduleState(Schedule s) {
@@ -247,6 +230,35 @@ public class UserDataViewModel extends AndroidViewModel {
     private String getIpKey() {
         return getApplication().getString(R.string.ip_key);
     }
+
+    public void startCalibration(Motor motor) {
+        client.startCalibration(motor);
+    }
+
+    public void stopCalibration(Motor motor) {
+        client.stopCalibration(motor);
+    }
+
+    public void moveUp(Motor motor) {
+        client.moveUp(motor);
+    }
+
+    public void moveDown(Motor motor) {
+        client.moveDown(motor);
+    }
+
+    public void stopMoving(Motor motor) {
+        client.stopMoving(motor);
+    }
+
+    public void setHighestPoint(Motor motor) {
+        client.setHighestPoint(motor);
+    }
+
+    public void setLowestPoint(Motor motor) {
+        client.setLowestPoint(motor);
+    }
+
 
     public MutableLiveData<NetworkStatus> getNetworkStatus() {
         MutableLiveData<NetworkStatus> status = new MutableLiveData<>();
@@ -307,7 +319,8 @@ public class UserDataViewModel extends AndroidViewModel {
         Motor targetMotor = null;
         // Check if voiceCommand contains a blind's name
         for (Motor m : Objects.requireNonNull(motors.getValue()).values()) {
-            if (!m.getName().equals("") && voiceCommand.contains(m.getName().toLowerCase())) {
+            String motorName = removeTrailingSpaces(m.getName().toLowerCase());
+            if (!m.getName().equals("") && voiceCommand.contains(motorName)) {
                 hasName = true;
                 targetMotor = m;
 
@@ -340,8 +353,14 @@ public class UserDataViewModel extends AndroidViewModel {
         return motors;
     }
 
-    public void toggleMotorActive(Motor m) {
-        m.setActive(!m.isActive());
-        pushCurrentMotorState(m);
+    public static String removeTrailingSpaces(String param) {
+        if (param == null)
+            return null;
+        int len = param.length();
+        for (; len > 0; len--) {
+            if (!Character.isWhitespace(param.charAt(len - 1)))
+                break;
+        }
+        return param.substring(0, len);
     }
 }

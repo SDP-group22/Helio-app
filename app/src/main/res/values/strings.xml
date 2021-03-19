@@ -25,6 +25,7 @@
     <string name="add_new_schedule_button">New schedule</string>
     <string name="title_edit_schedule">Edit Schedule</string>
     <string name="title_schedule_setting">Schedule</string>
+    <string name="time_to_open">Time to open (minutes)</string>
     <string name="target_motor_value_prefix">"Target: "</string>
     <string name="monday_short">M</string>
     <string name="tuesday_short">T</string>
@@ -67,4 +68,13 @@
     <string name="blinds_not_found_message">Blinds not found</string>
     <string name="command_not_recognised_message">Command not recognised</string>
 
+    <!--  Calibration  -->
+    <string name="motor_calibration">Calibration</string>
+    <string name="press_and_hold_to_move_instructions">Press and hold to move</string>
+    <string name="move_up">Move Up</string>
+    <string name="move_down">Move Down</string>
+    <string name="set_high_and_low_points_instructions">Set high and low points</string>
+    <string name="set_high_point">Set High Point</string>
+    <string name="set_low_point">Set Low Point</string>
+    <string name="calibrated">Calibrated</string>
 </resources>

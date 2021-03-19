@@ -14,6 +14,8 @@ import com.helio.app.networking.request.MotionSensorSettingsRequest;
 import com.helio.app.networking.request.MotorSettingsRequest;
 import com.helio.app.networking.request.ScheduleSettingsRequest;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +23,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -75,16 +79,6 @@ public class HubClient {
     public void moveMotor(Motor motor, int level) {
         Call<Motor> call = service.moveMotor(motor.getId(), level);
         call.enqueue(new MoveMotorCallback(motor));
-    }
-
-    public void startMotorCalibration(MutableLiveData<Map<Integer, Motor>> motors, int motorId) {
-        Call<Motor> call = service.startMotorCalibration(motorId);
-        call.enqueue(new IdComponentCallback<>(motors));
-    }
-
-    public void stopMotorCalibration(MutableLiveData<Map<Integer, Motor>> motors, int motorId) {
-        Call<Motor> call = service.stopMotorCalibration(motorId);
-        call.enqueue(new IdComponentCallback<>(motors));
     }
 
     public void getAllMotors(MutableLiveData<Map<Integer, Motor>> motors) {
@@ -162,4 +156,55 @@ public class HubClient {
         call.enqueue(new NetworkStatusCallback(status));
     }
 
+
+    public void startCalibration(Motor motor) {
+        Call<ResponseBody> call = service.startCalibration(motor.getId());
+        call.enqueue(new BlankCallback());
+    }
+
+    public void stopCalibration(Motor motor) {
+        Call<ResponseBody> call = service.stopCalibration(motor.getId());
+        call.enqueue(new BlankCallback());
+    }
+
+    public void moveUp(Motor motor) {
+        Call<ResponseBody> call = service.moveUp(motor.getId());
+        call.enqueue(new BlankCallback());
+    }
+
+    public void moveDown(Motor motor) {
+        Call<ResponseBody> call = service.moveDown(motor.getId());
+        call.enqueue(new BlankCallback());
+    }
+
+    public void stopMoving(Motor motor) {
+        Call<ResponseBody> call = service.stopMoving(motor.getId());
+        call.enqueue(new BlankCallback());
+    }
+
+    public void setHighestPoint(Motor motor) {
+        Call<ResponseBody> call = service.setHighestPoint(motor.getId());
+        call.enqueue(new BlankCallback());
+    }
+
+    public void setLowestPoint(Motor motor) {
+        Call<ResponseBody> call = service.setLowestPoint(motor.getId());
+        call.enqueue(new BlankCallback());
+    }
+
+    private static class BlankCallback implements Callback<ResponseBody> {
+        @Override
+        public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+            if (response.body() != null) {
+                System.out.println(call + " succeeded: " + response);
+            } else {
+                System.out.println("Communication error");
+            }
+        }
+
+        @Override
+        public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+            System.out.println(call + " failed: " + t);
+        }
+    }
 }

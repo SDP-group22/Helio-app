@@ -15,6 +15,9 @@
             android:name="currentMotorId"
             android:defaultValue="0"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_singleBlindSettingsFragment_to_calibrationFragment"
+            app:destination="@id/calibrationFragment" />
     </fragment>
 
     <fragment
@@ -76,6 +79,18 @@
 
         <argument
             android:name="sensorType"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/calibrationFragment"
+        android:name="com.helio.app.ui.blinds.CalibrationFragment"
+        android:label="@string/motor_calibration"
+        tools:layout="@layout/fragment_calibration">
+
+        <argument
+            android:name="currentMotorId"
             android:defaultValue="0"
             app:argType="integer" />
     </fragment>

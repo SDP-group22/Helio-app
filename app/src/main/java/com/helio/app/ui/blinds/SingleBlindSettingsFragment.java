@@ -14,6 +14,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
+import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -99,6 +103,17 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
                             }
                         }
                     });
+
+//                    calibrationPreference.setOnPreferenceClickListener(preference -> {
+//                        // Start calibration before opening page
+//                        getModel().startCalibration(component);
+//
+//                        SingleBlindSettingsFragmentDirections.ActionSingleBlindSettingsFragmentToCalibrationFragment action =
+//                                SingleBlindSettingsFragmentDirections.actionSingleBlindSettingsFragmentToCalibrationFragment();
+//                        action.setCurrentMotorId(component.getId());
+//                        Navigation.findNavController(view).navigate(action);
+//                        return false;
+//                    });
                 }
         );
 

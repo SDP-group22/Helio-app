@@ -10,6 +10,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
+import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.R;
@@ -20,6 +24,19 @@ import com.helio.app.ui.utils.TextChangedListener;
 
 public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment<Motor> {
 
+    private void setActionListeners(View view) {
+        // "open" button
+        view.findViewById(R.id.btn_open).setOnClickListener(v -> {
+            System.out.println("OPEN button pressed for " + component);
+            getModel().moveCurrentMotor(100);
+        });
+        // "close" button
+        view.findViewById(R.id.btn_close).setOnClickListener(v -> {
+            System.out.println("CLOSE button pressed for " + component);
+            getModel().moveCurrentMotor(0);
+        });
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -27,20 +44,13 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
         assert getArguments() != null;
         int motorId = getArguments().getInt("currentMotorId");
 
-        EditText nameEditText = view.<TextInputLayout>findViewById(R.id.blinds_name).getEditText();
-        TextInputLayout ipEditLayout = view.findViewById(R.id.blinds_ip_address);
-        EditText ipEditText = ipEditLayout.getEditText();
-        assert nameEditText != null;
-        assert ipEditText != null;
-
-        TextInputLayout iconMenuLayoutView = view.findViewById(R.id.dropdown_icons);
-
-        // Set the blinds icon
-        AutoCompleteTextView iconMenu = (AutoCompleteTextView) iconMenuLayoutView.getEditText();
-        assert iconMenu != null;
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_list_item,
-                view.getResources().getStringArray(R.array.icons));
-        iconMenu.setAdapter(adapter);
+        SingleBlindSettingsPreferencesFragment preferenceFragment = (SingleBlindSettingsPreferencesFragment)
+                getChildFragmentManager().findFragmentById(R.id.fragment_container_preferences);
+        assert preferenceFragment != null;
+        EditTextPreference namePreference = preferenceFragment.findPreference("name");
+        EditTextPreference ipPreference = preferenceFragment.findPreference("ip");
+        ListPreference iconPreference = preferenceFragment.findPreference("icon");
+        Preference calibrationPreference = preferenceFragment.findPreference("calibration");
 
         getModel().fetchMotors().observe(
                 getViewLifecycleOwner(),
@@ -56,6 +66,14 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
                         }
                     });
 
+                    assert namePreference != null;
+                    assert ipPreference != null;
+                    assert calibrationPreference != null;
+                    assert component != null;
+                    namePreference.setText(component.getName());
+                    ipPreference.setText(component.getIp());
+
+                    assert iconPreference != null;
                     ipEditText.setText(component.getIp());
                     ipEditText.addTextChangedListener(new TextChangedListener() {
                         @Override

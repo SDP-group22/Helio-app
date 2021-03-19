@@ -35,12 +35,6 @@ public interface HubService {
     @PATCH("/motor/move/{motor_id}")
     Call<Motor> moveMotor(@Path("motor_id") int id, @Body int level);
 
-    @PATCH("/motor/start_calibrate/{motor_id}")
-    Call<Motor> startMotorCalibration(@Path("motor_id") int id);
-
-    @PATCH("/motor/stop_calibrate/{motor_id}")
-    Call<Motor> stopMotorCalibration(@Path("motor_id") int id);
-
     @GET("/motor/get_all")
     Call<List<Motor>> getAllMotors();
 
@@ -85,4 +79,25 @@ public interface HubService {
 
     @GET("/motor/get_all")
     Call<List<Motor>> getNetworkStatus();
+
+    @PATCH("/motor/calibrate/start/{motor_id}")
+    Call<ResponseBody> startCalibration(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/stop/{motor_id}")
+    Call<ResponseBody> stopCalibration(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/move_up/{motor_id}")
+    Call<ResponseBody> moveUp(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/move_down/{motor_id}")
+    Call<ResponseBody> moveDown(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/stop_moving/{motor_id}")
+    Call<ResponseBody> stopMoving(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/set_highest/{motor_id}")
+    Call<ResponseBody> setHighestPoint(@Path("motor_id") int id);
+
+    @PATCH("/motor/calibrate/set_lowest/{motor_id}")
+    Call<ResponseBody> setLowestPoint(@Path("motor_id") int id);
 }

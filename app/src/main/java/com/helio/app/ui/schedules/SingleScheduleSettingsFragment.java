@@ -1,11 +1,13 @@
 package com.helio.app.ui.schedules;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -30,7 +32,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class SingleScheduleSettingsFragment extends SingleComponentSettingsFragment<Schedule> {
     private int fillColour;
@@ -45,10 +46,12 @@ public class SingleScheduleSettingsFragment extends SingleComponentSettingsFragm
         fillColour = ContextColourProvider.getColour(requireContext(), android.R.attr.colorPrimary);
         backgroundColour = ContextColourProvider.getColour(requireContext(), android.R.attr.windowBackground);
 
-        TextInputLayout name = view.findViewById(R.id.schedule_name);
-        EditText nameEditText = name.getEditText();
+        EditText nameEditText = view.<TextInputLayout>findViewById(R.id.schedule_name).getEditText();
         MaterialButton timeButton = view.findViewById(R.id.time_button);
         Slider levelSlider = view.findViewById(R.id.level_slider);
+        EditText gradientEditText = view.<TextInputLayout>findViewById(R.id.gradient).getEditText();
+        assert nameEditText != null;
+        assert gradientEditText != null;
 
         MotorIdsBlindsCheckboxRecViewAdapter adapter = new MotorIdsBlindsCheckboxRecViewAdapter();
 
@@ -60,12 +63,22 @@ public class SingleScheduleSettingsFragment extends SingleComponentSettingsFragm
                     if (component != null) {
                         adapter.setComponent(component);
 
-                        Objects.requireNonNull(nameEditText).setInputType(InputType.TYPE_CLASS_TEXT);
                         nameEditText.setText(component.getName());
                         nameEditText.addTextChangedListener(new TextChangedListener() {
                             @Override
                             public void onTextChanged(CharSequence s) {
                                 component.setName(s.toString());
+                            }
+                        });
+
+                        gradientEditText.setText(String.valueOf(component.getGradient()));
+                        gradientEditText.addTextChangedListener(new TextChangedListener() {
+                            @Override
+                            public void onTextChanged(CharSequence s) {
+                                try {
+                                    component.setGradient(Integer.parseInt(s.toString()));
+                                } catch (NumberFormatException ignored) {
+                                }
                             }
                         });
 

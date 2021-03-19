@@ -77,9 +77,8 @@
     <TextView
         android:id="@+id/connection_status_title_view"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="15dp"
         android:text="@string/connection_status"
         android:textSize="22sp"
         android:textStyle="bold" />
@@ -88,11 +87,11 @@
         android:id="@+id/connection_status"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginBottom="45dp"
-        android:drawablePadding="2dp"
+        android:layout_marginTop="15dp"
         android:gravity="start|center_vertical"
         android:text="@string/not_connected"
         android:textSize="18sp"
+        android:drawablePadding="3dp"
         app:drawableLeftCompat="@android:drawable/ic_delete" />
 
 </LinearLayout>

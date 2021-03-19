@@ -48,22 +48,12 @@
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dropdown_icons"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/blinds_icon_spinner"
         android:layout_marginVertical="10dp"
-        android:inputType="none"
-        app:startIconDrawable="@drawable/ic_icon">
-
-        <AutoCompleteTextView
-            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/blinds_icon"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
+        />
 
     <Button
         android:id="@+id/calibration"

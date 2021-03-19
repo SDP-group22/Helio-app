@@ -12,8 +12,8 @@ public abstract class Sensor implements IdComponent, MotorIdsComponent {
     private String name;
     private String ip;
     private boolean active;
-    private int battery;
-    private String style;
+    private final int battery;
+    private final String style;
 
     public Sensor(int id, String name, String ip, boolean active, int battery,
                   List<Integer> motorIds, String style) {
@@ -61,20 +61,12 @@ public abstract class Sensor implements IdComponent, MotorIdsComponent {
         return battery;
     }
 
-    public void setBattery(int battery) {
-        this.battery = battery;
-    }
-
     public List<Integer> getMotorIds() {
         return motorIds;
     }
 
     public String getStyle() {
         return style;
-    }
-
-    public void setStyle(String style) {
-        this.style = style;
     }
 
     @Override

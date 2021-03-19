@@ -69,35 +69,6 @@ class TestSchedule {
                 .check(matches(Utils.withExpectedCount(startCount + 1)));
     }
 
-    private fun withValue(expectedValue: Float): Matcher<View?> {
-        return object : BoundedMatcher<View?, View>(View::class.java) {
-            override fun describeTo(description: Description) {
-                description.appendText("expected: $expectedValue")
-            }
-
-            override fun matchesSafely(view: View): Boolean {
-                return view.findViewById<Slider>(R.id.controlSlider).value == expectedValue
-            }
-        }
-    }
-
-    fun setValue(value: Float): ViewAction {
-        return object : ViewAction {
-            override fun getDescription(): String {
-                return "Set Slider value to $value"
-            }
-
-            override fun getConstraints(): Matcher<View> {
-                return ViewMatchers.isAssignableFrom(Slider::class.java)
-            }
-
-            override fun perform(uiController: UiController?, view: View) {
-                val seekBar = view.findViewById(R.id.controlSlider) as Slider
-                seekBar.value = value
-            }
-        }
-    }
-
     private fun clickOnViewChild(viewId: Int) = object : ViewAction {
         override fun getConstraints() = null
 

@@ -47,6 +47,16 @@ class TestSensors {
     }
 
     @Test
+    // check that we can add a new light sensor using the "+"-button
+    fun registerNewLightSensor() {
+        val startCount = Utils.getCountFromRecyclerView(R.id.sensorsRCView)
+        onView(withId(R.id.add_light_button))
+                .perform(ViewActions.click())
+        onView(withId(R.id.sensorsRCView))
+                .check(matches(Utils.withExpectedCount(startCount + 1)));
+    }
+
+    @Test
     // check that we can toggle the switch for schedule #1
     fun toggleSwitch0() {
         onView(withId(R.id.schedulesRCView))

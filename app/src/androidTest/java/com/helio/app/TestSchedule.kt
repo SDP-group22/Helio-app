@@ -1,10 +1,7 @@
 package com.helio.app
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
@@ -51,7 +48,7 @@ class TestSchedule {
     fun toggleSwitch0() {
         onView(withId(R.id.schedulesRCView))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (0, clickOnViewChild(R.id.activate_switch)))
+                (0, Utils.clickOnViewChild(R.id.activate_switch)))
     }
 
     @Test
@@ -80,14 +77,5 @@ class TestSchedule {
                 .perform(ViewActions.click())
         onView(withId(R.id.day7))
                 .perform(ViewActions.click())
-    }
-
-    private fun clickOnViewChild(viewId: Int) = object : ViewAction {
-        override fun getConstraints() = null
-
-        override fun getDescription() = "Click on a child view with specified id."
-
-        override fun perform(uiController: UiController, view: View) =
-                ViewActions.click().perform(uiController, view.findViewById<View>(viewId))
     }
 }

@@ -1,10 +1,7 @@
 package com.helio.app
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
@@ -61,7 +58,7 @@ class TestSensors {
     fun toggleSwitch0() {
         onView(withId(R.id.sensorsRCView))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (0, clickOnViewChild(R.id.activate_switch)))
+                (0, Utils.clickOnViewChild(R.id.activate_switch)))
     }
 
     @Test
@@ -84,19 +81,10 @@ class TestSensors {
         // toggle the first blind for this sensor
         onView(withId(R.id.blindsRCView))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (0, clickOnViewChild(R.id.checkbox)))
+                (0, Utils.clickOnViewChild(R.id.checkbox)))
         // toggle the second blind for this sensor
         onView(withId(R.id.blindsRCView))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (1, clickOnViewChild(R.id.checkbox)))
-    }
-
-    private fun clickOnViewChild(viewId: Int) = object : ViewAction {
-        override fun getConstraints() = null
-
-        override fun getDescription() = "Click on a child view with specified id."
-
-        override fun perform(uiController: UiController, view: View) =
-                ViewActions.click().perform(uiController, view.findViewById<View>(viewId))
+                (1, Utils.clickOnViewChild(R.id.checkbox)))
     }
 }

@@ -48,6 +48,10 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
         return motors.size();
     }
 
+    public ArrayList<Motor> getMotors() {
+        return motors;
+    }
+
     public void setMotors(ArrayList<Motor> motors) {
         this.motors = motors;
         notifyDataSetChanged();

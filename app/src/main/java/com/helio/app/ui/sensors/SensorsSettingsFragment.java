@@ -8,20 +8,29 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
+import com.helio.app.model.IdComponent;
+import com.helio.app.model.Sensor;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SensorsSettingsFragment extends Fragment {
+    private UserDataViewModel model;
+    private SensorsRecViewAdapter adapter;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sensors_settings, container, false);
-        UserDataViewModel model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
-        SensorsRecViewAdapter adapter = new SensorsRecViewAdapter(getContext(), model);
+        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
+        adapter = new SensorsRecViewAdapter(getContext(), model);
 
         model.fetchLightSensors().observe(
                 getViewLifecycleOwner(),
@@ -38,17 +47,53 @@ public class SensorsSettingsFragment extends Fragment {
         recView.setAdapter(adapter);
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        view.<FloatingActionButton>findViewById(R.id.add_motion_button).setOnClickListener(
-                v -> model.addMotionSensor().observe(
-                        getViewLifecycleOwner(),
-                        sensors -> adapter.setMotionSensors(sensors.values()))
-        );
+        view.<FloatingActionButton>findViewById(R.id.add_motion_button).setOnClickListener(this::addButtonOnClickMotion);
+        view.<FloatingActionButton>findViewById(R.id.add_light_button).setOnClickListener(this::addButtonOnClickLight);
 
-        view.<FloatingActionButton>findViewById(R.id.add_light_button).setOnClickListener(
-                v -> model.addLightSensor().observe(
-                        getViewLifecycleOwner(),
-                        sensors -> adapter.setLightSensors(sensors.values()))
-        );
         return view;
+    }
+
+    private void addButtonOnClickMotion(View v) {
+        Set<Integer> oldIds = adapter.getMotionSensors().stream().map(IdComponent::getId).collect(Collectors.toSet());
+
+        model.addMotionSensor().observe(
+                getViewLifecycleOwner(),
+                sensors -> {
+                    adapter.setMotionSensors(sensors.values());
+
+                    // Find the new component and navigate to it
+                    for (Sensor s : sensors.values()) {
+                        if (!oldIds.contains(s.getId())) {
+                            SensorsSettingsFragmentDirections.ActionSensorsSettingFragmentToSingleSensorSettingFragment action =
+                                    SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
+                            action.setCurrentSensorId(s.getId());
+                            action.setSensorType(s.getType());
+                            Navigation.findNavController(getView()).navigate(action);
+                        }
+                    }
+                }
+        );
+    }
+
+    private void addButtonOnClickLight(View v) {
+        Set<Integer> oldIds = adapter.getMotionSensors().stream().map(IdComponent::getId).collect(Collectors.toSet());
+
+        model.addLightSensor().observe(
+                getViewLifecycleOwner(),
+                sensors -> {
+                    adapter.setLightSensors(sensors.values());
+
+                    // Find the new component and navigate to it
+                    for (Sensor s : sensors.values()) {
+                        if (!oldIds.contains(s.getId())) {
+                            SensorsSettingsFragmentDirections.ActionSensorsSettingFragmentToSingleSensorSettingFragment action =
+                                    SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
+                            action.setCurrentSensorId(s.getId());
+                            action.setSensorType(s.getType());
+                            Navigation.findNavController(getView()).navigate(action);
+                        }
+                    }
+                }
+        );
     }
 }

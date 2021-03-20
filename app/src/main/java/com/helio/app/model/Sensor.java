@@ -9,11 +9,11 @@ public abstract class Sensor implements IdComponent, MotorIdsComponent {
     private final int id;
     @SerializedName("motor_ids")
     private final List<Integer> motorIds;
+    private final int battery;
+    private final String style;
     private String name;
     private String ip;
     private boolean active;
-    private final int battery;
-    private final String style;
 
     public Sensor(int id, String name, String ip, boolean active, int battery,
                   List<Integer> motorIds, String style) {

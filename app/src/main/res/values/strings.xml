@@ -31,7 +31,6 @@
     <!-- Schedules -->
     <string name="title_edit_schedule">Edit Schedule</string>
     <string name="title_schedule_setting">Schedule</string>
-    <string name="time_to_open">Time to open (minutes)</string>
     <string name="target_motor_value_prefix">"Target: "</string>
     <string name="monday_short">M</string>
     <string name="tuesday_short">T</string>
@@ -85,4 +84,7 @@
     <string name="set_low_point">Set Low Point</string>
 
     <string name="calibrated_message">Calibrated</string>
+
+
+    <string name="time_to_open">Time to move (minutes)</string>
 </resources>

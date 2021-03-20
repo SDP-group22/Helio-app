@@ -37,7 +37,7 @@ class TestSchedule {
     }
 
     @Test
-    // check that we can add a new blind using the "+"-button
+    // check that we can add a new schedule using the "+"-button
     fun registerNewSchedule() {
         val startCount = Utils.getCountFromRecyclerView(R.id.schedulesRCView)
         onView(withId(R.id.add_button))

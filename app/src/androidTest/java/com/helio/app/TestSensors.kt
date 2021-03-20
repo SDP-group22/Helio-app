@@ -57,21 +57,21 @@ class TestSensors {
     }
 
     @Test
-    // check that we can toggle the switch for schedule #1
+    // check that we can toggle the switch for sensor #1
     fun toggleSwitch0() {
-        onView(withId(R.id.schedulesRCView))
+        onView(withId(R.id.sensorsRCView))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
                 (0, clickOnViewChild(R.id.activate_switch)))
     }
 
     @Test
-    // check that we can navigate into a single schedule settings fragment
-    fun enterSchedule0Settings() {
-        onView(withId(R.id.schedulesRCView))
+    // check that we can navigate into a single sensor settings fragment
+    fun enterSensor0Settings() {
+        onView(withId(R.id.sensorsRCView))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
                 (0, ViewActions.click()))
-        // check that the time button is displayed to confirm we're in settings fragment
-        onView(withId(R.id.time_button)).check(matches(ViewMatchers.isDisplayed()))
+        // check that the IP address field is displayed to confirm we're in settings fragment
+        onView(withId(R.id.ip_address)).check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test

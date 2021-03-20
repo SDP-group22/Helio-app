@@ -75,21 +75,20 @@ class TestSensors {
     }
 
     @Test
-    // check that we can update a schedule's activate days
-    fun adjustSchedule0ActiveDays() {
-        // enter the settings fragment for this schedule
-        onView(withId(R.id.schedulesRCView))
+    // check that we can update a sensor's active blinds
+    fun adjustSensor0ActiveBlinds() {
+        // enter the settings fragment for this blind
+        onView(withId(R.id.sensorsRCView))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
                 (0, ViewActions.click()))
-        // update this schedule's activate days
-        onView(withId(R.id.day1))
-                .perform(ViewActions.click())
-        onView(withId(R.id.day3))
-                .perform(ViewActions.click())
-        onView(withId(R.id.day4))
-                .perform(ViewActions.click())
-        onView(withId(R.id.day7))
-                .perform(ViewActions.click())
+        // toggle the first blind for this sensor
+        onView(withId(R.id.blindsRCView))
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
+                (0, clickOnViewChild(R.id.checkbox)))
+        // toggle the second blind for this sensor
+        onView(withId(R.id.blindsRCView))
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
+                (1, clickOnViewChild(R.id.checkbox)))
     }
 
     private fun clickOnViewChild(viewId: Int) = object : ViewAction {

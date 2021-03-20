@@ -32,17 +32,17 @@ class TestSensors {
     @Before
     fun setup() {
         // navigate to the desired fragment
-        onView(withId(R.id.navigation_schedule))
+        onView(withId(R.id.navigation_sensors))
                 .perform(ViewActions.click())
     }
 
     @Test
-    // check that we can add a new blind using the "+"-button
-    fun registerNewSchedule() {
-        val startCount = Utils.getCountFromRecyclerView(R.id.schedulesRCView)
-        onView(withId(R.id.add_button))
+    // check that we can add a new motion sensor using the "+"-button
+    fun registerNewMotionSensor() {
+        val startCount = Utils.getCountFromRecyclerView(R.id.sensorsRCView)
+        onView(withId(R.id.add_motion_button))
                 .perform(ViewActions.click())
-        onView(withId(R.id.schedulesRCView))
+        onView(withId(R.id.sensorsRCView))
                 .check(matches(Utils.withExpectedCount(startCount + 1)));
     }
 

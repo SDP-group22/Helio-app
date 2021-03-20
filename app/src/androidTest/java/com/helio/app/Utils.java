@@ -7,9 +7,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.matcher.BoundedMatcher;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+
+import java.util.Objects;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -59,7 +63,7 @@ public class Utils {
         Matcher<View> matcher = new TypeSafeMatcher<View>() {
             @Override
             protected boolean matchesSafely(View item) {
-                COUNT[0] = ((RecyclerView) item).getAdapter().getItemCount();
+                COUNT[0] = Objects.requireNonNull(((RecyclerView) item).getAdapter()).getItemCount();
                 return true;
             }
             @Override

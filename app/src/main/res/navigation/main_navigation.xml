@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/singleBlindSettingsFragment"
-        android:name="com.helio.app.ui.blinds.SingleBlindFragment"
+        android:name="com.helio.app.ui.blinds.SingleBlindSettingsFragment"
         android:label="@string/title_edit_blind"
         tools:layout="@layout/fragment_single_blind_settings">
 
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="com.helio.app.ui.schedules.SchedulesFragment"
+        android:name="com.helio.app.ui.schedules.SchedulesSettingsFragment"
         android:label="@string/title_schedule_setting"
         tools:layout="@layout/fragment_schedule_settings">
         <action
@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/scheduleSettingsFragment"
-        android:name="com.helio.app.ui.schedules.SingleScheduleFragment"
+        android:name="com.helio.app.ui.schedules.SingleScheduleSettingsFragment"
         android:label="@string/title_edit_schedule"
         tools:layout="@layout/schedule_list_item">
 
@@ -58,7 +58,7 @@
 
     <fragment
         android:id="@+id/navigation_sensors"
-        android:name="com.helio.app.ui.sensors.SensorsFragment"
+        android:name="com.helio.app.ui.sensors.SensorsSettingsFragment"
         android:label="@string/sensor"
         tools:layout="@layout/fragment_sensors_settings">
         <action
@@ -68,7 +68,7 @@
 
     <fragment
         android:id="@+id/singleSensorSettingsFragment"
-        android:name="com.helio.app.ui.sensors.SingleSensorFragment"
+        android:name="com.helio.app.ui.sensors.SingleSensorSettingsFragment"
         android:label="@string/sensor"
         tools:layout="@layout/fragment_single_sensor_settings">
 

@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class SensorsFragment extends Fragment {
+public class SensorsSettingsFragment extends Fragment {
     private UserDataViewModel model;
     private SensorsRecViewAdapter adapter;
 

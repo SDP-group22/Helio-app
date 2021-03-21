@@ -59,9 +59,13 @@
             android:id="@+id/ip_address"
             style="@style/ipBoxLayout"
             android:layout_width="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
 
-            <com.google.android.material.textfield.TextInputEditText style="@style/ipBoxText" />
+            >
+
+            <com.google.android.material.textfield.TextInputEditText style="@style/ipBoxText"
+                android:textSize="24sp"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 

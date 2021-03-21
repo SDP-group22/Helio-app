@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:digits="0123456789."
             android:inputType="number|numberDecimal"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textSize="24sp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -45,7 +46,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/component_name"
             android:imeOptions="actionDone"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textSize="24sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout

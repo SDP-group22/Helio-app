@@ -21,13 +21,13 @@ import com.helio.app.model.LightSensor;
 import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Sensor;
 import com.helio.app.networking.IPAddress;
-import com.helio.app.ui.SingleComponentSettingsFragment;
+import com.helio.app.ui.SingleComponentFragment;
 import com.helio.app.ui.utils.MotorIdsBlindsCheckboxRecViewAdapter;
 import com.helio.app.ui.utils.TextChangedListener;
 
 import java.util.ArrayList;
 
-public class SingleSensorSettingsFragment extends SingleComponentSettingsFragment<Sensor> {
+public class SingleSensorFragment extends SingleComponentFragment<Sensor> {
     private EditText nameEditText;
     private TextInputLayout ipEditLayout;
     private EditText ipEditText;

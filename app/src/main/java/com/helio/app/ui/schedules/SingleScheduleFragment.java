@@ -20,7 +20,7 @@ import com.google.android.material.timepicker.TimeFormat;
 import com.helio.app.R;
 import com.helio.app.model.Day;
 import com.helio.app.model.Schedule;
-import com.helio.app.ui.SingleComponentSettingsFragment;
+import com.helio.app.ui.SingleComponentFragment;
 import com.helio.app.ui.utils.ContextColourProvider;
 import com.helio.app.ui.utils.MotorIdsBlindsCheckboxRecViewAdapter;
 import com.helio.app.ui.utils.TextChangedListener;
@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingleScheduleSettingsFragment extends SingleComponentSettingsFragment<Schedule> {
+public class SingleScheduleFragment extends SingleComponentFragment<Schedule> {
     private int fillColour;
     private int backgroundColour;
 

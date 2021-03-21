@@ -18,12 +18,12 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.helio.app.R;
 import com.helio.app.model.Motor;
 import com.helio.app.networking.IPAddress;
-import com.helio.app.ui.SingleComponentFragment;
+import com.helio.app.ui.SingleComponentSettingsFragment;
 import com.helio.app.ui.utils.TextChangedListener;
 
 import java.util.ArrayList;
 
-public class SingleBlindFragment extends SingleComponentFragment<Motor> implements AdapterView.OnItemSelectedListener {
+public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment<Motor> implements AdapterView.OnItemSelectedListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,

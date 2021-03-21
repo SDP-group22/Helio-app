@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class SchedulesFragment extends Fragment {
+public class SchedulesSettingsFragment extends Fragment {
     private SchedulesRecViewAdapter adapter;
     private UserDataViewModel model;
 

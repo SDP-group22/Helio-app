@@ -18,6 +18,7 @@ import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.Sensor;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -60,17 +61,7 @@ public class SensorsSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 sensors -> {
                     adapter.setMotionSensors(sensors.values());
-
-                    // Find the new component and navigate to it
-                    for (Sensor s : sensors.values()) {
-                        if (!oldIds.contains(s.getId())) {
-                            SensorsSettingsFragmentDirections.ActionSensorsSettingFragmentToSingleSensorSettingFragment action =
-                                    SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
-                            action.setCurrentSensorId(s.getId());
-                            action.setSensorType(s.getType());
-                            Navigation.findNavController(getView()).navigate(action);
-                        }
-                    }
+                    navigateToNewComponent(oldIds, sensors);
                 }
         );
     }
@@ -82,18 +73,21 @@ public class SensorsSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 sensors -> {
                     adapter.setLightSensors(sensors.values());
-
-                    // Find the new component and navigate to it
-                    for (Sensor s : sensors.values()) {
-                        if (!oldIds.contains(s.getId())) {
-                            SensorsSettingsFragmentDirections.ActionSensorsSettingFragmentToSingleSensorSettingFragment action =
-                                    SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
-                            action.setCurrentSensorId(s.getId());
-                            action.setSensorType(s.getType());
-                            Navigation.findNavController(getView()).navigate(action);
-                        }
-                    }
+                    navigateToNewComponent(oldIds, sensors);
                 }
         );
+    }
+
+    private void navigateToNewComponent(Set<Integer> oldIds, Map<Integer, ? extends Sensor> sensors) {
+        // Find the new component and navigate to it
+        for (Sensor s : sensors.values()) {
+            if (!oldIds.contains(s.getId())) {
+                SensorsSettingsFragmentDirections.ActionSensorsSettingFragmentToSingleSensorSettingFragment action =
+                        SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
+                action.setCurrentSensorId(s.getId());
+                action.setSensorType(s.getType());
+                Navigation.findNavController(getView()).navigate(action);
+            }
+        }
     }
 }

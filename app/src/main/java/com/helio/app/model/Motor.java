@@ -8,12 +8,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Motor implements IdComponent {
     private final int id;
+    private final int battery;
+    private final int length;
     private String name;
     private String ip;
     private boolean active;
     private int level;
-    private final int battery;
-    private final int length;
     private String style;
 
     public Motor(

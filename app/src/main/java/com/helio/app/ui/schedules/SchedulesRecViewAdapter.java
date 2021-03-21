@@ -131,6 +131,10 @@ public class SchedulesRecViewAdapter extends RecyclerView.Adapter<SchedulesRecVi
         return schedules.size();
     }
 
+    public ArrayList<Schedule> getSchedules() {
+        return schedules;
+    }
+
     public void setSchedules(ArrayList<Schedule> schedules) {
         this.schedules = schedules;
         notifyDataSetChanged();

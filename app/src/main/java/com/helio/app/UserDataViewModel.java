@@ -46,6 +46,17 @@ public class UserDataViewModel extends AndroidViewModel {
         client = createClient(getHubIp());
     }
 
+    public static String removeTrailingSpaces(String param) {
+        if (param == null)
+            return null;
+        int len = param.length();
+        for (; len > 0; len--) {
+            if (!Character.isWhitespace(param.charAt(len - 1)))
+                break;
+        }
+        return param.substring(0, len);
+    }
+
     private HubClient createClient(String ip) {
         // IP of local machine when using emulator is 10.0.2.2
         return new HubClient(IPAddress.getBaseAddressUrl(ip));
@@ -247,7 +258,6 @@ public class UserDataViewModel extends AndroidViewModel {
         client.setLowestPoint(motor);
     }
 
-
     public MutableLiveData<NetworkStatus> getNetworkStatus() {
         MutableLiveData<NetworkStatus> status = new MutableLiveData<>();
         client.getNetworkStatus(status);
@@ -340,16 +350,5 @@ public class UserDataViewModel extends AndroidViewModel {
         Toast.makeText(getApplication(), returnString, Toast.LENGTH_LONG).show();
         tts.speak(returnString, TextToSpeech.QUEUE_FLUSH, null, "");
         return motors;
-    }
-
-    public static String removeTrailingSpaces(String param) {
-        if (param == null)
-            return null;
-        int len = param.length();
-        for (; len > 0; len--) {
-            if (!Character.isWhitespace(param.charAt(len - 1)))
-                break;
-        }
-        return param.substring(0, len);
     }
 }

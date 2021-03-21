@@ -48,6 +48,14 @@ public class SensorsFragment extends Fragment {
         recView.setAdapter(adapter);
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // On plus button press, open the two sensor type buttons
+        ViewGroup addButtonsLayout = view.findViewById(R.id.add_sensor_button_layout);
+        FloatingActionButton plusButton = view.findViewById(R.id.add_button);
+        plusButton.setOnClickListener(v -> {
+            plusButton.setVisibility(View.GONE);
+            addButtonsLayout.setVisibility(View.VISIBLE);
+        });
+
         view.<FloatingActionButton>findViewById(R.id.add_motion_button).setOnClickListener(this::addButtonOnClickMotion);
         view.<FloatingActionButton>findViewById(R.id.add_light_button).setOnClickListener(this::addButtonOnClickLight);
 

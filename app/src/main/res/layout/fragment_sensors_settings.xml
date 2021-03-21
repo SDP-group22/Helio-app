@@ -7,34 +7,54 @@
     android:padding="10dp"
     tools:context=".MainActivity">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sensorsRCView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_motion_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_above="@+id/add_light_button"
-        android:contentDescription="@string/new_motion_sensor"
-        app:maxImageSize="40dp"
-        app:srcCompat="@drawable/ic_motion_sensor"
-        app:tint="@color/white" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_light_button"
+    <LinearLayout
+        android:id="@+id/add_sensor_button_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="@string/new_light_sensor"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_motion_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/new_motion_sensor"
+            app:maxImageSize="40dp"
+            app:srcCompat="@drawable/ic_motion_sensor"
+            app:tint="@color/white" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_light_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/new_light_sensor"
+            app:maxImageSize="40dp"
+            app:srcCompat="@drawable/ic_light_sensor"
+            app:tint="@color/white" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/add_new_sensor_button"
         app:maxImageSize="40dp"
-        app:srcCompat="@drawable/ic_light_sensor"
+        app:srcCompat="@drawable/add"
         app:tint="@color/white" />
 </RelativeLayout>

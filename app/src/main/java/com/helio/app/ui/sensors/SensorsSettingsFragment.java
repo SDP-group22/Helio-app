@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -53,6 +54,7 @@ public class SensorsSettingsFragment extends Fragment {
         FloatingActionButton plusButton = view.findViewById(R.id.add_button);
         plusButton.setOnClickListener(v -> {
             plusButton.setVisibility(View.GONE);
+            addButtonsLayout.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in));
             addButtonsLayout.setVisibility(View.VISIBLE);
         });
 

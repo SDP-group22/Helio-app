@@ -37,9 +37,12 @@ class TestSensors {
     // check that we can add a new motion sensor using the "+"-button
     fun registerNewMotionSensor() {
         val startCount = Utils.getCountFromRecyclerView(R.id.sensorsRCView)
+        onView(withId(R.id.add_button))
+                .perform(ViewActions.click())
         onView(withId(R.id.add_motion_button))
                 .perform(ViewActions.click())
         // exit from new motion sensor's settings
+        Thread.sleep(500)
         Espresso.pressBack()
         onView(withId(R.id.sensorsRCView))
                 .check(matches(Utils.withExpectedCount(startCount + 1)));
@@ -49,9 +52,12 @@ class TestSensors {
     // check that we can add a new light sensor using the "+"-button
     fun registerNewLightSensor() {
         val startCount = Utils.getCountFromRecyclerView(R.id.sensorsRCView)
+        onView(withId(R.id.add_button))
+                .perform(ViewActions.click())
         onView(withId(R.id.add_light_button))
                 .perform(ViewActions.click())
         // exit from new light sensor's settings
+        Thread.sleep(500)
         Espresso.pressBack()
         onView(withId(R.id.sensorsRCView))
                 .check(matches(Utils.withExpectedCount(startCount + 1)));

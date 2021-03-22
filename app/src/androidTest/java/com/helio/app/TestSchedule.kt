@@ -40,6 +40,7 @@ class TestSchedule {
         onView(withId(R.id.add_button))
                 .perform(ViewActions.click())
         // exit from new schedule's settings
+        Thread.sleep(500)
         Espresso.pressBack()
         onView(withId(R.id.schedulesRCView))
                 .check(matches(Utils.withExpectedCount(startCount + 1)));

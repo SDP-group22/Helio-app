@@ -46,7 +46,7 @@
         android:text="@string/connect_to_your_helio_hub_device"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:drawableRightCompat="@drawable/hub" />
+        app:drawableRightCompat="@mipmap/hub" />
 
 
     <LinearLayout

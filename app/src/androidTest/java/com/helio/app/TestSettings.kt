@@ -5,8 +5,10 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
+import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -19,6 +21,11 @@ import org.junit.runner.RunWith
 @LargeTest
 class TestSettings {
 
+    // hardcode these values because grabbing them from R.strings doesn't work here
+    private val defaultThemeName = "Light"
+    private val nightThemeName = "Night"
+    private val highContrastThemeName = "High Contrast"
+
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity>
             = ActivityScenarioRule(MainActivity::class.java)
@@ -28,9 +35,8 @@ class TestSettings {
         // navigate to the desired fragment
         onView(withId(R.id.navigation_settings))
                 .perform(ViewActions.click())
-        // set Light theme to have predictable state in the tests
-        onView(withId(R.id.theme_autocomplete))
-                .perform(ViewActions.replaceText("Light"))
+        // set default theme to have predictable state in the tests
+        switchTheme(defaultThemeName)
     }
 
     @Test
@@ -66,5 +72,16 @@ class TestSettings {
                 .perform(ViewActions.click())
         onView(withId(R.id.day7))
                 .perform(ViewActions.click())
+    }
+
+    private fun switchTheme(themeName: String) {
+        Thread.sleep(2000)
+        onView(withId(R.id.theme_menu))
+                .perform(ViewActions.click())
+        Thread.sleep(2000)
+        onView(withText(themeName))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(ViewActions.click())
+        Thread.sleep(2000)
     }
 }

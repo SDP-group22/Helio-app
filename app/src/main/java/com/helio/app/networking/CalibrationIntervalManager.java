@@ -49,7 +49,7 @@ public class CalibrationIntervalManager {
     public void startMoveDownRequestLoop(Motor motor) {
         System.out.println("CALIBRATION: setting up move_down request loop...");
         if(state != CalibrationIntervalManagerState.IDLE) {
-            throw new IllegalStateException("Cannot start move down unless current state is IDLE.");
+            return;
         }
         state = CalibrationIntervalManagerState.MOVING_DOWN;
         targetMotor = motor;
@@ -68,8 +68,7 @@ public class CalibrationIntervalManager {
         System.out.println("CALIBRATION: stopping calibration request loop...");
         if(!(state == CalibrationIntervalManagerState.MOVING_UP ||
                 state == CalibrationIntervalManagerState.MOVING_DOWN)) {
-            throw new IllegalStateException("Cannot stop loop without being in MOVING_UP or " +
-                    "MOVING_DOWN state.");
+            return;
         }
         calibrationIntervalHandler.removeCallbacks(pendingRunnable);
         client.stopMoving(targetMotor);

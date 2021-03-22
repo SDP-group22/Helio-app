@@ -4,12 +4,18 @@ import android.os.Handler;
 
 import com.helio.app.model.Motor;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
 public class CalibrationIntervalManager {
     private CalibrationIntervalManagerState state;
     private static final int CALIBRATION_INTERVAL_DELAY = 1000;
     private final Handler calibrationIntervalHandler;
     private final HubClient client;
-    private Runnable pendingRunnable = null;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private ScheduledFuture<?> requestsLoopHandle = null;
     private Motor targetMotor = null;
 
     public CalibrationIntervalManager(HubClient client) {
@@ -35,15 +41,13 @@ public class CalibrationIntervalManager {
         }
         state = CalibrationIntervalManagerState.MOVING_UP;
         targetMotor = motor;
-        // set up a handler that calls itself
-        pendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                sendSingleMoveUpRequest();
-                calibrationIntervalHandler.postDelayed(this, CALIBRATION_INTERVAL_DELAY);
-            }
-        };
-        calibrationIntervalHandler.postDelayed(pendingRunnable, 0);
+        // schedule move_up request at fixed interval
+        requestsLoopHandle = scheduler.scheduleAtFixedRate(
+                this::sendSingleMoveUpRequest,
+                0,
+                CALIBRATION_INTERVAL_DELAY,
+                TimeUnit.MILLISECONDS
+        );
     }
 
     public void startMoveDownRequestLoop(Motor motor) {
@@ -53,15 +57,13 @@ public class CalibrationIntervalManager {
         }
         state = CalibrationIntervalManagerState.MOVING_DOWN;
         targetMotor = motor;
-        // set up a handler that calls itself
-        pendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                sendSingleMoveDownRequest();
-                calibrationIntervalHandler.postDelayed(this, CALIBRATION_INTERVAL_DELAY);
-            }
-        };
-        calibrationIntervalHandler.postDelayed(pendingRunnable, 0);
+        // schedule move_down request at fixed interval
+        requestsLoopHandle = scheduler.scheduleAtFixedRate(
+                this::sendSingleMoveDownRequest,
+                0,
+                CALIBRATION_INTERVAL_DELAY,
+                TimeUnit.MILLISECONDS
+        );
     }
 
     public void stopRequestLoop() {
@@ -70,9 +72,9 @@ public class CalibrationIntervalManager {
                 state == CalibrationIntervalManagerState.MOVING_DOWN)) {
             return;
         }
-        calibrationIntervalHandler.removeCallbacks(pendingRunnable);
+        requestsLoopHandle.cancel(true);
         client.stopMoving(targetMotor);
-        pendingRunnable = null;
+        requestsLoopHandle = null;
         targetMotor = null;
         state = CalibrationIntervalManagerState.IDLE;
     }

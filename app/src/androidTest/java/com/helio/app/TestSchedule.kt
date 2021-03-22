@@ -1,6 +1,7 @@
 package com.helio.app
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -36,6 +37,8 @@ class TestSchedule {
         val startCount = Utils.getCountFromRecyclerView(R.id.schedulesRCView)
         onView(withId(R.id.add_button))
                 .perform(ViewActions.click())
+        // exit from new schedule's settings
+        Espresso.pressBack()
         onView(withId(R.id.schedulesRCView))
                 .check(matches(Utils.withExpectedCount(startCount + 1)));
     }

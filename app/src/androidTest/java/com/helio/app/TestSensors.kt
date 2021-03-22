@@ -1,6 +1,7 @@
 package com.helio.app
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -36,6 +37,8 @@ class TestSensors {
         val startCount = Utils.getCountFromRecyclerView(R.id.sensorsRCView)
         onView(withId(R.id.add_motion_button))
                 .perform(ViewActions.click())
+        // exit from new motion sensor's settings
+        Espresso.pressBack()
         onView(withId(R.id.sensorsRCView))
                 .check(matches(Utils.withExpectedCount(startCount + 1)));
     }
@@ -46,6 +49,8 @@ class TestSensors {
         val startCount = Utils.getCountFromRecyclerView(R.id.sensorsRCView)
         onView(withId(R.id.add_light_button))
                 .perform(ViewActions.click())
+        // exit from new light sensor's settings
+        Espresso.pressBack()
         onView(withId(R.id.sensorsRCView))
                 .check(matches(Utils.withExpectedCount(startCount + 1)));
     }

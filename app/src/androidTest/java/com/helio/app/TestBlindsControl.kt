@@ -2,6 +2,7 @@ package com.helio.app
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
@@ -89,6 +90,8 @@ class TestBlindsControl {
         val startCount = Utils.getCountFromRecyclerView(R.id.control_rc_view)
         onView(withId(R.id.add_blinds_button))
                 .perform(ViewActions.click())
+        // exit from new blind's settings
+        Espresso.pressBack()
         onView(withId(R.id.control_rc_view))
                 .check(matches(Utils.withExpectedCount(startCount + 1)));
     }

@@ -106,6 +106,7 @@
     <style name="ipBoxText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:inputType">number|numberDecimal</item>
         <item name="android:digits">0123456789.</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

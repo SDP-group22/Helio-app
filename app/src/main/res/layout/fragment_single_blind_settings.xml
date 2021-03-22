@@ -20,14 +20,7 @@
         app:helperText="@string/ip_hint"
         app:startIconDrawable="@drawable/ic_baseline_wifi_24">
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:digits="0123456789."
-            android:inputType="number|numberDecimal"
-            android:singleLine="true"
-            android:textSize="24sp"/>
+        <com.google.android.material.textfield.TextInputEditText style="@style/ipBoxText" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,7 +40,7 @@
             android:hint="@string/component_name"
             android:imeOptions="actionDone"
             android:singleLine="true"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -64,9 +57,9 @@
 
         <Spinner
             android:id="@+id/blinds_icon_spinner"
-            android:layout_marginStart="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp" />
     </LinearLayout>
 
 

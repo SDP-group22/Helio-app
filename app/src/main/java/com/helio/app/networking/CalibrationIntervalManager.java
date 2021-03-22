@@ -20,10 +20,12 @@ public class CalibrationIntervalManager {
 
     private void sendSingleMoveUpRequest() {
         System.out.println("CALIBRATION: \tsending one move_up request...");
+        client.moveUp(targetMotor);
     }
 
     private void sendSingleMoveDownRequest() {
         System.out.println("CALIBRATION: \tsending one move_down request...");
+        client.moveDown(targetMotor);
     }
 
     public void startMoveUpRequestLoop(Motor motor) {
@@ -70,6 +72,7 @@ public class CalibrationIntervalManager {
                     "MOVING_DOWN state.");
         }
         calibrationIntervalHandler.removeCallbacks(pendingRunnable);
+        client.stopMoving(targetMotor);
         pendingRunnable = null;
         targetMotor = null;
         state = CalibrationIntervalManagerState.IDLE;

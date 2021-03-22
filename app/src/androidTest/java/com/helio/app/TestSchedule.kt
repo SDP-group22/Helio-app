@@ -37,7 +37,7 @@ class TestSchedule {
         onView(withId(R.id.add_button))
                 .perform(ViewActions.click())
         onView(withId(R.id.schedulesRCView))
-                .check(matches(Utils.withExpectedCount(startCount + 1)));
+                .check(matches(Utils.withExpectedCount(startCount + 1)))
     }
 
     @Test

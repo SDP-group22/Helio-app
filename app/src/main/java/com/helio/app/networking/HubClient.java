@@ -76,11 +76,6 @@ public class HubClient {
         call.enqueue(new IdComponentCallback<>(motors));
     }
 
-    public void moveMotor(Motor motor, int level) {
-        Call<Motor> call = service.moveMotor(motor.getId(), level);
-        call.enqueue(new MoveMotorCallback(motor));
-    }
-
     public void getAllMotors(MutableLiveData<Map<Integer, Motor>> motors) {
         Call<List<Motor>> call = service.getAllMotors();
         call.enqueue(new GetAllCallback<>(motors));

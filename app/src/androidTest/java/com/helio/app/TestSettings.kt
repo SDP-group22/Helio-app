@@ -79,13 +79,23 @@ class TestSettings {
     }
 
     @Test
-    // check that we can navigate into a single schedule settings fragment
-    fun enterSchedule0Settings() {
-        onView(withId(R.id.schedulesRCView))
-                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (0, ViewActions.click()))
-        // check that the time button is displayed to confirm we're in settings fragment
-        onView(withId(R.id.time_button)).check(matches(ViewMatchers.isDisplayed()))
+    // check that we can update the IP address value to a new, correctly formatted IP
+    fun updateHubIPValid() {
+        val ip = "1.2.8.9"
+        // update the IP
+        onView(withId(R.id.ip_address))
+                .perform(ViewActions.click())
+        onView(withId(R.id.ip_address_edittext))
+                .perform(ViewActions.clearText())
+                .perform(ViewActions.typeTextIntoFocusedView(ip))
+        // attempt to connect
+        onView(withId(R.id.connect_button))
+                .perform(ViewActions.click())
+        Thread.sleep(2000)
+        // check that IP is correctly set
+        onView(withId(R.id.ip_address))
+                .check(matches(Utils.withText(ip)))
+        // verify that the app also thinks the format is correct
     }
 
     @Test

@@ -96,7 +96,7 @@ public class SensorsSettingsFragment extends Fragment {
                         SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
                 action.setCurrentSensorId(s.getId());
                 action.setSensorType(s.getType());
-                Navigation.findNavController(getView()).navigate(action);
+                Navigation.findNavController(requireView()).navigate(action);
             }
         }
     }

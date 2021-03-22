@@ -5,6 +5,6 @@
     android:layout_centerInParent="true"
     android:ellipsize="end"
     android:maxLines="1"
-    android:text="Theme"
     android:padding="16dp"
+    android:text="Theme"
     tools:ignore="HardcodedText" />

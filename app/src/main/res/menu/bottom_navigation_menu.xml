@@ -2,12 +2,12 @@
 
     <item
         android:id="@+id/navigation_control"
-        android:icon="@drawable/ic_blinds"
+        android:icon="@mipmap/ic_blinds"
         android:title="@string/title_control" />
     <item
         android:id="@+id/navigation_schedule"
         android:icon="@drawable/ic_timer"
-        android:title="@string/title_schedule_setting"/>
+        android:title="@string/title_schedule_setting" />
     <item
         android:id="@+id/navigation_sensors"
         android:icon="@drawable/ic_sensor"

@@ -37,7 +37,7 @@ class TestSensors {
         onView(withId(R.id.add_motion_button))
                 .perform(ViewActions.click())
         onView(withId(R.id.sensorsRCView))
-                .check(matches(Utils.withExpectedCount(startCount + 1)));
+                .check(matches(Utils.withExpectedCount(startCount + 1)))
     }
 
     @Test
@@ -47,7 +47,7 @@ class TestSensors {
         onView(withId(R.id.add_light_button))
                 .perform(ViewActions.click())
         onView(withId(R.id.sensorsRCView))
-                .check(matches(Utils.withExpectedCount(startCount + 1)));
+                .check(matches(Utils.withExpectedCount(startCount + 1)))
     }
 
     @Test

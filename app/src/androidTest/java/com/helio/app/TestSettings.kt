@@ -29,9 +29,8 @@ class TestSettings {
         onView(withId(R.id.navigation_settings))
                 .perform(ViewActions.click())
         // set Light theme to have predictable state in the tests
-        onView(withId(R.id.temp_id))
-                .perform(ViewActions.replaceText("test"))
-        Thread.sleep(2000)
+        onView(withId(R.id.theme_autocomplete))
+                .perform(ViewActions.replaceText("Light"))
     }
 
     @Test

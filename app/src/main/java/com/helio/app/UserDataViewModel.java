@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.widget.Toast;
 
@@ -243,7 +242,7 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     public void moveUp(Motor motor) {
-        calibrationIntervalManager.startRequestLoop(motor);
+        calibrationIntervalManager.startMoveUpRequestLoop(motor);
     }
 
     public void moveDown(Motor motor) {

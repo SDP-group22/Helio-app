@@ -18,21 +18,22 @@ public class CalibrationIntervalManager {
         state = CalibrationIntervalManagerState.IDLE;
     }
 
-    private void sendSingleMoveUpRequest(Motor motor) {
+    private void sendSingleMoveUpRequest() {
         System.out.println("CALIBRATION: \tsending one move_up request...");
     }
 
-    public void startRequestLoop(Motor motor) {
+    public void startMoveUpRequestLoop(Motor motor) {
+        System.out.println("CALIBRATION: setting up move_up request loop...");
         if(state != CalibrationIntervalManagerState.IDLE) {
             throw new IllegalStateException("Cannot start move up unless current state is IDLE.");
         }
         state = CalibrationIntervalManagerState.MOVING_UP;
-        System.out.println("CALIBRATION: setting up move_up request loop...");
+        targetMotor = motor;
         // set up a handler that calls itself
         pendingRunnable = new Runnable() {
             @Override
             public void run() {
-                sendSingleMoveUpRequest(motor);
+                sendSingleMoveUpRequest();
                 calibrationIntervalHandler.postDelayed(this, CALIBRATION_INTERVAL_DELAY);
             }
         };
@@ -40,12 +41,12 @@ public class CalibrationIntervalManager {
     }
 
     public void stopRequestLoop() {
+        System.out.println("CALIBRATION: stopping calibration request loop...");
         if(state != CalibrationIntervalManagerState.MOVING_DOWN ||
                 state != CalibrationIntervalManagerState.MOVING_DOWN) {
             throw new IllegalStateException("Cannot stop loop without being in MOVING_UP or " +
                     "MOVING_DOWN state.");
         }
-        System.out.println("CALIBRATION: stopping calibration request loop...");
         calibrationIntervalHandler.removeCallbacks(pendingRunnable);
         pendingRunnable = null;
         targetMotor = null;

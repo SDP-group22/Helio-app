@@ -1,7 +1,5 @@
 package com.helio.app.networking;
 
-import android.os.Handler;
-
 import com.helio.app.model.Motor;
 
 import java.util.concurrent.Executors;
@@ -12,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 public class CalibrationIntervalManager {
     private CalibrationIntervalManagerState state;
     private static final int CALIBRATION_INTERVAL_DELAY = 1000;
-    private final Handler calibrationIntervalHandler;
     private final HubClient client;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private ScheduledFuture<?> requestsLoopHandle = null;
@@ -20,7 +17,6 @@ public class CalibrationIntervalManager {
 
     public CalibrationIntervalManager(HubClient client) {
         this.client = client;
-        this.calibrationIntervalHandler = new Handler();
         state = CalibrationIntervalManagerState.IDLE;
     }
 

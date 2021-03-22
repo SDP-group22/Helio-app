@@ -81,13 +81,10 @@ class TestSettings {
     }
 
     private fun switchTheme(themeName: String) {
-        Thread.sleep(2000)
         onView(withId(R.id.theme_menu))
                 .perform(ViewActions.click())
-        Thread.sleep(2000)
         onView(withText(themeName))
                 .inRoot(RootMatchers.isPlatformPopup())
                 .perform(ViewActions.click())
-        Thread.sleep(2000)
     }
 }

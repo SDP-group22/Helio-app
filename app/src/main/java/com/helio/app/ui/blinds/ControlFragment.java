@@ -103,7 +103,7 @@ public class ControlFragment extends Fragment {
                             ControlFragmentDirections.ActionNavigationControlToSingleBlindSettingsFragment action =
                                     ControlFragmentDirections.actionNavigationControlToSingleBlindSettingsFragment();
                             action.setCurrentMotorId(m.getId());
-                            Navigation.findNavController(getView()).navigate(action);
+                            Navigation.findNavController(requireView()).navigate(action);
                         }
                     }
                 }

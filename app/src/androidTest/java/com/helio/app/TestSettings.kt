@@ -66,6 +66,19 @@ class TestSettings {
     }
 
     @Test
+    // check that we can switch to high contrast theme
+    fun switchThemeHighContrast() {
+        // verify starting theme
+        onView(withId(R.id.theme_menu))
+                .check(matches(Utils.withText(defaultThemeName)))
+        // switch to new theme
+        switchTheme(highContrastThemeName)
+        // verify updated theme name in dropdown
+        onView(withId(R.id.theme_menu))
+                .check(matches(Utils.withText(highContrastThemeName)))
+    }
+
+    @Test
     // check that we can navigate into a single schedule settings fragment
     fun enterSchedule0Settings() {
         onView(withId(R.id.schedulesRCView))

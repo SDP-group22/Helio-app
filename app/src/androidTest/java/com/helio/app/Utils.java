@@ -53,7 +53,8 @@ public class Utils {
 
             @Override
             protected boolean matchesSafely(final RecyclerView view) {
-                int count = view.getAdapter().getItemCount();
+                int count;
+                count = Objects.requireNonNull(view.getAdapter()).getItemCount();
                 return count == expectedCount;
             }
         };

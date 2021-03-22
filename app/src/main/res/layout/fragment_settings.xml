@@ -63,7 +63,9 @@
 
             >
 
-            <com.google.android.material.textfield.TextInputEditText style="@style/ipBoxText" />
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/ipBoxText"
+                android:textSize="18sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

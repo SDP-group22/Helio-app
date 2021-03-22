@@ -10,6 +10,8 @@ import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.BoundedMatcher;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -55,6 +57,26 @@ public class Utils {
             protected boolean matchesSafely(final RecyclerView view) {
                 int count = view.getAdapter().getItemCount();
                 return count == expectedCount;
+            }
+        };
+    }
+
+    public static Matcher<View> withText(final String expectedText) {
+        return new TypeSafeMatcher<View>() {
+
+            @Override
+            public boolean matchesSafely(View view) {
+                if (!(view instanceof TextInputLayout)) {
+                    return false;
+                }
+
+                String text = ((TextInputLayout) view).getEditText().getText().toString();
+
+                return expectedText.equals(text);
+            }
+
+            @Override
+            public void describeTo(Description description) {
             }
         };
     }

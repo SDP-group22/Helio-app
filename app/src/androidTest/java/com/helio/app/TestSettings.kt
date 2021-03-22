@@ -28,24 +28,17 @@ class TestSettings {
         // navigate to the desired fragment
         onView(withId(R.id.navigation_settings))
                 .perform(ViewActions.click())
+        // set Light theme to have predictable state in the tests
+        onView(withId(R.id.temp_id))
+                .perform(ViewActions.replaceText("test"))
+        Thread.sleep(2000)
     }
 
     @Test
-    // check that we can add a new schedule using the "+"-button
-    fun registerNewSchedule() {
-        val startCount = Utils.getCountFromRecyclerView(R.id.schedulesRCView)
-        onView(withId(R.id.add_button))
-                .perform(ViewActions.click())
-        onView(withId(R.id.schedulesRCView))
-                .check(matches(Utils.withExpectedCount(startCount + 1)));
-    }
-
-    @Test
-    // check that we can toggle the switch for schedule #1
-    fun toggleSwitch0() {
-        onView(withId(R.id.schedulesRCView))
-                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (0, Utils.clickOnViewChild(R.id.activate_switch)))
+    // check that we can switch to night theme
+    fun switchThemeNight() {
+        onView(withId(R.id.theme_menu))
+                .check(matches(Utils.withText("Light")))
     }
 
     @Test

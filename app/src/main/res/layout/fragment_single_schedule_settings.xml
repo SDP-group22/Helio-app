@@ -21,27 +21,16 @@
     <com.helio.app.ui.utils.LevelSlider
         android:id="@+id/level_slider"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/schedule_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/nameBoxLayout"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/component_name"
-        app:endIconMode="clear_text"
-        app:startIconDrawable="@drawable/ic_label"
-        >
+        android:layout_marginTop="10dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:textSize="24sp"/>
+        <com.google.android.material.textfield.TextInputEditText style="@style/nameBoxText" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

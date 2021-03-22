@@ -94,26 +94,53 @@
         <item name="android:text">M</item>
     </style>
 
-    <style name="ipBoxLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:hint">@string/ip_address</item>
+    <style name="textBoxLayoutBase" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/hintTextAppearance</item>
+        <item name="helperTextTextAppearance">@style/helperTextTextAppearance</item>
         <item name="endIconMode">clear_text</item>
-        <item name="helperText">@string/ip_hint</item>
-        <item name="startIconDrawable">@drawable/ic_baseline_wifi_24</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="ipBoxText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:inputType">number|numberDecimal</item>
-        <item name="android:digits">0123456789.</item>
+    <style name="textBoxTextBase" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textSize">24sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="ipBoxLayout" parent="textBoxLayoutBase">
+        <item name="android:hint">@string/ip_address</item>
+        <item name="helperText">@string/ip_hint</item>
+        <item name="startIconDrawable">@drawable/ic_baseline_wifi_24</item>
+    </style>
+
+    <style name="ipBoxText" parent="textBoxTextBase">
+        <item name="android:inputType">number|numberDecimal</item>
+        <item name="android:digits">0123456789.</item>
+    </style>
+
+    <style name="nameBoxLayout" parent="textBoxLayoutBase">
+        <item name="endIconMode">clear_text</item>
+        <item name="startIconDrawable">@drawable/ic_label</item>
+    </style>
+
+    <style name="nameBoxText" parent="textBoxTextBase">
+        <item name="android:inputType">number|numberDecimal</item>
+        <item name="android:digits">0123456789.</item>
+        <item name="android:hint">@string/component_name</item>
+    </style>
+
     <style name="iconSize">
         <item name="android:layout_width">45dp</item>
         <item name="android:layout_height">45dp</item>
+    </style>
+
+    <style name="hintTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="helperTextTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">16sp</item>
     </style>
 </resources>

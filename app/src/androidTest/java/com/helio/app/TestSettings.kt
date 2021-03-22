@@ -92,21 +92,16 @@ class TestSettings {
     }
 
     @Test
-    // check that we can update a schedule's activate days
-    fun adjustSchedule0ActiveDays() {
-        // enter the settings fragment for this schedule
-        onView(withId(R.id.schedulesRCView))
-                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (0, ViewActions.click()))
-        // update this schedule's activate days
-        onView(withId(R.id.day1))
-                .perform(ViewActions.click())
-        onView(withId(R.id.day3))
-                .perform(ViewActions.click())
-        onView(withId(R.id.day4))
-                .perform(ViewActions.click())
-        onView(withId(R.id.day7))
-                .perform(ViewActions.click())
+    // check that providing an invalid IP format gives an error
+    fun updateHubIPInvalid() {
+        val ip = "2000.0.256.9"
+        setHubIP(ip)
+        // check that IP is correctly set
+        onView(withId(R.id.ip_address))
+                .check(matches(Utils.withText(ip)))
+        // verify that the app also thinks the format is correct
+        onView(withId(R.id.ip_address))
+                .check(matches(Utils.withErrorText("Incorrect format")))
     }
 
     private fun switchTheme(themeName: String) {

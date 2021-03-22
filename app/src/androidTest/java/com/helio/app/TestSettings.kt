@@ -40,6 +40,19 @@ class TestSettings {
     }
 
     @Test
+    // check that we can switch to default theme (nothing should change here)
+    fun switchThemeDefault() {
+        // verify starting theme
+        onView(withId(R.id.theme_menu))
+                .check(matches(Utils.withText(defaultThemeName)))
+        // switch to new theme
+        switchTheme(defaultThemeName)
+        // verify updated theme name in dropdown
+        onView(withId(R.id.theme_menu))
+                .check(matches(Utils.withText(defaultThemeName)))
+    }
+
+    @Test
     // check that we can switch to night theme
     fun switchThemeNight() {
         // verify starting theme

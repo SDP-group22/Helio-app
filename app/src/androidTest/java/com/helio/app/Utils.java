@@ -10,6 +10,7 @@ import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.BoundedMatcher;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.hamcrest.Description;
@@ -65,14 +66,32 @@ public class Utils {
         return new TypeSafeMatcher<View>() {
 
             @Override
-            public boolean matchesSafely(View view) {
-                if (!(view instanceof TextInputLayout)) {
+            public boolean matchesSafely(View item) {
+                if(!(item instanceof TextInputLayout)) {
                     return false;
                 }
-
-                String text = ((TextInputLayout) view).getEditText().getText().toString();
-
+                String text = ((TextInputLayout) item).getEditText().getText().toString();
                 return expectedText.equals(text);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+            }
+        };
+    }
+
+    public static Matcher<View> withErrorText(final String expectedErrorText) {
+        return new TypeSafeMatcher<View>() {
+            @Override
+            protected boolean matchesSafely(View item) {
+                if(!(item instanceof TextInputLayout)) {
+                    return false;
+                }
+                CharSequence error = ((TextInputLayout) item).getError();
+                if(error == null) { // this happens when there is no error
+                    return expectedErrorText.equals("");
+                }
+                return expectedErrorText.equals(error.toString());
             }
 
             @Override

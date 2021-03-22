@@ -96,6 +96,8 @@ class TestSettings {
         onView(withId(R.id.ip_address))
                 .check(matches(Utils.withText(ip)))
         // verify that the app also thinks the format is correct
+        onView(withId(R.id.ip_address))
+                .check(matches(Utils.withErrorText("")))
     }
 
     @Test

@@ -79,6 +79,7 @@ public class Utils {
         };
     }
 
+    // adapted from https://stackoverflow.com/a/38874162
     public static Matcher<View> withErrorText(final String expectedErrorText) {
         return new TypeSafeMatcher<View>() {
             @Override

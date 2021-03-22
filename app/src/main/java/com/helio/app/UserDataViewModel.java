@@ -40,7 +40,7 @@ public class UserDataViewModel extends AndroidViewModel {
     private MutableLiveData<Map<Integer, Schedule>> schedules;
     private MutableLiveData<Map<Integer, LightSensor>> lightSensors;
     private MutableLiveData<Map<Integer, MotionSensor>> motionSensors;
-    private CalibrationIntervalManager calibrationIntervalManager;
+    private final CalibrationIntervalManager calibrationIntervalManager;
 
     public UserDataViewModel(@NonNull Application application) {
         super(application);
@@ -246,7 +246,7 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     public void moveDown(Motor motor) {
-        client.moveDown(motor);
+        calibrationIntervalManager.startMoveDownRequestLoop(motor);
     }
 
     public void stopMoving(Motor motor) {

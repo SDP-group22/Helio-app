@@ -1,6 +1,7 @@
 package com.helio.app
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
@@ -12,6 +13,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,13 +23,21 @@ import org.junit.runner.RunWith
 class TestSchedule {
 
     @get:Rule
-    var activityRule: ActivityScenarioRule<MainActivity>
-            = ActivityScenarioRule(MainActivity::class.java)
+    var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule(MainActivity::class.java)
+
+    companion object {
+        @BeforeClass
+        @JvmStatic
+        fun connectIp() {
+            val scenario = ActivityScenario.launch(MainActivity::class.java)
+            // otherwise the elements won't load
+            Utils.setHubIP("10.0.2.2")
+            scenario.close()
+        }
+    }
 
     @Before
     fun setup() {
-        // otherwise the elements won't load
-        Utils.setHubIP("10.0.2.2")
         // navigate to the desired fragment
         onView(withId(R.id.navigation_schedule))
                 .perform(ViewActions.click())

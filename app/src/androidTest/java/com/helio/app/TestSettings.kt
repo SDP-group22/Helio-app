@@ -79,7 +79,7 @@ class TestSettings {
     // check that we can update the IP address value to a new, correctly formatted IP
     fun updateHubIPValid() {
         val ip = "1.2.8.9"
-        setHubIP(ip)
+        Utils.setHubIP(ip)
         // check that IP is correctly set
         onView(withId(R.id.ip_address))
                 .check(matches(Utils.withText(ip)))
@@ -92,7 +92,7 @@ class TestSettings {
     // check that providing an invalid IP format gives an error
     fun updateHubIPInvalid() {
         val ip = "2000.0.256.9"
-        setHubIP(ip)
+        Utils.setHubIP(ip)
         // check that IP is correctly set
         onView(withId(R.id.ip_address))
                 .check(matches(Utils.withText(ip)))
@@ -106,18 +106,6 @@ class TestSettings {
                 .perform(ViewActions.click())
         onView(withText(themeName))
                 .inRoot(RootMatchers.isPlatformPopup())
-                .perform(ViewActions.click())
-    }
-
-    private fun setHubIP(ip: String) {
-        // update the IP
-        onView(withId(R.id.ip_address))
-                .perform(ViewActions.click())
-        onView(withId(R.id.ip_address_edittext))
-                .perform(ViewActions.clearText())
-                .perform(ViewActions.typeTextIntoFocusedView(ip))
-        // attempt to connect
-        onView(withId(R.id.connect_button))
                 .perform(ViewActions.click())
     }
 }

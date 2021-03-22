@@ -132,4 +132,19 @@ public class Utils {
             }
         };
     }
+
+    public static void setHubIP(final String ip) {
+        // navigate to settings fragment
+        onView(withId(R.id.navigation_settings))
+                .perform(ViewActions.click());
+        // update the IP
+        onView(withId(R.id.ip_address))
+                .perform(ViewActions.click());
+        onView(withId(R.id.ip_address_edittext))
+                .perform(ViewActions.clearText())
+                .perform(ViewActions.typeTextIntoFocusedView(ip));
+        // attempt to connect
+        onView(withId(R.id.connect_button))
+                .perform(ViewActions.click());
+    }
 }

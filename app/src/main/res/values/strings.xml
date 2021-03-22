@@ -85,4 +85,5 @@
     <string name="set_low_point">Set Low Point</string>
 
     <string name="calibrated_message">Calibrated</string>
+    <string name="add_new_sensor_button">New sensor</string>
 </resources>

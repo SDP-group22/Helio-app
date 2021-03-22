@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -49,15 +48,6 @@ public class SensorsSettingsFragment extends Fragment {
         recView.setAdapter(adapter);
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // On plus button press, open the two sensor type buttons
-        ViewGroup addButtonsLayout = view.findViewById(R.id.add_sensor_button_layout);
-        FloatingActionButton plusButton = view.findViewById(R.id.add_button);
-        plusButton.setOnClickListener(v -> {
-            plusButton.setVisibility(View.GONE);
-            addButtonsLayout.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in));
-            addButtonsLayout.setVisibility(View.VISIBLE);
-        });
-
         view.<FloatingActionButton>findViewById(R.id.add_motion_button).setOnClickListener(this::addButtonOnClickMotion);
         view.<FloatingActionButton>findViewById(R.id.add_light_button).setOnClickListener(this::addButtonOnClickLight);
 
@@ -77,7 +67,7 @@ public class SensorsSettingsFragment extends Fragment {
     }
 
     private void addButtonOnClickLight(View v) {
-        Set<Integer> oldIds = adapter.getMotionSensors().stream().map(IdComponent::getId).collect(Collectors.toSet());
+        Set<Integer> oldIds = adapter.getLightSensors().stream().map(IdComponent::getId).collect(Collectors.toSet());
 
         model.addLightSensor().observe(
                 getViewLifecycleOwner(),

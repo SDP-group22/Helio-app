@@ -22,7 +22,7 @@
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/add_new_schedule_button"
         app:maxImageSize="40dp"
-        app:srcCompat="@drawable/add"
+        app:srcCompat="@drawable/ic_add"
         app:tint="@color/white" />
 
 </RelativeLayout>

@@ -249,7 +249,7 @@ public class UserDataViewModel extends AndroidViewModel {
         calibrationIntervalManager.startMoveDownRequestLoop(motor);
     }
 
-    public void stopMoving(Motor motor) {
+    public void stopMoving() {
         calibrationIntervalManager.stopRequestLoop();
     }
 

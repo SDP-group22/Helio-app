@@ -26,6 +26,8 @@ class TestSensors {
 
     @Before
     fun setup() {
+        // otherwise the elements won't load
+        Utils.setHubIP("10.0.2.2")
         // navigate to the desired fragment
         onView(withId(R.id.navigation_sensors))
                 .perform(ViewActions.click())

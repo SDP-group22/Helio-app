@@ -19,6 +19,7 @@ import com.google.android.material.slider.Slider
 import com.helio.app.Utils.atPosition
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,7 +30,16 @@ class TestBlindsControl {
 
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity>
-            = ActivityScenarioRule(MainActivity::class.java);
+            = ActivityScenarioRule(MainActivity::class.java)
+
+    @Before
+    fun setup() {
+        // otherwise the elements won't load
+        Utils.setHubIP("10.0.2.2")
+        // navigate to the desired fragment
+        onView(withId(R.id.navigation_control))
+                .perform(ViewActions.click())
+    }
 
     @Test
     // check that we can adjust the slider for the first blind in the list

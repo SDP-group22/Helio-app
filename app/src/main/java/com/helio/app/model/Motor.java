@@ -10,9 +10,9 @@ public class Motor implements IdComponent {
     private final int id;
     private final int battery;
     private final int length;
+    private final boolean active;
     private String name;
     private String ip;
-    private final boolean active;
     private int level;
     private String style;
 

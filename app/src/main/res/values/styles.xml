@@ -126,8 +126,6 @@
     </style>
 
     <style name="nameBoxText" parent="textBoxTextBase">
-        <item name="android:inputType">number|numberDecimal</item>
-        <item name="android:digits">0123456789.</item>
         <item name="android:hint">@string/component_name</item>
     </style>
 

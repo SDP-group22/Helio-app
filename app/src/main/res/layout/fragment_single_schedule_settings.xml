@@ -40,7 +40,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        app:helperTextTextAppearance="@style/helperTextTextAppearance"
+        app:hintTextAppearance="@style/hintTextAppearance">
 
         <AutoCompleteTextView
             style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"

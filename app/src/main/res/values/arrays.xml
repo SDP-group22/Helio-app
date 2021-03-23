@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <array name="icon_ids">
         <item>@drawable/ic_wash</item>
@@ -35,13 +35,13 @@
         <item>60</item>
     </string-array>
 
-    <string-array name="open">
+    <string-array name="open" tools:ignore="InconsistentArrays">
         <item>open</item>
         <item>raise</item>
         <item>up</item>
     </string-array>
 
-    <string-array name="close">
+    <string-array name="close" tools:ignore="InconsistentArrays">
         <item>close</item>
         <item>shut</item>
         <item>lower</item>

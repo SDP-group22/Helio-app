@@ -56,9 +56,10 @@
     <string name="press_and_hold_to_move_instructions">Mantén pulsado para moverte</string>
     <string name="move_up">Ascende</string>
     <string name="move_down">Abaje</string>
-    <string name="set_high_and_low_points_instructions">Establece máximo y minimo</string>
+    <string name="set_high_and_low_points_instructions">Establece máximo y mínimo</string>
     <string name="set_high_point">Establece máximo</string>
     <string name="set_low_point">Establece mínimo</string>
     <string name="calibrated_message">Calibrado</string>
     <string name="time_to_open">Tiempo para moverse (minutos)</string>
+    <string name="add_new_sensor_button">Nuevo sensor</string>
 </resources>

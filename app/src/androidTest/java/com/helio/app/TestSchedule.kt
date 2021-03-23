@@ -1,25 +1,19 @@
 package com.helio.app
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
-
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
-
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-
 import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -37,13 +31,13 @@ class TestSchedule {
     }
 
     @Test
-    // check that we can add a new blind using the "+"-button
+    // check that we can add a new schedule using the "+"-button
     fun registerNewSchedule() {
         val startCount = Utils.getCountFromRecyclerView(R.id.schedulesRCView)
         onView(withId(R.id.add_button))
                 .perform(ViewActions.click())
         onView(withId(R.id.schedulesRCView))
-                .check(matches(Utils.withExpectedCount(startCount + 1)));
+                .check(matches(Utils.withExpectedCount(startCount + 1)))
     }
 
     @Test
@@ -51,7 +45,7 @@ class TestSchedule {
     fun toggleSwitch0() {
         onView(withId(R.id.schedulesRCView))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
-                (0, clickOnViewChild(R.id.activate_switch)))
+                (0, Utils.clickOnViewChild(R.id.activate_switch)))
     }
 
     @Test
@@ -80,14 +74,5 @@ class TestSchedule {
                 .perform(ViewActions.click())
         onView(withId(R.id.day7))
                 .perform(ViewActions.click())
-    }
-
-    private fun clickOnViewChild(viewId: Int) = object : ViewAction {
-        override fun getConstraints() = null
-
-        override fun getDescription() = "Click on a child view with specified id."
-
-        override fun perform(uiController: UiController, view: View) =
-                ViewActions.click().perform(uiController, view.findViewById<View>(viewId))
     }
 }

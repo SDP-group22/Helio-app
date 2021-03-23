@@ -32,7 +32,6 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
     private final Context context;
     private final UserDataViewModel model;
     private List<Sensor> sensors = new ArrayList<>();
-    private Sensor sensor;
 
     public SensorsRecViewAdapter(Context context, UserDataViewModel model) {
         this.context = context;
@@ -49,24 +48,32 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        sensor = sensors.get(position);
+        Sensor sensor = sensors.get(position);
         holder.txtName.setText(sensor.getName());
         holder.sensorIcon.setImageResource(sensor.getIcon());
         holder.sensorIcon.setContentDescription(context.getString(sensor.getContentDescription()));
         holder.activateSwitch.setChecked(sensor.isActive());
     }
 
-    public void setLightSensors(Collection<LightSensor> sensors) {
-        // Remove sensors of this type before adding them back to avoid duplication
-        this.sensors = this.sensors.stream().filter(s -> s.getType() != LightSensor.TYPE).collect(Collectors.toList());
-        this.sensors.addAll(sensors);
-        sortSensors();
-        notifyDataSetChanged();
+    public List<MotionSensor> getMotionSensors() {
+        return sensors.stream().filter(s -> s.getClass() == MotionSensor.class).map(s -> (MotionSensor) s).collect(Collectors.toList());
     }
 
     public void setMotionSensors(Collection<MotionSensor> sensors) {
         // Remove sensors of this type before adding them back to avoid duplication
         this.sensors = this.sensors.stream().filter(s -> s.getType() != MotionSensor.TYPE).collect(Collectors.toList());
+        this.sensors.addAll(sensors);
+        sortSensors();
+        notifyDataSetChanged();
+    }
+
+    public List<LightSensor> getLightSensors() {
+        return sensors.stream().filter(s -> s.getClass() == LightSensor.class).map(s -> (LightSensor) s).collect(Collectors.toList());
+    }
+
+    public void setLightSensors(Collection<LightSensor> sensors) {
+        // Remove sensors of this type before adding them back to avoid duplication
+        this.sensors = this.sensors.stream().filter(s -> s.getType() != LightSensor.TYPE).collect(Collectors.toList());
         this.sensors.addAll(sensors);
         sortSensors();
         notifyDataSetChanged();

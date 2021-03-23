@@ -5,9 +5,10 @@ import android.view.View;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.BoundedMatcher;
-
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -52,7 +53,8 @@ public class Utils {
 
             @Override
             protected boolean matchesSafely(final RecyclerView view) {
-                int count = view.getAdapter().getItemCount();
+                int count;
+                count = Objects.requireNonNull(view.getAdapter()).getItemCount();
                 return count == expectedCount;
             }
         };
@@ -71,5 +73,24 @@ public class Utils {
         };
         onView(allOf(withId(RecyclerViewId), isDisplayed())).check(matches(matcher));
         return COUNT[0];
+    }
+
+    public static ViewAction clickOnViewChild(int viewId) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return null;
+            }
+
+            @Override
+            public String getDescription() {
+                return "Click on a child view with specified id.";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                ViewActions.click().perform(uiController, view.findViewById(viewId));
+            }
+        };
     }
 }

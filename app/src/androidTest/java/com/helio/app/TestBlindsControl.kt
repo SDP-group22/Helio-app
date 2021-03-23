@@ -8,22 +8,19 @@ import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
-
-import org.hamcrest.Matcher
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
-
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-
 import com.google.android.material.slider.Slider
 import com.helio.app.Utils.atPosition
 import org.hamcrest.Description
+import org.hamcrest.Matcher
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -31,7 +28,7 @@ class TestBlindsControl {
 
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity>
-            = ActivityScenarioRule(MainActivity::class.java);
+            = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     // check that we can adjust the slider for the first blind in the list
@@ -43,14 +40,14 @@ class TestBlindsControl {
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
                 (sliderPosition, setValue(expectedValue)))
         onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(sliderPosition, withValue(expectedValue))));
+                .check(matches(atPosition(sliderPosition, withValue(expectedValue))))
         // adjust to 10%
         expectedValue = 10.0F
         onView(withId(R.id.control_rc_view))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
                 (sliderPosition, setValue(expectedValue)))
         onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(sliderPosition, withValue(expectedValue))));
+                .check(matches(atPosition(sliderPosition, withValue(expectedValue))))
     }
 
     @Test
@@ -70,9 +67,9 @@ class TestBlindsControl {
                 (slider2Position, setValue(slider2ExpectedValue)))
         // verify values match expectations
         onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(slider1Position, withValue(slider1ExpectedValue))));
+                .check(matches(atPosition(slider1Position, withValue(slider1ExpectedValue))))
         onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(slider2Position, withValue(slider2ExpectedValue))));
+                .check(matches(atPosition(slider2Position, withValue(slider2ExpectedValue))))
     }
 
     @Test
@@ -93,7 +90,7 @@ class TestBlindsControl {
         onView(withId(R.id.add_blinds_button))
                 .perform(ViewActions.click())
         onView(withId(R.id.control_rc_view))
-                .check(matches(Utils.withExpectedCount(startCount + 1)));
+                .check(matches(Utils.withExpectedCount(startCount + 1)))
     }
 
     private fun withValue(expectedValue: Float): Matcher<View?> {

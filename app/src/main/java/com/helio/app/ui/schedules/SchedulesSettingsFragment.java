@@ -8,22 +8,30 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
+import com.helio.app.model.IdComponent;
+import com.helio.app.model.Schedule;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SchedulesSettingsFragment extends Fragment {
+    private SchedulesRecViewAdapter adapter;
+    private UserDataViewModel model;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_settings, container, false);
-        UserDataViewModel model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
-        SchedulesRecViewAdapter adapter = new SchedulesRecViewAdapter(getContext(), model);
+        model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
+        adapter = new SchedulesRecViewAdapter(getContext(), model);
         model.fetchSchedules().observe(
                 getViewLifecycleOwner(),
                 Schedules -> adapter.setSchedules(new ArrayList<>(Schedules.values()))
@@ -35,13 +43,28 @@ public class SchedulesSettingsFragment extends Fragment {
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         FloatingActionButton addButton = view.findViewById(R.id.add_button);
-        addButton.setOnClickListener(
-                v -> model.addSchedule().observe(
-                        getViewLifecycleOwner(),
-                        schedules -> adapter.setSchedules(new ArrayList<>(schedules.values()))
-                )
-        );
+        addButton.setOnClickListener(this::addButtonOnClick);
 
         return view;
+    }
+
+    private void addButtonOnClick(View v) {
+        Set<Integer> oldIds = adapter.getSchedules().stream().map(IdComponent::getId).collect(Collectors.toSet());
+        model.addSchedule().observe(
+                getViewLifecycleOwner(),
+                schedules -> {
+                    adapter.setSchedules(new ArrayList<>(schedules.values()));
+
+                    // Find the new component and navigate to it
+                    for (Schedule s : schedules.values()) {
+                        if (!oldIds.contains(s.getId())) {
+                            SchedulesSettingsFragmentDirections.ActionScheduleFragmentToScheduleSettingsFragment action =
+                                    SchedulesSettingsFragmentDirections.actionScheduleFragmentToScheduleSettingsFragment();
+                            action.setCurrentScheduleId(s.getId());
+                            Navigation.findNavController(requireView()).navigate(action);
+                        }
+                    }
+                }
+        );
     }
 }

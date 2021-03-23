@@ -13,22 +13,27 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
+import com.helio.app.model.IdComponent;
+import com.helio.app.model.Motor;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static android.app.Activity.RESULT_OK;
 
 public class ControlFragment extends Fragment {
 
     protected static final int RESULT_SPEECH = 100;
-    ControlRecViewAdapter adapter;
-    TextToSpeech tts;
+    private ControlRecViewAdapter adapter;
+    private TextToSpeech tts;
     private UserDataViewModel model;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -64,12 +69,7 @@ public class ControlFragment extends Fragment {
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         FloatingActionButton addButton = view.findViewById(R.id.add_blinds_button);
-        addButton.setOnClickListener(
-                v -> model.addMotor().observe(
-                        getViewLifecycleOwner(),
-                        motors -> adapter.setMotors(new ArrayList<>(motors.values()))
-                )
-        );
+        addButton.setOnClickListener(this::addButtonOnClick);
         return view;
     }
 
@@ -89,4 +89,24 @@ public class ControlFragment extends Fragment {
         }
     }
 
+    private void addButtonOnClick(View v) {
+        // Save the IDs before adding the component
+        Set<Integer> oldIds = adapter.getMotors().stream().map(IdComponent::getId).collect(Collectors.toSet());
+        model.addMotor().observe(
+                getViewLifecycleOwner(),
+                motors -> {
+                    adapter.setMotors(new ArrayList<>(motors.values()));
+
+                    // Find the new component and navigate to it
+                    for (Motor m : motors.values()) {
+                        if (!oldIds.contains(m.getId())) {
+                            ControlFragmentDirections.ActionNavigationControlToSingleBlindSettingsFragment action =
+                                    ControlFragmentDirections.actionNavigationControlToSingleBlindSettingsFragment();
+                            action.setCurrentMotorId(m.getId());
+                            Navigation.findNavController(requireView()).navigate(action);
+                        }
+                    }
+                }
+        );
+    }
 }

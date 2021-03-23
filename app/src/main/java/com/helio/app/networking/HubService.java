@@ -32,9 +32,6 @@ public interface HubService {
     @PATCH("/motor/update/{motor_id}")
     Call<Motor> updateMotor(@Path("motor_id") int id, @Body MotorSettingsRequest motorSettingsRequest);
 
-    @PATCH("/motor/move/{motor_id}")
-    Call<Motor> moveMotor(@Path("motor_id") int id, @Body int level);
-
     @GET("/motor/get_all")
     Call<List<Motor>> getAllMotors();
 

@@ -65,49 +65,50 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
                 getViewLifecycleOwner(),
                 motors -> {
                     component = motors.get(motorId);
-                    assert component != null;
+                    if (component != null) {
 
-                    nameEditText.setText(component.getName());
-                    nameEditText.addTextChangedListener(new TextChangedListener() {
-                        @Override
-                        public void onTextChanged(CharSequence s) {
-                            component.setName(s.toString());
-                        }
-                    });
-
-                    ipEditText.setText(component.getIp());
-                    ipEditText.addTextChangedListener(new TextChangedListener() {
-                        @Override
-                        public void onTextChanged(CharSequence s) {
-
-                            if (IPAddress.correctFormat(s.toString())) {
-                                // Clear the error message if there is one
-                                ipEditLayout.setError(null);
-
-                                component.setIp(s.toString());
-
-                                Toast.makeText(requireContext(), requireContext().getString(R.string.ip_address_set), Toast.LENGTH_SHORT).show();
-                            } else {
-                                ipEditLayout.setError(requireContext().getString(R.string.ip_incorrect_format));
+                        nameEditText.setText(component.getName());
+                        nameEditText.addTextChangedListener(new TextChangedListener() {
+                            @Override
+                            public void onTextChanged(CharSequence s) {
+                                component.setName(s.toString());
                             }
-                        }
-                    });
+                        });
+
+                        ipEditText.setText(component.getIp());
+                        ipEditText.addTextChangedListener(new TextChangedListener() {
+                            @Override
+                            public void onTextChanged(CharSequence s) {
+
+                                if (IPAddress.correctFormat(s.toString())) {
+                                    // Clear the error message if there is one
+                                    ipEditLayout.setError(null);
+
+                                    component.setIp(s.toString());
+
+                                    Toast.makeText(requireContext(), requireContext().getString(R.string.ip_address_set), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    ipEditLayout.setError(requireContext().getString(R.string.ip_incorrect_format));
+                                }
+                            }
+                        });
 
 
-                    calibrationButton.setOnClickListener(v -> {
-                        // Start calibration before opening page
-                        getModel().startCalibration(component);
+                        calibrationButton.setOnClickListener(v -> {
+                            // Start calibration before opening page
+                            getModel().startCalibration(component);
 
-                        SingleBlindSettingsFragmentDirections.ActionSingleBlindSettingsFragmentToCalibrationFragment action =
-                                SingleBlindSettingsFragmentDirections.actionSingleBlindSettingsFragmentToCalibrationFragment();
-                        action.setCurrentMotorId(component.getId());
-                        Navigation.findNavController(view).navigate(action);
-                    });
+                            SingleBlindSettingsFragmentDirections.ActionSingleBlindSettingsFragmentToCalibrationFragment action =
+                                    SingleBlindSettingsFragmentDirections.actionSingleBlindSettingsFragmentToCalibrationFragment();
+                            action.setCurrentMotorId(component.getId());
+                            Navigation.findNavController(view).navigate(action);
+                        });
 
-                    // Set the icon
-                    for (int i = 0; i < iconIds.length; i++) {
-                        if (iconIds[i] == component.getIconId()) {
-                            customSpinner.setSelection(i);
+                        // Set the icon
+                        for (int i = 0; i < iconIds.length; i++) {
+                            if (iconIds[i] == component.getIconId()) {
+                                customSpinner.setSelection(i);
+                            }
                         }
                     }
                 }

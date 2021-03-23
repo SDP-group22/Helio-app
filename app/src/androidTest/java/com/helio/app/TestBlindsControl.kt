@@ -32,7 +32,8 @@ import org.junit.runner.RunWith
 class TestBlindsControl {
 
     @get:Rule
-    var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule(MainActivity::class.java)
+    var activityRule: ActivityScenarioRule<MainActivity>
+            = ActivityScenarioRule(MainActivity::class.java)
 
     companion object {
         @BeforeClass

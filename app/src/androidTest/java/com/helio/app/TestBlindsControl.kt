@@ -148,6 +148,7 @@ class TestBlindsControl {
         }
     }
 
+    @Suppress("SameParameterValue")
     private fun clickOnViewChild(viewId: Int) = object : ViewAction {
         override fun getConstraints() = null
 

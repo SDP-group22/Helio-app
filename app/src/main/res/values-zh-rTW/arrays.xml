@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="open" tools:ignore="InconsistentArrays">
+        <item>打開</item>
+        <item>上升</item>
+        <item>向上</item>
+    </string-array>
+
+    <string-array name="close" tools:ignore="InconsistentArrays">
+        <item>關閉</item>
+        <item>下降</item>
+        <item>向下</item>
+    </string-array>
+</resources>

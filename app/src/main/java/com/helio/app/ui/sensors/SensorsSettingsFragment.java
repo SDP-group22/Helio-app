@@ -77,7 +77,7 @@ public class SensorsSettingsFragment extends Fragment {
     }
 
     private void addButtonOnClickLight(View v) {
-        Set<Integer> oldIds = adapter.getMotionSensors().stream().map(IdComponent::getId).collect(Collectors.toSet());
+        Set<Integer> oldIds = adapter.getLightSensors().stream().map(IdComponent::getId).collect(Collectors.toSet());
 
         model.addLightSensor().observe(
                 getViewLifecycleOwner(),
@@ -96,7 +96,7 @@ public class SensorsSettingsFragment extends Fragment {
                         SensorsSettingsFragmentDirections.actionSensorsSettingFragmentToSingleSensorSettingFragment();
                 action.setCurrentSensorId(s.getId());
                 action.setSensorType(s.getType());
-                Navigation.findNavController(getView()).navigate(action);
+                Navigation.findNavController(requireView()).navigate(action);
             }
         }
     }

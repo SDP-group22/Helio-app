@@ -55,7 +55,7 @@ class TestSensors {
         Thread.sleep(500)
         Espresso.pressBack()
         onView(withId(R.id.sensorsRCView))
-                .check(matches(Utils.withExpectedCount(startCount + 1)));
+                .check(matches(Utils.withExpectedCount(startCount + 1)))
     }
 
     @Test
@@ -70,7 +70,7 @@ class TestSensors {
         Thread.sleep(500)
         Espresso.pressBack()
         onView(withId(R.id.sensorsRCView))
-                .check(matches(Utils.withExpectedCount(startCount + 1)));
+                .check(matches(Utils.withExpectedCount(startCount + 1)))
     }
 
     @Test

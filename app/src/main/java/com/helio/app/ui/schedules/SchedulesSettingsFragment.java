@@ -61,7 +61,7 @@ public class SchedulesSettingsFragment extends Fragment {
                             SchedulesSettingsFragmentDirections.ActionScheduleFragmentToScheduleSettingsFragment action =
                                     SchedulesSettingsFragmentDirections.actionScheduleFragmentToScheduleSettingsFragment();
                             action.setCurrentScheduleId(s.getId());
-                            Navigation.findNavController(getView()).navigate(action);
+                            Navigation.findNavController(requireView()).navigate(action);
                         }
                     }
                 }

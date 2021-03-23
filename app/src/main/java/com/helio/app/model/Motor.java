@@ -10,9 +10,9 @@ public class Motor implements IdComponent {
     private final int id;
     private final int battery;
     private final int length;
+    private final boolean active;
     private String name;
     private String ip;
-    private boolean active;
     private int level;
     private String style;
 
@@ -84,9 +84,6 @@ public class Motor implements IdComponent {
         return active;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 
     public int getLevel() {
         return level;
@@ -106,10 +103,6 @@ public class Motor implements IdComponent {
 
     public String getStyle() {
         return style;
-    }
-
-    public void setStyle(String style) {
-        this.style = style;
     }
 
     public int getIconId() {

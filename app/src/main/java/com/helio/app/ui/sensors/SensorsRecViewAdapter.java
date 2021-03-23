@@ -32,7 +32,6 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
     private final Context context;
     private final UserDataViewModel model;
     private List<Sensor> sensors = new ArrayList<>();
-    private Sensor sensor;
 
     public SensorsRecViewAdapter(Context context, UserDataViewModel model) {
         this.context = context;
@@ -49,7 +48,7 @@ public class SensorsRecViewAdapter extends RecyclerView.Adapter<SensorsRecViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        sensor = sensors.get(position);
+        Sensor sensor = sensors.get(position);
         holder.txtName.setText(sensor.getName());
         holder.sensorIcon.setImageResource(sensor.getIcon());
         holder.sensorIcon.setContentDescription(context.getString(sensor.getContentDescription()));

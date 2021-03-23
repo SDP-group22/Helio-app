@@ -63,14 +63,14 @@ class TestBlindsControl {
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
                 (sliderPosition, setValue(expectedValue)))
         onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(sliderPosition, withValue(expectedValue))));
+                .check(matches(atPosition(sliderPosition, withValue(expectedValue))))
         // adjust to 10%
         expectedValue = 10.0F
         onView(withId(R.id.control_rc_view))
                 .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>
                 (sliderPosition, setValue(expectedValue)))
         onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(sliderPosition, withValue(expectedValue))));
+                .check(matches(atPosition(sliderPosition, withValue(expectedValue))))
     }
 
     @Test
@@ -90,9 +90,9 @@ class TestBlindsControl {
                 (slider2Position, setValue(slider2ExpectedValue)))
         // verify values match expectations
         onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(slider1Position, withValue(slider1ExpectedValue))));
+                .check(matches(atPosition(slider1Position, withValue(slider1ExpectedValue))))
         onView(withId(R.id.control_rc_view))
-                .check(matches(atPosition(slider2Position, withValue(slider2ExpectedValue))));
+                .check(matches(atPosition(slider2Position, withValue(slider2ExpectedValue))))
     }
 
     @Test
@@ -116,7 +116,7 @@ class TestBlindsControl {
         Thread.sleep(500)
         Espresso.pressBack()
         onView(withId(R.id.control_rc_view))
-                .check(matches(Utils.withExpectedCount(startCount + 1)));
+                .check(matches(Utils.withExpectedCount(startCount + 1)))
     }
 
     private fun withValue(expectedValue: Float): Matcher<View?> {

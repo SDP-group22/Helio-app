@@ -44,7 +44,7 @@ public class CalibrationFragment extends Fragment {
                         if (event.getAction() == MotionEvent.ACTION_DOWN) {
                             model.moveUp(motor);
                         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                            model.stopMoving(motor);
+                            model.stopMoving();
                         }
                         v.performClick();
                         return false;
@@ -53,7 +53,7 @@ public class CalibrationFragment extends Fragment {
                         if (event.getAction() == MotionEvent.ACTION_DOWN) {
                             model.moveDown(motor);
                         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                            model.stopMoving(motor);
+                            model.stopMoving();
                         }
                         v.performClick();
                         return false;
@@ -70,7 +70,7 @@ public class CalibrationFragment extends Fragment {
     public void onStop() {
         if (model != null) {
             // Stop calibration upon page closing
-            model.stopMoving(motor);
+            model.stopMoving();
             model.stopCalibration(motor);
             Toast.makeText(requireContext(), requireContext().getString(R.string.calibrated_message), Toast.LENGTH_SHORT).show();
         }

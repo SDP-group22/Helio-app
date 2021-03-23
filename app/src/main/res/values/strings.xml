@@ -85,6 +85,7 @@
 
     <string name="calibrated_message">Calibrated</string>
 
-
+    <!-- Additional translations -->
     <string name="time_to_open">Time to move (minutes)</string>
+    <string name="add_new_sensor_button">New sensor</string>
 </resources>

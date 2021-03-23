@@ -22,6 +22,7 @@
         android:inputType="none">
 
         <AutoCompleteTextView
+            android:id="@+id/theme_autocomplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
@@ -46,7 +47,7 @@
         android:text="@string/connect_to_your_helio_hub_device"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:drawableRightCompat="@drawable/hub" />
+        app:drawableRightCompat="@mipmap/hub" />
 
 
     <LinearLayout
@@ -61,7 +62,10 @@
             android:layout_width="0dp"
             android:layout_weight="1">
 
-            <com.google.android.material.textfield.TextInputEditText style="@style/ipBoxText" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ip_address_edittext"
+                style="@style/ipBoxText"
+                android:textSize="18sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,10 +92,10 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="15dp"
+        android:drawablePadding="3dp"
         android:gravity="start|center_vertical"
         android:text="@string/not_connected"
         android:textSize="18sp"
-        android:drawablePadding="3dp"
         app:drawableLeftCompat="@android:drawable/ic_delete" />
 
 </LinearLayout>

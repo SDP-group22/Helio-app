@@ -18,6 +18,7 @@ import com.helio.app.model.MotionSensor;
 import com.helio.app.model.Motor;
 import com.helio.app.model.Schedule;
 import com.helio.app.model.Sensor;
+import com.helio.app.networking.CalibrationIntervalManager;
 import com.helio.app.networking.HubClient;
 import com.helio.app.networking.IPAddress;
 import com.helio.app.networking.NetworkStatus;
@@ -40,11 +41,24 @@ public class UserDataViewModel extends AndroidViewModel {
     private MutableLiveData<Map<Integer, Schedule>> schedules;
     private MutableLiveData<Map<Integer, LightSensor>> lightSensors;
     private MutableLiveData<Map<Integer, MotionSensor>> motionSensors;
+    private final CalibrationIntervalManager calibrationIntervalManager;
 
     public UserDataViewModel(@NonNull Application application) {
         super(application);
         sharedPrefs = getApplication().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         client = createClient(getHubIp());
+        calibrationIntervalManager = new CalibrationIntervalManager(client);
+    }
+
+    public static String removeTrailingSpaces(String param) {
+        if (param == null)
+            return null;
+        int len = param.length();
+        for (; len > 0; len--) {
+            if (!Character.isWhitespace(param.charAt(len - 1)))
+                break;
+        }
+        return param.substring(0, len);
     }
 
     private HubClient createClient(String ip) {
@@ -229,15 +243,15 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     public void moveUp(Motor motor) {
-        client.moveUp(motor);
+        calibrationIntervalManager.startMoveUpRequestLoop(motor);
     }
 
     public void moveDown(Motor motor) {
-        client.moveDown(motor);
+        calibrationIntervalManager.startMoveDownRequestLoop(motor);
     }
 
-    public void stopMoving(Motor motor) {
-        client.stopMoving(motor);
+    public void stopMoving() {
+        calibrationIntervalManager.stopRequestLoop();
     }
 
     public void setHighestPoint(Motor motor) {
@@ -247,7 +261,6 @@ public class UserDataViewModel extends AndroidViewModel {
     public void setLowestPoint(Motor motor) {
         client.setLowestPoint(motor);
     }
-
 
     public MutableLiveData<NetworkStatus> getNetworkStatus() {
         MutableLiveData<NetworkStatus> status = new MutableLiveData<>();
@@ -342,16 +355,5 @@ public class UserDataViewModel extends AndroidViewModel {
         Toast.makeText(getApplication(), returnString, Toast.LENGTH_LONG).show();
         tts.speak(returnString, TextToSpeech.QUEUE_FLUSH, null, "");
         return motors;
-    }
-
-    public static String removeTrailingSpaces(String param) {
-        if (param == null)
-            return null;
-        int len = param.length();
-        for (; len > 0; len--) {
-            if (!Character.isWhitespace(param.charAt(len - 1)))
-                break;
-        }
-        return param.substring(0, len);
     }
 }

@@ -91,10 +91,8 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     public LiveData<Map<Integer, Motor>> fetchMotors() {
-        if (motors == null) {
-            motors = new MutableLiveData<>();
-            client.getAllMotors(motors);
-        }
+        motors = new MutableLiveData<>();
+        client.getAllMotors(motors);
         return motors;
     }
 

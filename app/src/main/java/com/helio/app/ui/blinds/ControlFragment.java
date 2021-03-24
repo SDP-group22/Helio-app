@@ -25,6 +25,10 @@ import com.helio.app.model.Motor;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static android.app.Activity.RESULT_OK;
@@ -35,16 +39,20 @@ public class ControlFragment extends Fragment {
     private ControlRecViewAdapter adapter;
     private TextToSpeech tts;
     private UserDataViewModel model;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private ScheduledFuture<?> requestsLoopHandle = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_control, container, false);
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
         adapter = new ControlRecViewAdapter(model);
-        model.fetchMotors().observe(
+
+        // Poll and update the motors repeatedly
+        requestsLoopHandle = scheduler.scheduleAtFixedRate(() -> requireActivity().runOnUiThread(() -> model.fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> adapter.setMotors(new ArrayList<>(motors.values()))
-        );
+        )), 0, 1, TimeUnit.SECONDS);
 
         // Start RecognizerIntent
         FloatingActionButton fab_voiceIntegration = view.findViewById(R.id.fab_voice_integration);
@@ -108,5 +116,12 @@ public class ControlFragment extends Fragment {
                     }
                 }
         );
+    }
+
+    @Override
+    public void onStop() {
+        // Stop polling when leaving the control page
+        requestsLoopHandle.cancel(true);
+        super.onStop();
     }
 }

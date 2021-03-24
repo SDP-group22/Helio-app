@@ -2,6 +2,8 @@ package com.helio.app
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
@@ -18,9 +20,12 @@ import com.google.android.material.slider.Slider
 import com.helio.app.Utils.atPosition
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -29,6 +34,24 @@ class TestBlindsControl {
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity>
             = ActivityScenarioRule(MainActivity::class.java)
+
+    companion object {
+        @BeforeClass
+        @JvmStatic
+        fun connectIp() {
+            val scenario = ActivityScenario.launch(MainActivity::class.java)
+            // otherwise the elements won't load
+            Utils.setHubIP("10.0.2.2")
+            scenario.close()
+        }
+    }
+
+    @Before
+    fun setup() {
+        // navigate to the desired fragment
+        onView(withId(R.id.navigation_control))
+                .perform(ViewActions.click())
+    }
 
     @Test
     // check that we can adjust the slider for the first blind in the list
@@ -89,6 +112,9 @@ class TestBlindsControl {
         val startCount = Utils.getCountFromRecyclerView(R.id.control_rc_view)
         onView(withId(R.id.add_blinds_button))
                 .perform(ViewActions.click())
+        // exit from new blind's settings
+        Thread.sleep(500)
+        Espresso.pressBack()
         onView(withId(R.id.control_rc_view))
                 .check(matches(Utils.withExpectedCount(startCount + 1)))
     }
@@ -122,6 +148,7 @@ class TestBlindsControl {
         }
     }
 
+    @Suppress("SameParameterValue")
     private fun clickOnViewChild(viewId: Int) = object : ViewAction {
         override fun getConstraints() = null
 

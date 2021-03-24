@@ -28,6 +28,7 @@ import com.helio.app.networking.request.MotorSettingsRequest;
 import com.helio.app.networking.request.ScheduleSettingsRequest;
 
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -280,6 +281,7 @@ public class UserDataViewModel extends AndroidViewModel {
         Resources res = getApplication().getApplicationContext().getResources();
         String[] openWords = res.getStringArray(R.array.open);
         String[] closeWords = res.getStringArray(R.array.close);
+        System.out.println(Arrays.toString(openWords));
 
         boolean hasOpen = false;
         boolean hasClosed = false;

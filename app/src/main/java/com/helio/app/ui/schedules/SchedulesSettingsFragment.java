@@ -39,14 +39,7 @@ public class SchedulesSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 Schedules -> {
                     adapter.setSchedules(new ArrayList<>(Schedules.values()));
-                    // provide a hint to the user if there are no components
-                    NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
-                    assert hintInterface != null;
-                    if(adapter.getItemCount() == 0) {
-                        hintInterface.showNoComponentHint();
-                    } else {
-                        hintInterface.hideNoComponentHint();
-                    }
+                    checkNoComponentsHint();
                 }
         );
 
@@ -63,12 +56,20 @@ public class SchedulesSettingsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkNoComponentsHint();
+    }
+
     private void addButtonOnClick(View v) {
         Set<Integer> oldIds = adapter.getSchedules().stream().map(IdComponent::getId).collect(Collectors.toSet());
         model.addSchedule().observe(
                 getViewLifecycleOwner(),
                 schedules -> {
                     adapter.setSchedules(new ArrayList<>(schedules.values()));
+
+                    checkNoComponentsHint();
 
                     // Find the new component and navigate to it
                     for (Schedule s : schedules.values()) {
@@ -81,6 +82,17 @@ public class SchedulesSettingsFragment extends Fragment {
                     }
                 }
         );
+    }
+
+    private void checkNoComponentsHint() {
+        // provide a hint to the user if there are no components
+        NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
+        assert hintInterface != null;
+        if(adapter.getItemCount() == 0) {
+            hintInterface.showNoComponentHint();
+        } else {
+            hintInterface.hideNoComponentHint();
+        }
     }
 
     private void provideHubConnectionHint() {

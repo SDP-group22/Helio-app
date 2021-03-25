@@ -20,6 +20,7 @@ import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.Sensor;
 import com.helio.app.networking.NetworkStatus;
+import com.helio.app.ui.NoComponentHintBackground;
 
 import java.util.Map;
 import java.util.Set;
@@ -38,12 +39,18 @@ public class SensorsSettingsFragment extends Fragment {
 
         model.fetchLightSensors().observe(
                 getViewLifecycleOwner(),
-                sensors -> adapter.setLightSensors(sensors.values())
+                sensors -> {
+                    adapter.setLightSensors(sensors.values());
+                    checkNoComponentsHint();
+                }
         );
 
         model.fetchMotionSensors().observe(
                 getViewLifecycleOwner(),
-                sensors -> adapter.setMotionSensors(sensors.values())
+                sensors -> {
+                    adapter.setMotionSensors(sensors.values());
+                    checkNoComponentsHint();
+                }
         );
 
         // Insert into the recycler view
@@ -68,6 +75,12 @@ public class SensorsSettingsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkNoComponentsHint();
+    }
+
     private void addButtonOnClickMotion(View v) {
         Set<Integer> oldIds = adapter.getMotionSensors().stream().map(IdComponent::getId).collect(Collectors.toSet());
 
@@ -75,6 +88,7 @@ public class SensorsSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 sensors -> {
                     adapter.setMotionSensors(sensors.values());
+                    checkNoComponentsHint();
                     navigateToNewComponent(oldIds, sensors);
                 }
         );
@@ -87,9 +101,21 @@ public class SensorsSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 sensors -> {
                     adapter.setLightSensors(sensors.values());
+                    checkNoComponentsHint();
                     navigateToNewComponent(oldIds, sensors);
                 }
         );
+    }
+
+    private void checkNoComponentsHint() {
+        // provide a hint to the user if there are no components
+        NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
+        assert hintInterface != null;
+        if(adapter.getItemCount() == 0) {
+            hintInterface.showNoComponentHint();
+        } else {
+            hintInterface.hideNoComponentHint();
+        }
     }
 
     private void provideHubConnectionHint() {

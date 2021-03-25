@@ -48,6 +48,7 @@
     <string name="sensor">Sensors</string>
     <string name="motion_sensor_sensitivity">Sensor Sensitivity (Minutes)</string>
 
+    <string name="new_sensor">New sensor</string>
     <string name="new_motion_sensor">New motion sensor</string>
     <string name="new_light_sensor">New light sensor</string>
 

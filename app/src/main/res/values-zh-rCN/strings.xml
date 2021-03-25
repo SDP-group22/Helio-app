@@ -62,4 +62,5 @@
     <string name="calibrated_message">已校准</string>
     <string name="time_to_open">移动时间(分钟)</string>
     <string name="add_new_sensor_button">添加传感器</string>
+    <string name="new_sensor">TODO</string>
 </resources>

@@ -62,4 +62,5 @@
     <string name="set_low_point">設置低點</string>
     <string name="calibrated_message">已校準</string>
     <string name="time_to_open">移動時間(分鐘)</string>
+    <string name="new_sensor">TODO</string>
 </resources>

@@ -109,6 +109,8 @@ public class ControlFragment extends Fragment {
                 motors -> {
                     adapter.setMotors(new ArrayList<>(motors.values()));
 
+                    checkNoComponentsHint();
+
                     // Find the new component and navigate to it
                     for (Motor m : motors.values()) {
                         if (!oldIds.contains(m.getId())) {
@@ -123,6 +125,12 @@ public class ControlFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        checkNoComponentsHint();
+    }
+
+    @Override
     public void onStop() {
         // Stop polling when leaving the control page
         stopPollingLoop();
@@ -134,16 +142,20 @@ public class ControlFragment extends Fragment {
                 getViewLifecycleOwner(),
                 motors -> {
                     adapter.setMotors(new ArrayList<>(motors.values()));
-                    // provide a hint to the user if there are no components
-                    NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
-                    assert hintInterface != null;
-                    if(adapter.getItemCount() == 0) {
-                        hintInterface.showNoComponentHint();
-                    } else {
-                        hintInterface.hideNoComponentHint();
-                    }
+                    checkNoComponentsHint();
                 }
         );
+    }
+
+    private void checkNoComponentsHint() {
+        // provide a hint to the user if there are no components
+        NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
+        assert hintInterface != null;
+        if(adapter.getItemCount() == 0) {
+            hintInterface.showNoComponentHint();
+        } else {
+            hintInterface.hideNoComponentHint();
+        }
     }
 
     private void provideHubConnectionHint() {

@@ -23,6 +23,7 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.Motor;
+import com.helio.app.networking.NetworkStatus;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -77,11 +78,18 @@ public class ControlFragment extends Fragment {
         FloatingActionButton addButton = view.findViewById(R.id.add_blinds_button);
         addButton.setOnClickListener(this::addButtonOnClick);
 
-        // hint the user to set up a connection to their hub if necessary
         model.getNetworkStatus().observe(
                 getViewLifecycleOwner(),
                 networkStatus -> {
-                    System.out.println(networkStatus);
+                    System.out.println("connection status: " + networkStatus);
+                    if(networkStatus == NetworkStatus.DISCONNECTED) {
+                        // hint the user to set up a connection to their hub
+                        Toast.makeText(
+                                getContext(),
+                                getResources().getString(R.string.connect_to_your_helio_hub_device),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
                 }
         );
 

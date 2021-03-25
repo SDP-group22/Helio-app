@@ -76,6 +76,15 @@ public class ControlFragment extends Fragment {
 
         FloatingActionButton addButton = view.findViewById(R.id.add_blinds_button);
         addButton.setOnClickListener(this::addButtonOnClick);
+
+        // hint the user to set up a connection to their hub if necessary
+        model.getNetworkStatus().observe(
+                getViewLifecycleOwner(),
+                networkStatus -> {
+                    System.out.println(networkStatus);
+                }
+        );
+
         return view;
     }
 

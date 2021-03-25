@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.Sensor;
+import com.helio.app.networking.NetworkStatus;
 
 import java.util.Map;
 import java.util.Set;
@@ -61,6 +63,8 @@ public class SensorsSettingsFragment extends Fragment {
         view.<FloatingActionButton>findViewById(R.id.add_motion_button).setOnClickListener(this::addButtonOnClickMotion);
         view.<FloatingActionButton>findViewById(R.id.add_light_button).setOnClickListener(this::addButtonOnClickLight);
 
+        provideHubConnectionHint();
+
         return view;
     }
 
@@ -84,6 +88,23 @@ public class SensorsSettingsFragment extends Fragment {
                 sensors -> {
                     adapter.setLightSensors(sensors.values());
                     navigateToNewComponent(oldIds, sensors);
+                }
+        );
+    }
+
+    private void provideHubConnectionHint() {
+        model.getNetworkStatus().observe(
+                getViewLifecycleOwner(),
+                networkStatus -> {
+                    System.out.println("connection status: " + networkStatus);
+                    if(networkStatus == NetworkStatus.DISCONNECTED) {
+                        // hint the user to set up a connection to their hub
+                        Toast.makeText(
+                                getContext(),
+                                getResources().getString(R.string.connect_to_your_helio_hub_device),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
                 }
         );
     }

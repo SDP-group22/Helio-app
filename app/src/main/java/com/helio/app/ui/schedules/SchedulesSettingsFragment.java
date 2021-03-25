@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,7 @@ import com.helio.app.R;
 import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.Schedule;
+import com.helio.app.networking.NetworkStatus;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -45,6 +47,8 @@ public class SchedulesSettingsFragment extends Fragment {
         FloatingActionButton addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(this::addButtonOnClick);
 
+        provideHubConnectionHint();
+
         return view;
     }
 
@@ -63,6 +67,23 @@ public class SchedulesSettingsFragment extends Fragment {
                             action.setCurrentScheduleId(s.getId());
                             Navigation.findNavController(requireView()).navigate(action);
                         }
+                    }
+                }
+        );
+    }
+
+    private void provideHubConnectionHint() {
+        model.getNetworkStatus().observe(
+                getViewLifecycleOwner(),
+                networkStatus -> {
+                    System.out.println("connection status: " + networkStatus);
+                    if(networkStatus == NetworkStatus.DISCONNECTED) {
+                        // hint the user to set up a connection to their hub
+                        Toast.makeText(
+                                getContext(),
+                                getResources().getString(R.string.connect_to_your_helio_hub_device),
+                                Toast.LENGTH_LONG
+                        ).show();
                     }
                 }
         );

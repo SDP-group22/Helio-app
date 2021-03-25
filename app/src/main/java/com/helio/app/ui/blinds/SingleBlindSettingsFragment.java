@@ -119,7 +119,9 @@ public class SingleBlindSettingsFragment extends SingleComponentSettingsFragment
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        component.setIconId((Integer) adapterView.getSelectedItem());
+        if (component != null) {
+            component.setIconId((Integer) adapterView.getSelectedItem());
+        }
     }
 
     @Override

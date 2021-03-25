@@ -51,6 +51,7 @@ class TestBlindsControl {
         // navigate to the desired fragment
         onView(withId(R.id.navigation_control))
                 .perform(ViewActions.click())
+        Thread.sleep(500)
     }
 
     @Test

@@ -49,10 +49,17 @@ public class ControlFragment extends Fragment {
         adapter = new ControlRecViewAdapter(model);
 
         // Poll and update the motors repeatedly
-        requestsLoopHandle = scheduler.scheduleAtFixedRate(() -> requireActivity().runOnUiThread(() -> model.fetchMotors().observe(
-                getViewLifecycleOwner(),
-                motors -> adapter.setMotors(new ArrayList<>(motors.values()))
-        )), 0, 1, TimeUnit.SECONDS);
+        requestsLoopHandle = scheduler.scheduleAtFixedRate(() -> requireActivity().runOnUiThread(() -> {
+            // Try/catch because it sometimes crashes when this runs after the view has been closed
+            try {
+                model.fetchMotors().observe(
+                        getViewLifecycleOwner(),
+                        motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+                );
+            } catch (IllegalStateException e) {
+                System.out.println("Caught error in polling loop, ignoring it");
+            }
+        }), 0, 1, TimeUnit.SECONDS);
 
         // Start RecognizerIntent
         FloatingActionButton fab_voiceIntegration = view.findViewById(R.id.fab_voice_integration);

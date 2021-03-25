@@ -176,12 +176,14 @@ public class UserDataViewModel extends AndroidViewModel {
     }
 
     private void pushMotorState(Motor m) {
-        Objects.requireNonNull(motors.getValue()).put(m.getId(), m);
-        MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
-                m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
-                m.getLevel(), m.getStyle()
-        );
-        client.updateMotor(motors, m.getId(), motorSettingsRequest);
+        if (motors.getValue() != null) {
+            motors.getValue().put(m.getId(), m);
+            MotorSettingsRequest motorSettingsRequest = new MotorSettingsRequest(
+                    m.getName(), m.getIp(), m.isActive(), m.getBattery(), m.getLength(),
+                    m.getLevel(), m.getStyle()
+            );
+            client.updateMotor(motors, m.getId(), motorSettingsRequest);
+        }
     }
 
     private void pushScheduleState(Schedule s) {

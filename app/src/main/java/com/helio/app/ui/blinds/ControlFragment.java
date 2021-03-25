@@ -24,6 +24,7 @@ import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.Motor;
 import com.helio.app.networking.NetworkStatus;
+import com.helio.app.ui.NoComponentHintBackground;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -131,7 +132,17 @@ public class ControlFragment extends Fragment {
     private void fetchMotors() {
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
-                motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+                motors -> {
+                    adapter.setMotors(new ArrayList<>(motors.values()));
+                    // provide a hint to the user if there are no components
+                    NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
+                    assert hintInterface != null;
+                    if(adapter.getItemCount() == 0) {
+                        hintInterface.showNoComponentHint();
+                    } else {
+                        hintInterface.hideNoComponentHint();
+                    }
+                }
         );
     }
 

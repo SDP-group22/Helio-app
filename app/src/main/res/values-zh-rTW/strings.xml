@@ -20,7 +20,7 @@
     <string name="new_blinds">添加百葉窗</string>
     <string name="title_edit_schedule">編輯時間表</string>
     <string name="title_schedule_setting">時間表</string>
-    <string name="target_motor_value_prefix">位於</string>
+    <string name="target_motor_value_prefix">位於：</string>
     <string name="monday_short">一</string>
     <string name="tuesday_short">二</string>
     <string name="wednesday_short">三</string>

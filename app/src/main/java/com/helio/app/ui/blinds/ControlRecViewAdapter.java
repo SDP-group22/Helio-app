@@ -20,10 +20,12 @@ import java.util.ArrayList;
 
 public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAdapter.ViewHolder> {
     private final UserDataViewModel model;
+    private final ControlFragment fragment;
     private ArrayList<Motor> motors = new ArrayList<>();
 
-    public ControlRecViewAdapter(UserDataViewModel model) {
+    public ControlRecViewAdapter(UserDataViewModel model, ControlFragment fragment) {
         this.model = model;
+        this.fragment = fragment;
     }
 
 
@@ -74,6 +76,7 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
             slider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
                 @Override
                 public void onStartTrackingTouch(@NonNull Slider slider) {
+                    fragment.stopPollingLoop();
                 }
 
                 @Override
@@ -83,6 +86,7 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
                     motor.setLevel((int) slider.getValue());
                     System.out.println("Updated level using slider: " + motor);
                     model.pushComponentState(motor);
+                    fragment.startPollingLoop();
                 }
             });
 

@@ -1,5 +1,6 @@
 package com.helio.app.ui.blinds;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,24 +43,14 @@ public class ControlFragment extends Fragment {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private ScheduledFuture<?> requestsLoopHandle = null;
 
+    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_control, container, false);
         model = new ViewModelProvider(requireActivity()).get(UserDataViewModel.class);
-        adapter = new ControlRecViewAdapter(model);
+        adapter = new ControlRecViewAdapter(model, this);
 
-        // Poll and update the motors repeatedly
-        requestsLoopHandle = scheduler.scheduleAtFixedRate(() -> requireActivity().runOnUiThread(() -> {
-            // Try/catch because it sometimes crashes when this runs after the view has been closed
-            try {
-                model.fetchMotors().observe(
-                        getViewLifecycleOwner(),
-                        motors -> adapter.setMotors(new ArrayList<>(motors.values()))
-                );
-            } catch (IllegalStateException e) {
-                System.out.println("Caught error in polling loop, ignoring it");
-            }
-        }), 0, 1, TimeUnit.SECONDS);
+        startPollingLoop();
 
         // Start RecognizerIntent
         FloatingActionButton fab_voiceIntegration = view.findViewById(R.id.fab_voice_integration);
@@ -89,6 +80,7 @@ public class ControlFragment extends Fragment {
     }
 
     // Receiving the speech response
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -128,7 +120,30 @@ public class ControlFragment extends Fragment {
     @Override
     public void onStop() {
         // Stop polling when leaving the control page
-        requestsLoopHandle.cancel(true);
+        stopPollingLoop();
         super.onStop();
+    }
+
+    private void fetchMotors() {
+        model.fetchMotors().observe(
+                getViewLifecycleOwner(),
+                motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+        );
+    }
+
+    public void startPollingLoop() {
+        // Poll and update the motors repeatedly
+        requestsLoopHandle = scheduler.scheduleAtFixedRate(() -> requireActivity().runOnUiThread(() -> {
+            // Try/catch because it sometimes crashes when this runs after the view has been closed
+            try {
+                fetchMotors();
+            } catch (IllegalStateException e) {
+                System.out.println("Caught error in polling loop, ignoring it");
+            }
+        }), 500, 1000, TimeUnit.MILLISECONDS);
+    }
+
+    public void stopPollingLoop() {
+        requestsLoopHandle.cancel(true);
     }
 }

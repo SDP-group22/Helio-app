@@ -78,20 +78,7 @@ public class ControlFragment extends Fragment {
         FloatingActionButton addButton = view.findViewById(R.id.add_blinds_button);
         addButton.setOnClickListener(this::addButtonOnClick);
 
-        model.getNetworkStatus().observe(
-                getViewLifecycleOwner(),
-                networkStatus -> {
-                    System.out.println("connection status: " + networkStatus);
-                    if(networkStatus == NetworkStatus.DISCONNECTED) {
-                        // hint the user to set up a connection to their hub
-                        Toast.makeText(
-                                getContext(),
-                                getResources().getString(R.string.connect_to_your_helio_hub_device),
-                                Toast.LENGTH_LONG
-                        ).show();
-                    }
-                }
-        );
+        provideHubConnectionHint();
 
         return view;
     }
@@ -145,6 +132,23 @@ public class ControlFragment extends Fragment {
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
                 motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+        );
+    }
+
+    private void provideHubConnectionHint() {
+        model.getNetworkStatus().observe(
+            getViewLifecycleOwner(),
+            networkStatus -> {
+                System.out.println("connection status: " + networkStatus);
+                if(networkStatus == NetworkStatus.DISCONNECTED) {
+                    // hint the user to set up a connection to their hub
+                    Toast.makeText(
+                            getContext(),
+                            getResources().getString(R.string.connect_to_your_helio_hub_device),
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
         );
     }
 

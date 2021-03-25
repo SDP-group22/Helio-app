@@ -19,6 +19,7 @@ import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.Schedule;
 import com.helio.app.networking.NetworkStatus;
+import com.helio.app.ui.NoComponentHintBackground;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -36,7 +37,17 @@ public class SchedulesSettingsFragment extends Fragment {
         adapter = new SchedulesRecViewAdapter(getContext(), model);
         model.fetchSchedules().observe(
                 getViewLifecycleOwner(),
-                Schedules -> adapter.setSchedules(new ArrayList<>(Schedules.values()))
+                Schedules -> {
+                    adapter.setSchedules(new ArrayList<>(Schedules.values()));
+                    // provide a hint to the user if there are no components
+                    NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
+                    assert hintInterface != null;
+                    if(adapter.getItemCount() == 0) {
+                        hintInterface.showNoComponentHint();
+                    } else {
+                        hintInterface.hideNoComponentHint();
+                    }
+                }
         );
 
         // Insert into the recycler view

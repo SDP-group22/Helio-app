@@ -1,170 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="10dp">
-
-    <Button
-        android:id="@+id/time_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="?colorSecondary"
-        android:padding="20dp"
-        android:text="XX:XX PM"
-        android:textSize="48sp"
-        tools:ignore="HardcodedText" />
-
-    <com.helio.app.ui.utils.LevelSlider
-        android:id="@+id/level_slider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/schedule_name"
-        style="@style/nameBoxLayout"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="10dp">
-
-        <com.google.android.material.textfield.TextInputEditText style="@style/nameBoxText" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/gradient"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="10dp"
-        app:helperTextTextAppearance="@style/helperTextTextAppearance"
-        app:hintTextAppearance="@style/hintTextAppearance">
-
-        <AutoCompleteTextView
-            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/time_to_open"
-            android:imeOptions="actionDone"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/days_layout"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/day1"
-            style="@style/dayButtonStyle"
-            android:layout_marginHorizontal="1dp"
-            app:cornerRadius="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/day2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/day2"
-            style="@style/dayButtonStyle"
-            android:layout_marginHorizontal="1dp"
-            app:cornerRadius="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/day3"
-            app:layout_constraintStart_toEndOf="@id/day1"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/day3"
-            style="@style/dayButtonStyle"
-            android:layout_marginHorizontal="1dp"
-            app:cornerRadius="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/day4"
-            app:layout_constraintStart_toEndOf="@id/day2"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/day4"
-            style="@style/dayButtonStyle"
-            android:layout_marginHorizontal="1dp"
-            app:cornerRadius="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/day5"
-            app:layout_constraintStart_toEndOf="@id/day3"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/day5"
-            style="@style/dayButtonStyle"
-            android:layout_marginHorizontal="1dp"
-            app:cornerRadius="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/day6"
-            app:layout_constraintStart_toEndOf="@id/day4"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/day6"
-            style="@style/dayButtonStyle"
-            android:layout_marginHorizontal="1dp"
-            app:cornerRadius="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/day7"
-            app:layout_constraintStart_toEndOf="@id/day5"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/day7"
-            style="@style/dayButtonStyle"
-            android:layout_marginHorizontal="1dp"
-            app:cornerRadius="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/day6"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ButtonStyle,HardcodedText" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/textView"
+        <Button
+            android:id="@+id/time_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorSecondary"
+            android:padding="20dp"
+            android:text="XX:XX PM"
+            android:textSize="48sp"
+            tools:ignore="HardcodedText" />
+
+        <com.helio.app.ui.utils.LevelSlider
+            android:id="@+id/level_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/select_blinds"
-            android:textColor="?colorSecondary"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="10dp" />
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="10dp"
-            android:background="?android:attr/listDivider" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/schedule_name"
+            style="@style/nameBoxLayout"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/blindsRCView"
+            <com.google.android.material.textfield.TextInputEditText style="@style/nameBoxText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/gradient"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            app:helperTextTextAppearance="@style/helperTextTextAppearance"
+            app:hintTextAppearance="@style/hintTextAppearance">
+
+            <AutoCompleteTextView
+                style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/time_to_open"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/days_layout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/day1"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/day2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
+
+            <Button
+                android:id="@+id/day2"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/day3"
+                app:layout_constraintStart_toEndOf="@id/day1"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
+
+            <Button
+                android:id="@+id/day3"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/day4"
+                app:layout_constraintStart_toEndOf="@id/day2"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
+
+            <Button
+                android:id="@+id/day4"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/day5"
+                app:layout_constraintStart_toEndOf="@id/day3"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
+
+            <Button
+                android:id="@+id/day5"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/day6"
+                app:layout_constraintStart_toEndOf="@id/day4"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
+
+            <Button
+                android:id="@+id/day6"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/day7"
+                app:layout_constraintStart_toEndOf="@id/day5"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
+
+            <Button
+                android:id="@+id/day7"
+                style="@style/dayButtonStyle"
+                android:layout_marginHorizontal="1dp"
+                app:cornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/day6"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ButtonStyle,HardcodedText" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/select_blinds"
+                android:textColor="?colorSecondary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="10dp"
+                android:background="?android:attr/listDivider" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/blindsRCView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

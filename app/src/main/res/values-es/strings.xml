@@ -62,5 +62,4 @@
     <string name="calibrated_message">Calibrado</string>
     <string name="time_to_open">Tiempo para moverse (minutos)</string>
     <string name="add_new_sensor_button">Nuevo sensor</string>
-    <string name="new_sensor">TODO</string>
 </resources>

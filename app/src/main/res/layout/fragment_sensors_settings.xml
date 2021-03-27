@@ -19,13 +19,13 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:background="@drawable/ic_add"
-            android:contentDescription="@string/new_sensor"
+            android:contentDescription="@string/add_new_sensor_button"
             android:backgroundTint="?colorTextSubtle"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/new_sensor"
+            android:text="@string/add_new_sensor_button"
             android:textSize="36sp"
             android:textColor="?colorTextSubtle"
             android:textStyle="bold"/>

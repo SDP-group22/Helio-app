@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,6 +24,7 @@ import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.Motor;
 import com.helio.app.networking.NetworkStatus;
+import com.helio.app.ui.NoComponentHintBackground;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -77,7 +78,13 @@ public class ControlFragment extends Fragment {
         FloatingActionButton addButton = view.findViewById(R.id.add_blinds_button);
         addButton.setOnClickListener(this::addButtonOnClick);
 
+        // Make hint displayed when empty act as an add button
+        View hintImage = view.findViewById(R.id.add_component_hint_layout);
+        hintImage.setOnClickListener(this::addButtonOnClick);
+
         provideHubConnectionHint();
+        Handler handler = new Handler();
+        handler.postDelayed(this::toggleNoComponentsHint, 100);
 
         return view;
     }
@@ -130,8 +137,22 @@ public class ControlFragment extends Fragment {
     private void fetchMotors() {
         model.fetchMotors().observe(
                 getViewLifecycleOwner(),
-                motors -> adapter.setMotors(new ArrayList<>(motors.values()))
+                motors -> {
+                    adapter.setMotors(new ArrayList<>(motors.values()));
+                    toggleNoComponentsHint();
+                }
         );
+    }
+
+    private void toggleNoComponentsHint() {
+        // provide a hint to the user if there are no components
+        NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
+        assert hintInterface != null;
+        if(adapter.getItemCount() == 0) {
+            hintInterface.showNoComponentHint();
+        } else {
+            hintInterface.hideNoComponentHint();
+        }
     }
 
     private void provideHubConnectionHint() {

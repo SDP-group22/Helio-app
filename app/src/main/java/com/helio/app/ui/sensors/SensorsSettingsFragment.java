@@ -1,6 +1,7 @@
 package com.helio.app.ui.sensors;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.Sensor;
 import com.helio.app.networking.NetworkStatus;
+import com.helio.app.ui.NoComponentHintBackground;
 
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +30,8 @@ import java.util.stream.Collectors;
 public class SensorsSettingsFragment extends Fragment {
     private UserDataViewModel model;
     private SensorsRecViewAdapter adapter;
+    private ViewGroup addButtonsLayout;
+    private FloatingActionButton plusButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,12 +42,18 @@ public class SensorsSettingsFragment extends Fragment {
 
         model.fetchLightSensors().observe(
                 getViewLifecycleOwner(),
-                sensors -> adapter.setLightSensors(sensors.values())
+                sensors -> {
+                    adapter.setLightSensors(sensors.values());
+                    toggleNoComponentsHint();
+                }
         );
 
         model.fetchMotionSensors().observe(
                 getViewLifecycleOwner(),
-                sensors -> adapter.setMotionSensors(sensors.values())
+                sensors -> {
+                    adapter.setMotionSensors(sensors.values());
+                    toggleNoComponentsHint();
+                }
         );
 
         // Insert into the recycler view
@@ -52,20 +62,28 @@ public class SensorsSettingsFragment extends Fragment {
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // On plus button press, open the two sensor type buttons
-        ViewGroup addButtonsLayout = view.findViewById(R.id.add_sensor_button_layout);
-        FloatingActionButton plusButton = view.findViewById(R.id.add_button);
-        plusButton.setOnClickListener(v -> {
-            plusButton.setVisibility(View.GONE);
-            addButtonsLayout.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in));
-            addButtonsLayout.setVisibility(View.VISIBLE);
-        });
+        addButtonsLayout = view.findViewById(R.id.add_sensor_button_layout);
+        plusButton = view.findViewById(R.id.add_button);
+        plusButton.setOnClickListener(this::addButtonOnClick);
 
         view.<FloatingActionButton>findViewById(R.id.add_motion_button).setOnClickListener(this::addButtonOnClickMotion);
         view.<FloatingActionButton>findViewById(R.id.add_light_button).setOnClickListener(this::addButtonOnClickLight);
 
+        // Make hint displayed when empty act as an add button
+        View hintImage = view.findViewById(R.id.add_component_hint_layout);
+        hintImage.setOnClickListener(this::addButtonOnClick);
+
         provideHubConnectionHint();
+        Handler handler = new Handler();
+        handler.postDelayed(this::toggleNoComponentsHint, 100);
 
         return view;
+    }
+
+    private void addButtonOnClick(View v) {
+        plusButton.setVisibility(View.GONE);
+        addButtonsLayout.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in));
+        addButtonsLayout.setVisibility(View.VISIBLE);
     }
 
     private void addButtonOnClickMotion(View v) {
@@ -92,12 +110,23 @@ public class SensorsSettingsFragment extends Fragment {
         );
     }
 
+    private void toggleNoComponentsHint() {
+        // provide a hint to the user if there are no components
+        NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
+        assert hintInterface != null;
+        if (adapter.getItemCount() == 0) {
+            hintInterface.showNoComponentHint();
+        } else {
+            hintInterface.hideNoComponentHint();
+        }
+    }
+
     private void provideHubConnectionHint() {
         model.getNetworkStatus().observe(
                 getViewLifecycleOwner(),
                 networkStatus -> {
                     System.out.println("connection status: " + networkStatus);
-                    if(networkStatus == NetworkStatus.DISCONNECTED) {
+                    if (networkStatus == NetworkStatus.DISCONNECTED) {
                         // hint the user to set up a connection to their hub
                         Toast.makeText(
                                 getContext(),

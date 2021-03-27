@@ -1,6 +1,7 @@
 package com.helio.app.ui.schedules;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.helio.app.UserDataViewModel;
 import com.helio.app.model.IdComponent;
 import com.helio.app.model.Schedule;
 import com.helio.app.networking.NetworkStatus;
+import com.helio.app.ui.NoComponentHintBackground;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -36,7 +38,10 @@ public class SchedulesSettingsFragment extends Fragment {
         adapter = new SchedulesRecViewAdapter(getContext(), model);
         model.fetchSchedules().observe(
                 getViewLifecycleOwner(),
-                Schedules -> adapter.setSchedules(new ArrayList<>(Schedules.values()))
+                Schedules -> {
+                    adapter.setSchedules(new ArrayList<>(Schedules.values()));
+                    toggleNoComponentsHint();
+                }
         );
 
         // Insert into the recycler view
@@ -47,7 +52,13 @@ public class SchedulesSettingsFragment extends Fragment {
         FloatingActionButton addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(this::addButtonOnClick);
 
+        // Make hint displayed when empty act as an add button
+        View hintImage = view.findViewById(R.id.add_component_hint_layout);
+        hintImage.setOnClickListener(this::addButtonOnClick);
+
         provideHubConnectionHint();
+        Handler handler = new Handler();
+        handler.postDelayed(this::toggleNoComponentsHint, 100);
 
         return view;
     }
@@ -72,12 +83,23 @@ public class SchedulesSettingsFragment extends Fragment {
         );
     }
 
+    private void toggleNoComponentsHint() {
+        // provide a hint to the user if there are no components
+        NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
+        assert hintInterface != null;
+        if (adapter.getItemCount() == 0) {
+            hintInterface.showNoComponentHint();
+        } else {
+            hintInterface.hideNoComponentHint();
+        }
+    }
+
     private void provideHubConnectionHint() {
         model.getNetworkStatus().observe(
                 getViewLifecycleOwner(),
                 networkStatus -> {
                     System.out.println("connection status: " + networkStatus);
-                    if(networkStatus == NetworkStatus.DISCONNECTED) {
+                    if (networkStatus == NetworkStatus.DISCONNECTED) {
                         // hint the user to set up a connection to their hub
                         Toast.makeText(
                                 getContext(),

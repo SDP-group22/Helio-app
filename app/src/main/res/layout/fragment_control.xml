@@ -7,6 +7,34 @@
     android:padding="10dp"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:id="@+id/add_component_hint_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables"> <!-- so we can adjust ImageView size -->
+        <ImageView
+            android:id="@+id/add_component_hint_image"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:visibility="gone"
+            android:background="@drawable/ic_add"
+            android:contentDescription="@string/new_blinds"
+            android:backgroundTint="?colorTextSubtle"/>
+        <TextView
+            android:id="@+id/add_component_hint_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:text="@string/new_blinds"
+            android:textSize="36sp"
+            android:textColor="?colorTextSubtle"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/control_rc_view"
         android:layout_width="match_parent"

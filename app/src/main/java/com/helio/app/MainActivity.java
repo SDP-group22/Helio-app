@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +15,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.helio.app.ui.NoComponentHintBackground;
 import com.helio.app.ui.settings.AppTheme;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NoComponentHintBackground {
     private static boolean restartOnSettings = false;
 
     @Override
@@ -111,6 +114,22 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
         System.out.println("New theme: " +
                 sharedPrefs.getInt(getString(R.string.user_settings_theme_key), AppTheme.DEFAULT_THEME_ID));
+    }
+
+    @Override
+    public void showNoComponentHint() {
+        runOnUiThread(() -> {
+            findViewById(R.id.add_component_hint_image).setVisibility(View.VISIBLE);
+            findViewById(R.id.add_component_hint_text).setVisibility(View.VISIBLE);
+        });
+    }
+
+    @Override
+    public void hideNoComponentHint() {
+        runOnUiThread(() -> {
+            findViewById(R.id.add_component_hint_image).setVisibility(View.GONE);
+            findViewById(R.id.add_component_hint_text).setVisibility(View.GONE);
+        });
     }
 }
 

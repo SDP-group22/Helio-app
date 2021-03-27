@@ -1,6 +1,7 @@
 package com.helio.app.ui.sensors;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class SensorsSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 sensors -> {
                     adapter.setLightSensors(sensors.values());
-                    checkNoComponentsHint();
+                    toggleNoComponentsHint();
                 }
         );
 
@@ -49,7 +50,7 @@ public class SensorsSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 sensors -> {
                     adapter.setMotionSensors(sensors.values());
-                    checkNoComponentsHint();
+                    toggleNoComponentsHint();
                 }
         );
 
@@ -71,14 +72,10 @@ public class SensorsSettingsFragment extends Fragment {
         view.<FloatingActionButton>findViewById(R.id.add_light_button).setOnClickListener(this::addButtonOnClickLight);
 
         provideHubConnectionHint();
+        Handler handler = new Handler();
+        handler.postDelayed(this::toggleNoComponentsHint, 100);
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        checkNoComponentsHint();
     }
 
     private void addButtonOnClickMotion(View v) {
@@ -88,7 +85,6 @@ public class SensorsSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 sensors -> {
                     adapter.setMotionSensors(sensors.values());
-                    checkNoComponentsHint();
                     navigateToNewComponent(oldIds, sensors);
                 }
         );
@@ -101,13 +97,12 @@ public class SensorsSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 sensors -> {
                     adapter.setLightSensors(sensors.values());
-                    checkNoComponentsHint();
                     navigateToNewComponent(oldIds, sensors);
                 }
         );
     }
 
-    private void checkNoComponentsHint() {
+    private void toggleNoComponentsHint() {
         // provide a hint to the user if there are no components
         NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
         assert hintInterface != null;

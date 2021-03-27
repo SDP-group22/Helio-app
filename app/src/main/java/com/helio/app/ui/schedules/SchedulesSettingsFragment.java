@@ -1,6 +1,7 @@
 package com.helio.app.ui.schedules;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class SchedulesSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 Schedules -> {
                     adapter.setSchedules(new ArrayList<>(Schedules.values()));
-                    toggleNoComponentsHint(Schedules.size() == 0);
+                    toggleNoComponentsHint();
                 }
         );
 
@@ -53,6 +54,8 @@ public class SchedulesSettingsFragment extends Fragment {
         addButton.setOnClickListener(this::addButtonOnClick);
 
         provideHubConnectionHint();
+        Handler handler = new Handler();
+        handler.postDelayed(this::toggleNoComponentsHint, 100);
 
         return view;
     }
@@ -77,11 +80,11 @@ public class SchedulesSettingsFragment extends Fragment {
         );
     }
 
-    private void toggleNoComponentsHint(boolean showHint) {
+    private void toggleNoComponentsHint() {
         // provide a hint to the user if there are no components
         NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
         assert hintInterface != null;
-        if(showHint) {
+        if(adapter.getItemCount() == 0) {
             hintInterface.showNoComponentHint();
         } else {
             hintInterface.hideNoComponentHint();

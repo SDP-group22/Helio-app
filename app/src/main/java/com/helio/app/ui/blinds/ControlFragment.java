@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
@@ -79,6 +80,8 @@ public class ControlFragment extends Fragment {
         addButton.setOnClickListener(this::addButtonOnClick);
 
         provideHubConnectionHint();
+        Handler handler = new Handler();
+        handler.postDelayed(this::toggleNoComponentsHint, 100);
 
         return view;
     }
@@ -133,11 +136,12 @@ public class ControlFragment extends Fragment {
                 getViewLifecycleOwner(),
                 motors -> {
                     adapter.setMotors(new ArrayList<>(motors.values()));
+                    toggleNoComponentsHint();
                 }
         );
     }
 
-    private void checkNoComponentsHint() {
+    private void toggleNoComponentsHint() {
         // provide a hint to the user if there are no components
         NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
         assert hintInterface != null;

@@ -8,7 +8,6 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/add_component_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -16,12 +15,14 @@
         android:orientation="vertical"
         tools:ignore="UseCompoundDrawables"> <!-- so we can adjust ImageView size -->
         <ImageView
+            android:id="@+id/add_component_hint_image"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:background="@drawable/ic_add"
             android:contentDescription="@string/add_new_sensor_button"
             android:backgroundTint="?colorTextSubtle"/>
         <TextView
+            android:id="@+id/add_component_hint_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

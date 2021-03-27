@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -117,12 +118,14 @@ public class MainActivity extends AppCompatActivity implements NoComponentHintBa
 
     @Override
     public void showNoComponentHint() {
-        findViewById(R.id.add_component_hint).setVisibility(View.VISIBLE);
+        findViewById(R.id.add_component_hint_image).setVisibility(View.VISIBLE);
+        findViewById(R.id.add_component_hint_text).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideNoComponentHint() {
-        findViewById(R.id.add_component_hint).setVisibility(View.INVISIBLE);
+        findViewById(R.id.add_component_hint_image).setVisibility(View.GONE);
+        findViewById(R.id.add_component_hint_text).setVisibility(View.GONE);
     }
 }
 

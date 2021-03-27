@@ -116,6 +116,7 @@ class TestBlindsControl {
         // exit from new blind's settings
         Thread.sleep(500)
         Espresso.pressBack()
+        Thread.sleep(500)
         onView(withId(R.id.control_rc_view))
                 .check(matches(Utils.withExpectedCount(startCount + 1)))
     }

@@ -19,7 +19,7 @@
     <string name="new_blinds">Nouveaux stores</string>
     <string name="title_edit_schedule">Modifier l\'horaire</string>
     <string name="title_schedule_setting">Horaire</string>
-    <string name="target_motor_value_prefix">\"Objectif: \"</string>
+    <string name="target_motor_value_prefix">"Objectif: "</string>
     <string name="monday_short">L</string>
     <string name="tuesday_short">M</string>
     <string name="wednesday_short">M</string>

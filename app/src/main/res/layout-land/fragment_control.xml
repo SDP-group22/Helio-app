@@ -22,6 +22,7 @@
                 android:id="@+id/add_component_hint_image"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
+                android:visibility="gone"
                 android:background="@drawable/ic_add"
                 android:contentDescription="@string/new_blinds"
                 android:backgroundTint="?colorTextSubtle"/>
@@ -30,6 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:text="@string/new_blinds"
                 android:textSize="36sp"
                 android:textColor="?colorTextSubtle"

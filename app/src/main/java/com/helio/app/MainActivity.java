@@ -119,16 +119,22 @@ public class MainActivity extends AppCompatActivity implements NoComponentHintBa
     @Override
     public void showNoComponentHint() {
         runOnUiThread(() -> {
-            findViewById(R.id.add_component_hint_image).setVisibility(View.VISIBLE);
-            findViewById(R.id.add_component_hint_text).setVisibility(View.VISIBLE);
+            final View hintImage = findViewById(R.id.add_component_hint_image);
+            final View hintText = findViewById(R.id.add_component_hint_text);
+            if(hintImage == null || hintText == null) return;
+            hintImage.setVisibility(View.VISIBLE);
+            hintText.setVisibility(View.VISIBLE);
         });
     }
 
     @Override
     public void hideNoComponentHint() {
         runOnUiThread(() -> {
-            findViewById(R.id.add_component_hint_image).setVisibility(View.GONE);
-            findViewById(R.id.add_component_hint_text).setVisibility(View.GONE);
+            final View hintImage = findViewById(R.id.add_component_hint_image);
+            final View hintText = findViewById(R.id.add_component_hint_text);
+            if(hintImage == null || hintText == null) return;
+            hintImage.setVisibility(View.GONE);
+            hintText.setVisibility(View.GONE);
         });
     }
 }

@@ -40,7 +40,9 @@ public class ControlRecViewAdapter extends RecyclerView.Adapter<ControlRecViewAd
     public void onBindViewHolder(@NonNull ControlRecViewAdapter.ViewHolder holder, int position) {
         // Set the name and icon of the motor and put the current level in the slider
         Motor motor = motors.get(position);
-        holder.txtName.setText(motor.getName());
+        if (holder.txtName != null) {
+            holder.txtName.setText(motor.getName());
+        }
         holder.blindIcon.setImageResource(motor.getIconId());
         holder.slider.setValue(motor.getLevel());
     }

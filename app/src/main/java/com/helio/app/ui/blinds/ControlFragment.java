@@ -74,7 +74,6 @@ public class ControlFragment extends Fragment {
         // Insert into the recycler view
         RecyclerView recView = view.findViewById(R.id.control_rc_view);
         recView.setAdapter(adapter);
-        recView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         FloatingActionButton addButton = view.findViewById(R.id.add_blinds_button);
         addButton.setOnClickListener(this::addButtonOnClick);

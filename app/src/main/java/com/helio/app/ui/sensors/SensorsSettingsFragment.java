@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
 public class SensorsSettingsFragment extends Fragment {
     private UserDataViewModel model;
     private SensorsRecViewAdapter adapter;
+    private ViewGroup addButtonsLayout;
+    private FloatingActionButton plusButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -60,22 +62,28 @@ public class SensorsSettingsFragment extends Fragment {
         recView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // On plus button press, open the two sensor type buttons
-        ViewGroup addButtonsLayout = view.findViewById(R.id.add_sensor_button_layout);
-        FloatingActionButton plusButton = view.findViewById(R.id.add_button);
-        plusButton.setOnClickListener(v -> {
-            plusButton.setVisibility(View.GONE);
-            addButtonsLayout.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in));
-            addButtonsLayout.setVisibility(View.VISIBLE);
-        });
+        addButtonsLayout = view.findViewById(R.id.add_sensor_button_layout);
+        plusButton = view.findViewById(R.id.add_button);
+        plusButton.setOnClickListener(this::addButtonOnClick);
 
         view.<FloatingActionButton>findViewById(R.id.add_motion_button).setOnClickListener(this::addButtonOnClickMotion);
         view.<FloatingActionButton>findViewById(R.id.add_light_button).setOnClickListener(this::addButtonOnClickLight);
+
+        // Make hint displayed when empty act as an add button
+        View hintImage = view.findViewById(R.id.add_component_hint_layout);
+        hintImage.setOnClickListener(this::addButtonOnClick);
 
         provideHubConnectionHint();
         Handler handler = new Handler();
         handler.postDelayed(this::toggleNoComponentsHint, 100);
 
         return view;
+    }
+
+    private void addButtonOnClick(View v) {
+        plusButton.setVisibility(View.GONE);
+        addButtonsLayout.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in));
+        addButtonsLayout.setVisibility(View.VISIBLE);
     }
 
     private void addButtonOnClickMotion(View v) {
@@ -106,7 +114,7 @@ public class SensorsSettingsFragment extends Fragment {
         // provide a hint to the user if there are no components
         NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
         assert hintInterface != null;
-        if(adapter.getItemCount() == 0) {
+        if (adapter.getItemCount() == 0) {
             hintInterface.showNoComponentHint();
         } else {
             hintInterface.hideNoComponentHint();
@@ -118,7 +126,7 @@ public class SensorsSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 networkStatus -> {
                     System.out.println("connection status: " + networkStatus);
-                    if(networkStatus == NetworkStatus.DISCONNECTED) {
+                    if (networkStatus == NetworkStatus.DISCONNECTED) {
                         // hint the user to set up a connection to their hub
                         Toast.makeText(
                                 getContext(),

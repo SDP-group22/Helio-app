@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -78,6 +77,10 @@ public class ControlFragment extends Fragment {
 
         FloatingActionButton addButton = view.findViewById(R.id.add_blinds_button);
         addButton.setOnClickListener(this::addButtonOnClick);
+
+        // Make hint displayed when empty act as an add button
+        View hintImage = view.findViewById(R.id.add_component_hint_layout);
+        hintImage.setOnClickListener(this::addButtonOnClick);
 
         provideHubConnectionHint();
         Handler handler = new Handler();

@@ -23,7 +23,6 @@ import com.helio.app.networking.NetworkStatus;
 import com.helio.app.ui.NoComponentHintBackground;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -52,6 +51,10 @@ public class SchedulesSettingsFragment extends Fragment {
 
         FloatingActionButton addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(this::addButtonOnClick);
+
+        // Make hint displayed when empty act as an add button
+        View hintImage = view.findViewById(R.id.add_component_hint_layout);
+        hintImage.setOnClickListener(this::addButtonOnClick);
 
         provideHubConnectionHint();
         Handler handler = new Handler();
@@ -84,7 +87,7 @@ public class SchedulesSettingsFragment extends Fragment {
         // provide a hint to the user if there are no components
         NoComponentHintBackground hintInterface = (NoComponentHintBackground) getActivity();
         assert hintInterface != null;
-        if(adapter.getItemCount() == 0) {
+        if (adapter.getItemCount() == 0) {
             hintInterface.showNoComponentHint();
         } else {
             hintInterface.hideNoComponentHint();
@@ -96,7 +99,7 @@ public class SchedulesSettingsFragment extends Fragment {
                 getViewLifecycleOwner(),
                 networkStatus -> {
                     System.out.println("connection status: " + networkStatus);
-                    if(networkStatus == NetworkStatus.DISCONNECTED) {
+                    if (networkStatus == NetworkStatus.DISCONNECTED) {
                         // hint the user to set up a connection to their hub
                         Toast.makeText(
                                 getContext(),

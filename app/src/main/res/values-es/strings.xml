@@ -30,7 +30,7 @@
     <string name="add_new_schedule_button">Nuevo horario</string>
     <string name="light_sensor">Sensor de luz</string>
     <string name="motion_sensor">Sensor de movimiento</string>
-    <string name="sensor">Sensor</string>
+    <string name="sensor">Sensores</string>
     <string name="motion_sensor_sensitivity">Sensibilidad</string>
     <string name="new_motion_sensor">Nuevo sensor de movimiento</string>
     <string name="new_light_sensor">Nuevo sensor de luz</string>
